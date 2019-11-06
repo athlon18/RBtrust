@@ -218,13 +218,14 @@
 			<![CDATA[	
 				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).Any() == true) {
 					var Location = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).First().Location;
-					 while (Core.Me.Location.Distance2D(Location) > 1.5f)
+					 while (Core.Me.Location.Distance2D(Location) > 1f)
 					{
 						Navigator.PlayerMover.MoveTowards(Location);
 						await Coroutine.Sleep(100);
 					}
 
 					Navigator.PlayerMover.MoveStop();
+					await Coroutine.Sleep(1000);
 					GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
 					Core.Target.Interact();
 				}
