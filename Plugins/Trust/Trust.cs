@@ -110,8 +110,11 @@ namespace Trust
                 }
 
                 var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+					r.NpcId == 713 ||                       	// "桑克瑞德"
+                    r.NpcId == 8889 ||                        	// 琳   
 					r.Name == "琳" ||
-					r.Name == "桑科瑞德"
+					r.Name == "桑克瑞德"
+					
                 ).OrderBy(r => r.Distance()).First();
 
                 //当距离大于跟随距离 再处理跟随
@@ -174,7 +177,8 @@ namespace Trust
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-					r.Name == "琳" 
+									r.NpcId == 8889 ||                        	// 琳
+									r.Name == "琳" 
                                      ).OrderBy(r => r.Distance()).First();
 
                             //当距离大于跟随距离 再处理跟随
