@@ -227,6 +227,11 @@
 					Navigator.PlayerMover.MoveStop();
 					await Coroutine.Sleep(1000);
 					GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
+					await Coroutine.Sleep(1000);
+					if(Core.Target == null)  {
+						GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
+						await Coroutine.Sleep(1000);
+					}
 					Core.Target.Interact();
 				}
 			  ]]>
