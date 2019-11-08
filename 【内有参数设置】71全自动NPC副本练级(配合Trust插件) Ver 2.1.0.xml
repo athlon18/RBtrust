@@ -73,7 +73,7 @@
 				<!-- 第八步  打怪 -->
 				<MoveTo XYZ="-15.98,2.05, 127.16"/>
 				
-				<RunCode name="拾取宝箱" />
+				<!-- <RunCode name="拾取宝箱" /> -->
 				
 				<!-- 第九步  打怪 -->
 				<MoveTo XYZ="-4.61,-4.48,68.4"/>
@@ -233,6 +233,28 @@
 						await Coroutine.Sleep(1000);
 					}
 					Core.Target.Interact();
+				}
+			  ]]>
+		</CodeChunk>
+		<CodeChunk name="贝壳王冠">
+			<![CDATA[	
+				if(GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).Any() == true) {
+					var obj = GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).First();
+					 while (Core.Me.Location.Distance2D(obj.Location) > 1f)
+					{
+						Navigator.PlayerMover.MoveTowards(obj.Location);
+						await Coroutine.Sleep(100);
+					}
+
+					Navigator.PlayerMover.MoveStop();
+					await Coroutine.Sleep(1000);
+					obj.Target();
+					await Coroutine.Sleep(1000);
+					if(Core.Target == null)  {
+						obj.Target();
+						await Coroutine.Sleep(1000);
+					}
+					Core.Target.Interact();					
 				}
 			  ]]>
 		</CodeChunk>
