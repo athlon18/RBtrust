@@ -2,7 +2,10 @@
 
 <!DOCTYPE Profile [
 
+<!ENTITY usefood "1"> <!--是否启用食物 -->
 <!ENTITY food "4753"> <!-- 食物为水牛奶 -->
+<!ENTITY foodHQ "False"> <!-- 食物是否为HQ (是 为True)-->
+<!ENTITY foodtime "30"> <!-- 食物剩余时间补充 -->
 
 <!ENTITY repair "1"> <!-- 0为暗物质修理 1为NPC修理-->
 <!ENTITY repairNum "50"> <!-- 修理数值 -->
@@ -40,8 +43,11 @@
 					<SelfRepair Threshhold="&repairNum;"/>
 				</If>
 				<WaitTimer waitTime="2"/> 
-				<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="False" MinDuration="30" />
-				
+
+				<If Condition="&usefood; == 1">
+					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
+				</If>
+
 				<RunCode name="openSS" />			
 				
 				<!-- 第一步 得到宽恕的自负 -->
@@ -78,7 +84,10 @@
 					<LoadProfile Path="&URL;" />
 				</If>				
 				
-				<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="False" MinDuration="30" />
+				<If Condition="&usefood; == 1">
+					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
+				</If>
+
 				<RunCode name="openSS" />
 				
 				<!-- 第八步  打怪 -->
@@ -118,7 +127,10 @@
 					<LoadProfile Path="&URL;" />
 				</If>
 				
-				<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="False" MinDuration="30" />
+				<If Condition="&usefood; == 1">
+					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
+				</If>
+
 				<RunCode name="openSS" />
 				
 				<If Condition="&halfway; == 1">
