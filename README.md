@@ -14,3 +14,5 @@ Plugins 放RB Plugins里
 有问题联系 QQ:250717291
 
 discord: https://discord.gg/WqxpkqG
+
+QQ群: 938170067
