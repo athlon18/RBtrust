@@ -61,10 +61,12 @@ namespace Trust
 
         public override void OnInitialize()
         {
-            var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
-            if (plugin != null)
+            var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避");
+            
+            if (plugin.Any() == true)
             {
-                if (plugin.Enabled == false) plugin.Enabled = true;
+                var Plugin = plugin.First();   
+                if (Plugin.Enabled == false) Plugin.Enabled = true;
             }
             _coroutine = new Decorator(c => CanTarget(), new ActionRunCoroutine(r => RunTrust()));
         }
