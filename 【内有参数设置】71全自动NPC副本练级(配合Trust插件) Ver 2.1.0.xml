@@ -11,6 +11,13 @@
 <!ENTITY boss2 "0"> 		<!--BOSS2结束 -->
 <!ENTITY before_boss3 "0"> 	<!--BOSS3之前结束 -->
 <!ENTITY boss3 "1"> 		<!--打完全部 -->
+
+<!-- 拾取箱子 -->
+<!ENTITY boss1box "1"> 		<!--BOSS1结束箱子 -->
+<!ENTITY boss2box "1"> 		<!--BOSS2结束箱子 -->
+<!ENTITY boss3box "1"> 		<!--BOSS3结束箱子 -->
+<!ENTITY halfway "1"> 		<!--路途中的箱子 -->
+
 <!ENTITY URL "【内有参数设置】71全自动NPC副本练级(配合Trust插件) Ver 2.1.0.xml"> <!--退本用和当前脚本名称一致-->
 ]>
 <Profile>
@@ -59,8 +66,11 @@
 				<MoveTo XYZ="-14.87,0, 235.55"/>
 				<Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8299)" />				
 
-				<RunCode name="拾取宝箱" />
 				
+				<If Condition="&boss1box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>		
+
 				<If Condition="&boss1; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
@@ -73,25 +83,33 @@
 				<!-- 第八步  打怪 -->
 				<MoveTo XYZ="-15.98,2.05, 127.16"/>
 				
-				<!-- <RunCode name="拾取宝箱" /> -->
+				<MoveTo XYZ="-4.837286,-1.260272,106.3564"/>
+
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<!-- 第九步  打怪 -->
 				<MoveTo XYZ="-4.61,-4.48,68.4"/>
 				
 				<!-- 第九步  打怪 -->
 				<MoveTo XYZ="24.02,-8.12,40.39"/>
-				
-				<!--<RunCode name="拾取宝箱" />-->
-				
+
 				<!-- 第十步  打怪 -->
 				<MoveTo XYZ="73.73,-5.25,-0.73"/>
 				
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
+
 				<!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
 				<!-- <MoveTo XYZ="88.43562,0,-90.29143"/>-->
 				<MoveTo XYZ="88.43562,0,-90.29143"/>
 				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)" />
 				
-				<RunCode name="拾取宝箱" />
+				<If Condition="&boss2box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<If Condition="&boss2; == 1">
 					<WaitTimer waitTime="5"/> 
@@ -101,6 +119,11 @@
 				
 				<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="False" MinDuration="30" />
 				<RunCode name="openSS" />
+				
+				<If Condition="&halfway; == 1">
+					<MoveTo XYZ="86.15449,0.512633,-189.4477"/>
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<!-- 第十一步 打怪-->
 				<MoveTo XYZ="77.4,0,-208.51"/>
@@ -117,6 +140,12 @@
 				<MoveTo XYZ="72.46,3.45,-273.49"/>
 				<WaitTimer waitTime="3"/>			
 				
+				<If Condition="&halfway; == 1">
+					<MoveTo XYZ="71.46906,1.502112,-326.3975"/>
+					<RunCode name="拾取宝箱" />
+				</If>
+				
+
 				<If Condition="&before_boss3; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
@@ -132,7 +161,9 @@
 				<WaitTimer waitTime="3"/> 
 				<MoveTo XYZ="133.34,23,-455.87"/>				
 				
-				<RunCode name="拾取宝箱" />
+				<If Condition="&boss3box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<If Condition="&boss3; == 1">
 					<WaitTimer waitTime="3"/> 
