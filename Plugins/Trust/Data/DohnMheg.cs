@@ -122,8 +122,16 @@ namespace Trust
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                    r.Name == "阿莉塞" ||
-                    r.Name == "琳"
+                                    r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
+                                    r.NpcId == 1492 ||                       // "于里昂热"
+                                    r.NpcId == 4130 ||                       // "阿尔菲诺"
+                                    r.NpcId == 5239 ||                       // "阿莉塞"
+                                    r.NpcId == 8889 ||                        // 琳   
+                                    r.Name == "雅·修特拉" ||
+                                    r.Name == "于里昂热" ||
+                                    r.Name == "阿尔菲诺" ||
+                                    r.Name == "阿莉塞" ||
+                                    r.Name == "琳"
                                      ).OrderBy(r => r.Distance()).First();
 
                         //当距离大于跟随距离 再处理跟随
