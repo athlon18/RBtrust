@@ -61,7 +61,7 @@ namespace Trust
                 case 822: //79本 格鲁格火山
                     return await MtGulg.Run();
                     break;
-                case 823: //80本 亚马乌罗提
+                case 838: //80本 亚马乌罗提
                     return await Amaurot.Run();
                     break;
                 case 884: //80本 国际服 5.1
