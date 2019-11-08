@@ -15,7 +15,14 @@
 <!ENTITY before_boss3 "0"> 	<!--BOSS3之前结束 -->
 <!ENTITY boss3 "1"> 		<!--打完全部 -->
 
-<!ENTITY URL "【内有参数设置】73全自动NPC副本练级(配合Trust插件) Ver 1.0.1.xml"> <!--退本用和当前脚本名称一致-->
+<!-- 拾取箱子 -->
+<!ENTITY boss1box "1"> 		<!--BOSS1结束箱子 -->
+<!ENTITY boss2box "1"> 		<!--BOSS2结束箱子 -->
+<!ENTITY boss3box "1"> 		<!--BOSS3结束箱子 -->
+<!ENTITY halfway "1"> 		<!--路途中的箱子 -->
+
+
+<!ENTITY URL "【内有参数设置】73全自动NPC副本练级(配合Trust插件) Ver 1.0.1.xml"> <!--退本用和当前脚本名称一致  推荐队友：阿莉塞、于里昂热-->     
 ]>
 <Profile>
     <Name>【NPC】73全自动副本练级 by athlon and Minami16 and 疾风点破</Name>
@@ -69,16 +76,22 @@
 				<If Condition="&usefood; == 1">
 					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
 				</If>
-								
-                <!-- 第六步  打怪 禁园石莲猬 -->
+				
+				<RunCode name="openSS" />				
+                
+				<!-- 第六步  打怪 禁园石莲猬 -->
 				<MoveTo XYZ="-4.819658,0.7291775,-48.64905"/>
 
+                 <RunCode name="closeSS" />
+				 
 				<!-- 第七步  打怪 酿蜜蜂 -->
 				<MoveTo XYZ="-35.63404,1.916844,-89.18874"/>
 
 				<!-- 第八步  打怪 猎蜜熊 -->
 				<MoveTo XYZ="-67.10806,16.14704,-186.3012"/>
 
+                <RunCode name="openSS" />
+				
 				<!-- 第九步  打怪 禁园水妖 -->
 				<MoveTo XYZ="-4.79935,11.95175,-235.6158"/>
 				

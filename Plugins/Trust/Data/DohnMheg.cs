@@ -32,8 +32,8 @@ namespace Trust
                 .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
                     (
                     r.CastingSpellId == 15788 ||   //小怪禁园篮筐 圆形
-                    r.CastingSpellId == 15793 ||    //小怪禁园花楸树  圆形
-                    r.CastingSpellId == 15792 ||    //小怪禁园花楸树  扇形
+                    //r.CastingSpellId == 15793 ||    //小怪禁园花楸树  圆形
+                    //r.CastingSpellId == 15792 ||    //小怪禁园花楸树  扇形
                     r.CastingSpellId == 15794 ||   //小怪蜜蜂 针
                     r.CastingSpellId == 15796 ||    //小怪熊 扇形
                     r.CastingSpellId == 8906 ||    //重击 扇形  73 2王
