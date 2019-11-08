@@ -31,6 +31,7 @@
 				<If Condition="&repair; == 1">
 					<NPCRepair Threshhold="&repairNum;" XYZ="79.79,207.03,1.59" ZoneId="478" NpcId="1012094"/>
 				</If>
+				<WaitTimer waitTime="8"/> 
 				<RunCode name="选择副本" />
 				<CommenceDuty />
 			</If>
@@ -103,8 +104,8 @@
 				</If>
 
 				<!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
-				<!-- <MoveTo XYZ="88.43562,0,-90.29143"/>-->
-				<MoveTo XYZ="88.43562,0,-90.29143"/>
+				<MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
+				<NoCombatMoveTo XYZ="85.32442,0,-88.8187"/>
 				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)" />
 				
 				<If Condition="&boss2box; == 1">
