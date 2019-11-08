@@ -163,6 +163,7 @@ namespace Trust
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+                                    r.NpcId == 729 || r.NpcId == 8378 ||        // "雅·修特拉"
                                     r.NpcId == 8889 ||                          // 琳
                                     r.NpcId == 5239 ||                          // "阿莉塞"
                                     r.Name == "阿莉塞" ||
