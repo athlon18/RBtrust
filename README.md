@@ -10,3 +10,7 @@ Plugins 放RB Plugins里
 71本 T不是很稳定 D H 还好
 
 73本 比较稳定,还需要测试再提交 
+
+有问题联系 QQ:250717291
+
+https://discord.gg/4EmuTD
