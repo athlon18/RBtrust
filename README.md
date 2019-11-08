@@ -1,5 +1,4 @@
-# RBtrust
-rb 全自动npc副本(序列模式)
+# RBtrust RB 全自动npc副本(序列模式)
 
 
 主线一定要过 有琳和桑科瑞德
