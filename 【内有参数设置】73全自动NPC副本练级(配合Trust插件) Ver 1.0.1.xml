@@ -15,69 +15,51 @@
 <!ENTITY before_boss3 "0"> 	<!--BOSS3之前结束 -->
 <!ENTITY boss3 "1"> 		<!--打完全部 -->
 
-<!-- 拾取箱子 -->
-<!ENTITY boss1box "1"> 		<!--BOSS1结束箱子 -->
-<!ENTITY boss2box "1"> 		<!--BOSS2结束箱子 -->
-<!ENTITY boss3box "1"> 		<!--BOSS3结束箱子 -->
-<!ENTITY halfway "1"> 		<!--路途中的箱子 -->
-
-<!ENTITY URL "【内有参数设置】71全自动NPC副本练级(配合Trust插件) Ver 2.1.0.xml"> <!--退本用和当前脚本名称一致-->
+<!ENTITY URL "【内有参数设置】73全自动NPC副本练级(配合Trust插件) Ver 1.0.1.xml"> <!--退本用和当前脚本名称一致-->
 ]>
 <Profile>
-    <Name>【NPC】71全自动副本练级 by athlon and Minami16 and 疾风点破</Name>
+    <Name>【NPC】73全自动副本练级 by athlon and Minami16 and 疾风点破</Name>
     <KillRadius>50</KillRadius>
 	<BehaviorDirectory>Quest Behaviors</BehaviorDirectory>
     <Order>
 		<RunCode name="checkPlugin" />
 		<While Condition="True">	
-			<If Condition="not IsOnMap(837)">
+			<If Condition="not IsOnMap(821)">
 				<If Condition="&repair; == 1">
 					<NPCRepair Threshhold="&repairNum;" XYZ="79.79,207.03,1.59" ZoneId="478" NpcId="1012094"/>
 				</If>
-				<WaitTimer waitTime="8"/> 
+				<WaitTimer waitTime="8"/>
 				<RunCode name="选择副本" />
 				<CommenceDuty />
 			</If>
-			<If Condition="IsOnMap(837)">
+			<If Condition="IsOnMap(821)">
 				<If Condition="&repair; == 0">
 					<SelfRepair Threshhold="&repairNum;"/>
 				</If>
 				<WaitTimer waitTime="2"/> 
-
+				
 				<If Condition="&usefood; == 1">
 					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
 				</If>
+				
+				<RunCode name="closeSS" />
+								
+				<!-- 第一步 禁园风花 -->
+				<MoveTo XYZ="-53.46396,8.040462,130.1588"/>
+				
+				<!-- 第二步 禁园篮筐 -->
+				<MoveTo XYZ="-25.65871,8.101549,174.557"/>
 
-				<RunCode name="openSS" />			
-				
-				<!-- 第一步 得到宽恕的自负 -->
-				<MoveTo XYZ="-127.256,2.538,403.434"/>
-				<!-- 第二步 得到宽恕的喧哗 -->
-				<MoveTo XYZ="-148.1962,-1.056138,339.3869"/>
-				
-				<!-- 第三步 得到宽恕的愚行 -->
-				<MoveTo XYZ="-98.134636,-0.230948,321.217957"/>
-				
-				<!-- 第四步 得到宽恕的自负 -->
-				<!-- <NoCombatMoveTo XYZ="-66.7244,0.7372842,346.6774"/> -->
-				<MoveTo XYZ="-66.7244,0.7372842,346.6774"/>
-				
-				<!-- 第五步 得到宽恕的喧哗 -->
-				<!-- <NoCombatMoveTo XYZ="-50.47,0.05,352.05" Wait="1"/> -->
-				<MoveTo XYZ="-50.47,0.05,352.05"/>
-							
-				<!-- 第六步 得到宽恕的无知 -->
-				<MoveTo XYZ="-12.07,0.08,292.24"/>
-				
-				<!-- 第七步 BOOS1 得到宽恕的失调 -->
-				<MoveTo XYZ="-14.87,0, 235.55"/>
-				<Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8299)" />				
+				<!-- 第三步 禁园爱蒂恩蛾 -->
+				<MoveTo XYZ="61.03216,8.424351,131.8419"/>
 
+				<!-- 第四步 禁园水妖 -->
+				<MoveTo XYZ="35.01454,8.267113,81.02051"/>
 				
-				<If Condition="&boss1box; == 1">
-					<RunCode name="拾取宝箱" />
-				</If>		
-
+				<!-- 第五步 BOOS1 美眼 因克·佐恩 -->
+				<MoveTo XYZ="6.234492,6.851405,21.12165"/>
+				<Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8141)" />					
+				
 				<If Condition="&boss1; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
@@ -87,39 +69,23 @@
 				<If Condition="&usefood; == 1">
 					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
 				</If>
+								
+                <!-- 第六步  打怪 禁园石莲猬 -->
+				<MoveTo XYZ="-4.819658,0.7291775,-48.64905"/>
 
-				<RunCode name="openSS" />
-				
-				<!-- 第八步  打怪 -->
-				<MoveTo XYZ="-15.98,2.05, 127.16"/>
-				
-				<MoveTo XYZ="-4.837286,-1.260272,106.3564"/>
+				<!-- 第七步  打怪 酿蜜蜂 -->
+				<MoveTo XYZ="-35.63404,1.916844,-89.18874"/>
 
-				<If Condition="&halfway; == 1">
-					<RunCode name="拾取宝箱" />
-				</If>
-				
-				<!-- 第九步  打怪 -->
-				<MoveTo XYZ="-4.61,-4.48,68.4"/>
-				
-				<!-- 第九步  打怪 -->
-				<MoveTo XYZ="24.02,-8.12,40.39"/>
+				<!-- 第八步  打怪 猎蜜熊 -->
+				<MoveTo XYZ="-67.10806,16.14704,-186.3012"/>
 
-				<!-- 第十步  打怪 -->
-				<MoveTo XYZ="73.73,-5.25,-0.73"/>
+				<!-- 第九步  打怪 禁园水妖 -->
+				<MoveTo XYZ="-4.79935,11.95175,-235.6158"/>
 				
-				<If Condition="&halfway; == 1">
-					<RunCode name="拾取宝箱" />
-				</If>
-
-				<!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
-				<MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
-				<NoCombatMoveTo XYZ="85.32442,0,-88.8187"/>
-				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)" />
-				
-				<If Condition="&boss2box; == 1">
-					<RunCode name="拾取宝箱" />
-				</If>
+				<!-- 第十步  BOSS2 格里奥勒 -->
+				<RunCode name="closeSS" />
+				<NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528"/>
+				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8143)" />
 				
 				<If Condition="&boss2; == 1">
 					<WaitTimer waitTime="5"/> 
@@ -130,53 +96,62 @@
 				<If Condition="&usefood; == 1">
 					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
 				</If>
+				
+			
+				<!-- 第十一步 打怪 上个BOSS打完要往前去到下一层 再往前右键互动石柱才能开怪-->
+				<MoveTo XYZ="8.755135,20.0074,-400.4264"/>
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<WaitTimer waitTime="5"/> 
+	            <MoveTo XYZ="-171.8794,-178.75,-6.813273"/>
+				<RunCode name="贝壳王冠" />
+				<WaitTimer waitTime="5"/>
+				
+				<!-- 第十二步 打怪 禁园凯尔派 -->					
+				<MoveTo XYZ="-172.199,-179.0002,-23.83175"/>
+				<RunCode name="closeSS" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />		
+				
+				<!-- 第十三步 打怪 禁园凯尔派2 -->
+				<MoveTo XYZ="-125.179,-167.7505,-84.55482"/>
 
-				<RunCode name="openSS" />
-				
-				<If Condition="&halfway; == 1">
-					<MoveTo XYZ="86.15449,0.512633,-189.4477"/>
-					<RunCode name="拾取宝箱" />
-				</If>
-				
-				<!-- 第十一步 打怪-->
-				<MoveTo XYZ="77.4,0,-208.51"/>
-				
-				
-				<!-- 第十二步 打怪-->
-				<MoveTo XYZ="89.05,3.93,-241.38"/>
-				
-				
-				<!-- 第十三步 打怪-->
-				<MoveTo XYZ="63.87,4.05,-251.26"/>
-				
-				<!-- 第十四步 打怪-->
-				<MoveTo XYZ="72.46,3.45,-273.49"/>
-				<WaitTimer waitTime="3"/>			
-				
-				<If Condition="&halfway; == 1">
-					<MoveTo XYZ="71.46906,1.502112,-326.3975"/>
-					<RunCode name="拾取宝箱" />
-				</If>
-				
+                <!-- 第十四步 打怪 那伊阿得斯 -->
+				<MoveTo XYZ="-123.701,-167.4992,-101.0573"/>
+			    <WaitTimer waitTime="1"/>
 
+				<!-- 第十五步 打怪 那伊阿得斯2 -->
+				<MoveTo XYZ="-128.6821,-167.4947,-103.0438"/>
+				<MoveTo XYZ="-128.4726,-167.4992,-111.1085"/>
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />	
+				<WaitTimer waitTime="1"/>
+							
 				<If Condition="&before_boss3; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
 					<LoadProfile Path="&URL;" />
 				</If>
 				
-				<!-- 第十五步 BOSS3-->
-				<!-- <MoveTo XYZ="134.34,23,-455.87"/>-->
-				<NoCombatMoveTo XYZ="134.1453,23,-477.03"/>
-				
-				<Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8301)" />
+                <!-- 第十六步 BOSS3 乐圣 因克·佐恩 -->
+				<MoveTo XYZ="-128.4545,-156.0078,-160.0941"/>
+				<MoveTo XYZ="-128.5197,-156.0078,-173.2586"/>
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />
+				<RunCode name="向前移动" />	
+				<WaitTimer waitTime="3"/>
+				<MoveTo XYZ="-135.7786,-144.5292,-253.5551"/>
+                <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8146)" />
 
 				<WaitTimer waitTime="3"/> 
-				<MoveTo XYZ="133.34,23,-455.87"/>				
+				<MoveTo XYZ="-135.7786,-144.5292,-253.5551"/>			
 				
-				<If Condition="&boss3box; == 1">
-					<RunCode name="拾取宝箱" />
-				</If>
+				<RunCode name="拾取宝箱" />
+				<WaitTimer waitTime="2"/>
 				
 				<If Condition="&boss3; == 1">
 					<WaitTimer waitTime="3"/> 
@@ -200,7 +175,7 @@
 				await Buddy.Coroutines.Coroutine.Sleep(1000);
 				windowByName = RaptureAtkUnitManager.GetWindowByName("Dawn");
 				if(windowByName != null){
-					windowByName.SendAction(2,3,15,4,0);//最后是副本选择0-5
+					windowByName.SendAction(2,3,15,4,1);//最后是副本选择0-5
 					ushort elementCount = Core.Memory.Read<ushort>(windowByName.Pointer + 458);
 					IntPtr addr = Core.Memory.Read<IntPtr>(windowByName.Pointer + 352);
 					var elements = Core.Memory.ReadArray<TwoInt>(addr, elementCount);
@@ -208,28 +183,6 @@
 					var dps2 = Core.Memory.ReadString((IntPtr) elements[54].Data, Encoding.UTF8);
 					await Buddy.Coroutines.Coroutine.Sleep(100);
 					
-					if( dps1 != "光之巫女" && dps2 != "光之巫女" ){
-					
-						switch(dps2){
-							case "赤魔法师":
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 1); //卸下阿莉塞
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 5); //装上琳
-							break;
-							case "魔女":
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 4); //卸下雅修特拉
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 5); //装上琳
-							break;
-						}
-						
-						//带阿莉塞
-						if(dps1 != "占星术士") { // T N 模式 
-							if(dps1 != "赤魔法师") {
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 4); //卸下雅修特拉
-								windowByName.SendAction(2, 3, 12, 4, (ulong) 1); //装上阿莉塞
-							}
-						}
-					
-					}
 					
 					await Buddy.Coroutines.Coroutine.Sleep(100);
 					RaptureAtkUnitManager.GetWindowByName("Dawn").SendAction(1,3,14);
@@ -258,47 +211,31 @@
 				}
 			  ]]>
 		</CodeChunk>
+		<CodeChunk name="closeSS">
+			<![CDATA[	
+				var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避");
+				if(plugin.Any()){
+					var Plugin = plugin.First();
+					 if (Plugin != null)
+                    {
+                        if (Plugin.Enabled == true) Plugin.Enabled = false;
+                    }
+				}
+			  ]]>
+		</CodeChunk>
 		<CodeChunk name="拾取宝箱">
 			<![CDATA[	
 				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).Any() == true) {
 					var Location = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).First().Location;
-					 while (Core.Me.Location.Distance2D(Location) > 1f)
+					 while (Core.Me.Location.Distance2D(Location) > 1.5f)
 					{
 						Navigator.PlayerMover.MoveTowards(Location);
 						await Coroutine.Sleep(100);
 					}
 
 					Navigator.PlayerMover.MoveStop();
-					await Coroutine.Sleep(1000);
 					GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-					await Coroutine.Sleep(1000);
-					if(Core.Target == null)  {
-						GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-						await Coroutine.Sleep(1000);
-					}
 					Core.Target.Interact();
-				}
-			  ]]>
-		</CodeChunk>
-		<CodeChunk name="贝壳王冠">
-			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).Any() == true) {
-					var obj = GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).First();
-					 while (Core.Me.Location.Distance2D(obj.Location) > 1f)
-					{
-						Navigator.PlayerMover.MoveTowards(obj.Location);
-						await Coroutine.Sleep(100);
-					}
-
-					Navigator.PlayerMover.MoveStop();
-					await Coroutine.Sleep(1000);
-					obj.Target();
-					await Coroutine.Sleep(1000);
-					if(Core.Target == null)  {
-						obj.Target();
-						await Coroutine.Sleep(1000);
-					}
-					Core.Target.Interact();					
 				}
 			  ]]>
 		</CodeChunk>
@@ -331,7 +268,29 @@
 				}
 				await Buddy.Coroutines.Coroutine.Sleep(5000);
 			]]>
-		</CodeChunk>			
+		</CodeChunk>
+        <CodeChunk name="贝壳王冠">
+			<![CDATA[	
+				if(GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).Any() == true) {
+					var obj = GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).First();
+					 while (Core.Me.Location.Distance2D(obj.Location) > 1f)
+					{
+						Navigator.PlayerMover.MoveTowards(obj.Location);
+						await Coroutine.Sleep(100);
+					}
+
+					Navigator.PlayerMover.MoveStop();
+					await Coroutine.Sleep(1000);
+					obj.Target();
+					await Coroutine.Sleep(1000);
+					if(Core.Target == null)  {
+						obj.Target();
+						await Coroutine.Sleep(1000);
+					}
+					Core.Target.Interact();					
+				}
+			  ]]>
+		</CodeChunk>		
 		<CodeChunk Name="Interact">
 		<![CDATA[ff14bot.Managers.GameObjectManager.GetObjectByNPCId(1002391).Interact(); await Buddy.Coroutines.Coroutine.Wait(5000, () => ff14bot.RemoteWindows.SelectString.IsOpen); ff14bot.RemoteWindows.SelectString.ClickSlot(0); await Buddy.Coroutines.Coroutine.Wait(5000, () => RaptureAtkUnitManager.GetWindowByName("GrandCompanySupplyList") != null); RaptureAtkUnitManager.GetWindowByName("GrandCompanySupplyList").SendAction(2,1,0,1,2); await Buddy.Coroutines.Coroutine.Sleep(650);]]>
 		</CodeChunk>
@@ -343,69 +302,30 @@
 		</CodeChunk>	
 	</CodeChunks>		
     <GrindAreas>
-		<GrindArea name="next1">
-            <Hotspots>
-				<Hotspot Radius="50" XYZ="0.1776512, 16.34725, -421.882" />
-            </Hotspots>
-            <TargetMobs><!-- 8302 -->
-			    <TargetMob Name="得到宽恕的自负" Id="8302" Weight="1" />				
-            </TargetMobs>
-        </GrindArea>
-		<GrindArea name="next2">
-            <Hotspots>
-				<Hotspot Radius="50" XYZ="-153.1962,-1.296138,345.3869" />
-            </Hotspots>
-            <TargetMobs>
-			    <TargetMob Name="得到宽恕的喧哗" Id="8307" Weight="1" />				
-            </TargetMobs>
-        </GrindArea>	
-		<GrindArea name="next3">
-            <Hotspots>
-				<Hotspot Radius="50" XYZ="-105.4857,-0.2641778,319.6836" />
-            </Hotspots>
-            <TargetMobs>
-			    <TargetMob Name="得到宽恕的愚行" Id="8303" Weight="1" />				
-            </TargetMobs>
-        </GrindArea>	
-		<GrindArea name="next4">
-            <Hotspots>
-				<Hotspot Radius="50" XYZ="-105.4857,-0.2641778,319.6836" />
-            </Hotspots>
-            <TargetMobs>
-			    <TargetMob Name="得到宽恕的自负" Id="8302" Weight="1" />				
-            </TargetMobs>
-        </GrindArea>	
-       <GrindArea name="next5">
-            <Hotspots>
-				<Hotspot Radius="50" XYZ="-49.5725327,0.1686163,354.077728" />
-            </Hotspots>
-            <TargetMobs>
-			    <TargetMob Name="得到宽恕的喧哗" Id="8307" Weight="1" />				
-            </TargetMobs>
-        </GrindArea>	
 		<GrindArea name="boss1">
             <Hotspots>
-				<Hotspot Radius="200" XYZ="-14.87,0, 235.55" />
+				<Hotspot Radius="200" XYZ="6.234492,6.851405,21.12165" />
             </Hotspots>
             <TargetMobs>
-			    <TargetMob Name="得到宽恕的失调" Id="8299" Weight="1" />				
+			    <TargetMob Name="美眼 因克·佐恩" Id="8141 " Weight="1" />			
             </TargetMobs>
         </GrindArea>	
 		<GrindArea name="boss2">
             <Hotspots>
-				<Hotspot Radius="200" XYZ="77.77,0,-79.51" />
+				<Hotspot Radius="200" XYZ="12.55156,23.04288,-349.352" />
             </Hotspots>
             <TargetMobs>
-			    <TargetMob Name="得到宽恕的泰丝琳" Id="8300" Weight="1" />				
+			    <TargetMob Name="格里奥勒" Id="8143" Weight="1" />	
+				<TargetMob Name="格里奥勒根茎" Id="8145" Weight="100" />				
             </TargetMobs>
         </GrindArea>	
 		<GrindArea name="boss3">
             <Hotspots>
-				<Hotspot Radius="200" XYZ="134.34,23,-455.87" />
+				<Hotspot Radius="200" XYZ="-135.7786,-144.5292,-253.5551" />
             </Hotspots>
             <TargetMobs>
-			    <TargetMob Name="斐利亚" Id="8301" Weight="1" />	
-				<TargetMob Name="锁链" Id="8570" Weight="100" />				
+			    <TargetMob Name="乐圣 因克·佐恩	" Id="8146" Weight="1" />	
+				<TargetMob Name="恐怖幻影" Id="8171 " Weight="1" />				
             </TargetMobs>
         </GrindArea>	
     </GrindAreas>

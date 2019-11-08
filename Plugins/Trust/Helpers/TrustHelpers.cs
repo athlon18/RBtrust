@@ -1,5 +1,7 @@
-﻿using ff14bot.Enums;
+﻿using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Managers;
+using ff14bot.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,21 @@ namespace Trust
         public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id)
         {
             return bags.First(s => s.TrueItemId == id);
+        }
+
+        public static bool IsHealer() {
+            switch (Core.Me.CurrentJob)
+            {
+                case ClassJobType.Arcanist:
+                case ClassJobType.Astrologian:
+                case ClassJobType.Conjurer:
+                case ClassJobType.Scholar:
+                case ClassJobType.WhiteMage:
+                    return true;
+                default:
+                    return false;
+            }
+			return false;
         }
     }
 
