@@ -260,25 +260,17 @@
 		</CodeChunk>
 		<CodeChunk name="拾取宝箱">
 			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).Any() == true) {
-					var Location = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50).First().Location;
-					 while (Core.Me.Location.Distance2D(Location) > 1f)
-					{
-						Navigator.PlayerMover.MoveTowards(Location);
-						await Coroutine.Sleep(100);
-					}
-
+				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).Any() == true) {
+					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).First();
+					
+					while (Treasure.Location.Distance2D(Core.Me.Location) >= 0.5)
+                    {
+                        Navigator.PlayerMover.MoveTowards(Treasure.Location);
+                        await Coroutine.Yield();
+                    }
 					Navigator.PlayerMover.MoveStop();
-					await Coroutine.Sleep(3000);
-					GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-					await Coroutine.Sleep(2000);
-					if(Core.Target == null)  {
-						GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-						await Coroutine.Sleep(5000);
-						if(Core.Target != null) Core.Target.Interact();
-					}else {
-						Core.Target.Interact();
-					}					
+					Poi.Current = new Poi(Treasure, PoiType.Kill);
+					Poi.Current.Unit.Interact();					
 				}
 			  ]]>
 		</CodeChunk>
