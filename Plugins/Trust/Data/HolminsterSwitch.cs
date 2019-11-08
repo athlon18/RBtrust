@@ -43,7 +43,7 @@ namespace Trust
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                await Coroutine.Sleep(7000);
+                await Coroutine.Sleep(6000);
 
                 if (Helpers.IsHealer() == false)
                 {
@@ -166,6 +166,7 @@ namespace Trust
                                     r.NpcId == 8889 ||                          // 琳
                                     r.NpcId == 5239 ||                          // "阿莉塞"
                                     r.Name == "阿莉塞" ||
+									r.Name == "雅·修特拉" ||
                                     r.Name == "琳"
                                      ).OrderBy(r => r.Distance()).First();
 
