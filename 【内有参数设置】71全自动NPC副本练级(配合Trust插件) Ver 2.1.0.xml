@@ -269,36 +269,16 @@
 					}
 
 					Navigator.PlayerMover.MoveStop();
-					await Coroutine.Sleep(1000);
+					await Coroutine.Sleep(3000);
 					GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-					await Coroutine.Sleep(1000);
+					await Coroutine.Sleep(2000);
 					if(Core.Target == null)  {
 						GameObjectManager.GetObjectsOfType<Treasure>().First().Target();
-						await Coroutine.Sleep(1000);
-					}
-					Core.Target.Interact();
-				}
-			  ]]>
-		</CodeChunk>
-		<CodeChunk name="贝壳王冠">
-			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).Any() == true) {
-					var obj = GameObjectManager.GetObjectsOfType<EventObject>().Where(r => r.Distance() < 50 && r.NpcId == 2009760 && r.IsVisible == true).First();
-					 while (Core.Me.Location.Distance2D(obj.Location) > 1f)
-					{
-						Navigator.PlayerMover.MoveTowards(obj.Location);
-						await Coroutine.Sleep(100);
-					}
-
-					Navigator.PlayerMover.MoveStop();
-					await Coroutine.Sleep(1000);
-					obj.Target();
-					await Coroutine.Sleep(1000);
-					if(Core.Target == null)  {
-						obj.Target();
-						await Coroutine.Sleep(1000);
-					}
-					Core.Target.Interact();					
+						await Coroutine.Sleep(5000);
+						if(Core.Target != null) Core.Target.Interact();
+					}else {
+						Core.Target.Interact();
+					}					
 				}
 			  ]]>
 		</CodeChunk>
