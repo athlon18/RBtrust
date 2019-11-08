@@ -147,8 +147,8 @@
 				<MoveTo XYZ="-135.7786,-144.5292,-253.5551"/>
                 <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8146)" />
 
-				<WaitTimer waitTime="3"/> 
-				<MoveTo XYZ="-135.7786,-144.5292,-253.5551"/>			
+				<WaitTimer waitTime="2"/> 
+				<MoveTo XYZ="-128.9267,-144.5268,-255.1648"/>			
 				
 				<RunCode name="拾取宝箱" />
 				<WaitTimer waitTime="2"/>

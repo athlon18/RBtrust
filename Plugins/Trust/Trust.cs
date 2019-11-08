@@ -46,11 +46,26 @@ namespace Trust
             var mapId = WorldManager.ZoneId;
             switch (mapId)
             {
-                case 837: //71本
+                case 837: //71本 水滩村
                     return await HolminsterSwitch.Run();
                     break;
-                case 821: //73本
+                case 821: //73本 多恩美格禁园
                     return await DohnMheg.Run();
+                    break;
+                case 823: //75本 奇坦那神影洞
+                    return await TheQitanaRavel.Run();
+                    break;
+                case 836: //77本 马利卡大井
+                    return await MalikahWell.Run();
+                    break;
+                case 822: //79本 格鲁格火山
+                    return await MtGulg.Run();
+                    break;
+                case 823: //80本 亚马乌罗提
+                    return await Amaurot.Run();
+                    break;
+                case 884: //80本 国际服 5.1
+                    return await TheGrandCosmos.Run();
                     break;
                 default:
                     return false;
@@ -62,10 +77,10 @@ namespace Trust
         public override void OnInitialize()
         {
             var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避");
-            
+
             if (plugin.Any() == true)
             {
-                var Plugin = plugin.First();   
+                var Plugin = plugin.First();
                 if (Plugin.Enabled == false) Plugin.Enabled = true;
             }
             _coroutine = new Decorator(c => CanTarget(), new ActionRunCoroutine(r => RunTrust()));
