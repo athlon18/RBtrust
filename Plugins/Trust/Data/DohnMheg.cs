@@ -97,7 +97,7 @@ namespace Trust
                     //r.CastingSpellId == 15792 ||    //小怪禁园花楸树  扇形
                     r.CastingSpellId == 15794 ||   //小怪蜜蜂 针
                     r.CastingSpellId == 15796 ||    //小怪熊 扇形
-                    r.CastingSpellId == 8906 ||    //重击 扇形  73 2王
+                    //r.CastingSpellId == 8906 ||    //重击 扇形  73 2王
                                                    //r.CastingSpellId == 15798 ||   //小怪凯尔派 圆圈
                     r.CastingSpellId == 15799 ||   //小怪那伊阿得斯 扇形 
                     r.CastingSpellId == 15800 ||   //小怪那伊阿得斯 圆形

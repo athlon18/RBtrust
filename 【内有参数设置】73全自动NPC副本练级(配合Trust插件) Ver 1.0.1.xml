@@ -82,6 +82,7 @@
 				<!-- 第六步  打怪 禁园石莲猬 -->
 				<MoveTo XYZ="-4.819658,0.7291775,-48.64905"/>
 
+                 <WaitTimer waitTime="1"/> 
                  <RunCode name="closeSS" />
 				 
 				<!-- 第七步  打怪 酿蜜蜂 -->
@@ -96,7 +97,6 @@
 				<MoveTo XYZ="-4.79935,11.95175,-235.6158"/>
 				
 				<!-- 第十步  BOSS2 格里奥勒 -->
-				<RunCode name="closeSS" />
 				<NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528"/>
 				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8143)" />
 				
