@@ -74,8 +74,6 @@ namespace Trust
                     r.NpcId == 5239 ||                       // "阿莉塞"
                     r.NpcId == 8889 ||                        // 琳   
                     r.Name == "雅·修特拉" ||
-                    r.Name == "于里昂热" ||
-                    r.Name == "阿尔菲诺" ||
                     r.Name == "阿莉塞" ||
                     r.Name == "琳"
                 ).OrderBy(r => r.Distance()).First();
@@ -128,8 +126,6 @@ namespace Trust
                                     r.NpcId == 5239 ||                       // "阿莉塞"
                                     r.NpcId == 8889 ||                        // 琳   
                                     r.Name == "雅·修特拉" ||
-                                    r.Name == "于里昂热" ||
-                                    r.Name == "阿尔菲诺" ||
                                     r.Name == "阿莉塞" ||
                                     r.Name == "琳"
                                      ).OrderBy(r => r.Distance()).First();

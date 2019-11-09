@@ -126,8 +126,7 @@
 				<MoveTo XYZ="-172.199,-179.0002,-23.83175"/>
 				<RunCode name="closeSS" />
 				<RunCode name="向前移动" />
-				<RunCode name="向前移动" />
-				<RunCode name="向前移动" />		
+				<RunCode name="向前移动" />	
 				
 				<!-- 第十三步 打怪 禁园凯尔派2 -->
 				<MoveTo XYZ="-125.179,-167.7505,-84.55482"/>
