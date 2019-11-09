@@ -26,7 +26,68 @@ namespace Trust
         {
 
             var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
+ 
+            var check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15723 || r.CastingSpellId == 13520 || r.CastingSpellId == 13844));
 
+			var sC3 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146);  //73BOSS3
+					
+            //过独木桥     BOSS 3             
+                if (check.Any() == true && sC3.First().Location.Distance2D(Core.Me.Location) >= 10)
+                {   await Coroutine.Sleep(3000);
+                    Logging.Write(Colors.Aquamarine, $"过独木桥");
+                    //过桥
+                    var Location = new Vector3("-142.8355,-144.5264,-232.6624");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-140.8284,-144.5366,-246.1443");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-130.1889,-144.5366,-242.384");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-114.455,-144.5366,-244.2632");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-125.6857,-144.5238,-249.264");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-122.5055,-144.5192,-258.3726");
+                    while (Location.Distance2D(Core.Me.Location) > 0.2)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(30);
+                    }
+                    Location = new Vector3("-128.1084,-144.5226,-258.0896");
+                    while (Location.Distance2D(Core.Me.Location) > 1)
+                    {
+                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
+                        Navigator.PlayerMover.MoveTowards(Location);
+                        await Coroutine.Sleep(100);
+                    }
+
+                }
+			
             // 检测附近 对象是否有特定读条技能
             var num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
                 .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
@@ -53,8 +114,23 @@ namespace Trust
                     r.CastingSpellId == 13953     //触手轰击   十字触手
                     )
                 );
-
-            if (num != null && num.Count() > 0)
+				
+/*             var sC2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                r => r.NpcId == 8145 && r.IsVisible == true
+                );	//藤蔓
+				
+            if (Core.Target != sC2.First())
+			{
+				if (sC2.Any() == true)
+				{
+					sC2.First().Target();
+					return true;
+				}
+			}
+			
+            else  */
+			
+			if (num != null && num.Count() > 0)
             {
                 var spell = num.First();
                 Logging.Write(Colors.Aquamarine, $"跟随");
@@ -68,6 +144,7 @@ namespace Trust
                 }
 
                 var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+					//r.NpcId == 8145||						 // 藤蔓
                     r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
                     r.NpcId == 1492 ||                       // "于里昂热"
                     r.NpcId == 4130 ||                       // "阿尔菲诺"
