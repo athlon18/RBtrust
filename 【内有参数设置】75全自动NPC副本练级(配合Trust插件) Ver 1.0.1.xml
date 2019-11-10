@@ -197,17 +197,9 @@
 				await Buddy.Coroutines.Coroutine.Sleep(1000);
 				windowByName = RaptureAtkUnitManager.GetWindowByName("Dawn");
 				if(windowByName != null){
-					windowByName.SendAction(2,3,15,4,2);//最后是副本选择0-5
-					ushort elementCount = Core.Memory.Read<ushort>(windowByName.Pointer + 458);
-					IntPtr addr = Core.Memory.Read<IntPtr>(windowByName.Pointer + 352);
-					var elements = Core.Memory.ReadArray<TwoInt>(addr, elementCount);
-					var dps1 = Core.Memory.ReadString((IntPtr) elements[53].Data, Encoding.UTF8);
-					var dps2 = Core.Memory.ReadString((IntPtr) elements[54].Data, Encoding.UTF8);
+					windowByName.SendAction(2,3,15,4,1);//最后是副本选择0-5
 					await Buddy.Coroutines.Coroutine.Sleep(100);
-					
-					
-					await Buddy.Coroutines.Coroutine.Sleep(100);
-					RaptureAtkUnitManager.GetWindowByName("Dawn").SendAction(1,3,14);
+					windowByName.SendAction(1,3,14);
 				}
 				
 			]]>
