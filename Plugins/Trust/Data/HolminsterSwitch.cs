@@ -33,6 +33,10 @@ namespace Trust
             if (check.Any() == true)
             {
                 Logging.Write(Colors.Aquamarine, $"驱魔");
+
+                //读条中断
+                if (Core.Me.IsCasting) ActionManager.StopCasting();
+                
                 //中点
                 var Location = new Vector3("78.77, 0, -82.18");
                 while (Location.Distance2D(Core.Me.Location) > 1)
@@ -47,6 +51,9 @@ namespace Trust
 
                 if (Helpers.IsHealer() == false)
                 {
+                    //读条中断
+                    if (Core.Me.IsCasting) ActionManager.StopCasting();
+                    
                     //远点
                     Location = new Vector3("84.92282, 0, -97.60876"); // 远点坐标
                     while (Location.Distance2D(Core.Me.Location) > 1)
@@ -106,6 +113,9 @@ namespace Trust
                 //当距离大于跟随距离 再处理跟随
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.3)
                 {
+                    //读条中断
+                    if (Core.Me.IsCasting) ActionManager.StopCasting();
+
                     // 选中跟随最近的队友
                     Obj.Target();
 
@@ -162,12 +172,15 @@ namespace Trust
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
+                        //读条中断
+                        if (Core.Me.IsCasting) ActionManager.StopCasting();
+
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                                     r.NpcId == 729 || r.NpcId == 8378 ||        // "雅·修特拉"
                                     r.NpcId == 8889 ||                          // 琳
                                     r.NpcId == 5239 ||                          // "阿莉塞"
                                     r.Name == "阿莉塞" ||
-									r.Name == "雅·修特拉" ||
+                                    r.Name == "雅·修特拉" ||
                                     r.Name == "琳"
                                      ).OrderBy(r => r.Distance()).First();
 
