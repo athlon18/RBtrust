@@ -83,17 +83,16 @@ namespace Trust
                 var Plugin = plugin.First();
                 if (Plugin.Enabled == false) Plugin.Enabled = true;
             }
-            _coroutine = new Decorator(c => CanTarget(), new ActionRunCoroutine(r => RunTrust()));
+            _coroutine = new Decorator(c => CanTrust(), new ActionRunCoroutine(r => RunTrust()));
         }
 
-        public bool CanTarget()
+        public bool CanTrust()
         {
-
-
+            int[] array = new int[]  {837, 821, 823, 836, 822, 838, 884};
             //疾跑
             if (ActionManager.IsSprintReady && MovementManager.IsMoving && Core.Me.InCombat == false) ActionManager.Sprint();
-
-            return Core.Target != null;
+            var mapId = WorldManager.ZoneId;
+            return Array.IndexOf(array, mapId) >= 0;
         }
 
 
