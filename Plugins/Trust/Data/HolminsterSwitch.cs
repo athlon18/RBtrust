@@ -36,7 +36,7 @@ namespace Trust
 
                 //读条中断
                 if (Core.Me.IsCasting) ActionManager.StopCasting();
-                
+
                 //中点
                 var Location = new Vector3("78.77, 0, -82.18");
                 while (Location.Distance2D(Core.Me.Location) > 1)
@@ -53,7 +53,7 @@ namespace Trust
                 {
                     //读条中断
                     if (Core.Me.IsCasting) ActionManager.StopCasting();
-                    
+
                     //远点
                     Location = new Vector3("84.92282, 0, -97.60876"); // 远点坐标
                     while (Location.Distance2D(Core.Me.Location) > 1)
@@ -98,7 +98,7 @@ namespace Trust
                 }
 
                 var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                    r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
+                    (r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
                     r.NpcId == 1492 ||                       // "于里昂热"
                     r.NpcId == 4130 ||                       // "阿尔菲诺"
                     r.NpcId == 5239 ||                       // "阿莉塞"
@@ -107,7 +107,8 @@ namespace Trust
                     r.Name == "于里昂热" ||
                     r.Name == "阿尔菲诺" ||
                     r.Name == "阿莉塞" ||
-                    r.Name == "琳"
+                    r.Name == "琳")
+                    && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
 
                 //当距离大于跟随距离 再处理跟随
@@ -176,12 +177,13 @@ namespace Trust
                         if (Core.Me.IsCasting) ActionManager.StopCasting();
 
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                                    r.NpcId == 729 || r.NpcId == 8378 ||        // "雅·修特拉"
+                                    (r.NpcId == 729 || r.NpcId == 8378 ||        // "雅·修特拉"
                                     r.NpcId == 8889 ||                          // 琳
                                     r.NpcId == 5239 ||                          // "阿莉塞"
                                     r.Name == "阿莉塞" ||
                                     r.Name == "雅·修特拉" ||
-                                    r.Name == "琳"
+                                    r.Name == "琳")
+                                    && r.IsDead == false
                                      ).OrderBy(r => r.Distance()).First();
 
                         //当距离大于跟随距离 再处理跟随

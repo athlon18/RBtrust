@@ -79,14 +79,15 @@ namespace Trust
                 }
 
                 var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                    r.NpcId == 729 || r.NpcId == 8378 ||
-                    r.NpcId == 1492 ||
-                    r.NpcId == 4130 ||
-                    r.NpcId == 5239 ||
-                    r.NpcId == 8889 ||
-                    r.Name == "雅·修特拉" ||
-                    r.Name == "阿莉塞" ||
-                    r.Name == "琳"
+                        (r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
+                                                                  //r.NpcId == 1492 ||                       // "于里昂热"
+                                                                  //r.NpcId == 4130 ||                       // "阿尔菲诺"
+                        r.NpcId == 5239 ||                       // "阿莉塞"
+                        r.NpcId == 8889 ||                        // 琳   
+                        r.Name == "雅·修特拉" ||
+                        r.Name == "阿莉塞" ||
+                        r.Name == "琳")
+                    && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
 
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.3)
@@ -108,7 +109,7 @@ namespace Trust
             }
 
             return false;
-            
+
         }
     }
 
