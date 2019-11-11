@@ -49,8 +49,9 @@
 					<EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;" />
 				</If>
 				
-				<RunCode name="closeSS" />
-								
+				
+				<RunCode name="closeSS" />			
+				
 				<!-- 第一步 禁园风花 -->
 				<MoveTo XYZ="-53.46396,8.040462,130.1588"/>
 				
@@ -62,10 +63,14 @@
 
 				<!-- 第四步 禁园水妖 -->
 				<MoveTo XYZ="35.01454,8.267113,81.02051"/>
-				
+				<WaitTimer waitTime="2"/>
 				<!-- 第五步 BOOS1 美眼 因克·佐恩 -->
-				<MoveTo XYZ="6.234492,6.851405,21.12165"/>
+				<NoCombatMoveTo XYZ="6.234492,6.851405,21.12165" Wait="1"/>
 				<Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8141)" />					
+				
+				<If Condition="&boss1box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>	
 				
 				<If Condition="&boss1; == 1">
 					<WaitTimer waitTime="5"/> 
@@ -87,7 +92,12 @@
 				 
 				<!-- 第七步  打怪 酿蜜蜂 -->
 				<MoveTo XYZ="-35.63404,1.916844,-89.18874"/>
-
+                 <WaitTimer waitTime="1"/> 
+				 
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
+				
 				<!-- 第八步  打怪 猎蜜熊 -->
 				<MoveTo XYZ="-67.10806,16.14704,-186.3012"/>
 
@@ -95,10 +105,19 @@
 				
 				<!-- 第九步  打怪 禁园水妖 -->
 				<MoveTo XYZ="-4.79935,11.95175,-235.6158"/>
+				<WaitTimer waitTime="2"/>
+				
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<!-- 第十步  BOSS2 格里奥勒 -->
-				<NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528"/>
+				<NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528" Wait="1"/>
 				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8143)" />
+				
+				<If Condition="&boss2box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<If Condition="&boss2; == 1">
 					<WaitTimer waitTime="5"/> 
@@ -118,6 +137,12 @@
 				<RunCode name="向前移动" />
 				<RunCode name="向前移动" />
 				<WaitTimer waitTime="5"/> 
+				<MoveTo XYZ="-170.8162,-182.7501,35.80744"/>
+				
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
+				
 	            <MoveTo XYZ="-171.8794,-178.75,-6.813273"/>
 				<RunCode name="贝壳王冠" />
 				<WaitTimer waitTime="5"/>
@@ -129,9 +154,10 @@
 				<RunCode name="向前移动" />	
 				
 				<!-- 第十三步 打怪 禁园凯尔派2 -->
-				<MoveTo XYZ="-125.179,-167.7505,-84.55482"/>
-
+				<MoveTo XYZ="-125.179,-167.7505,-84.55482"/>                
+				 
                 <!-- 第十四步 打怪 那伊阿得斯 -->
+				<RunCode name="openSS" />
 				<MoveTo XYZ="-123.701,-167.4992,-101.0573"/>
 			    <WaitTimer waitTime="1"/>
 
@@ -142,7 +168,11 @@
 				<RunCode name="向前移动" />
 				<RunCode name="向前移动" />	
 				<WaitTimer waitTime="1"/>
-							
+				
+				<If Condition="&halfway; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
+				
 				<If Condition="&before_boss3; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
@@ -156,14 +186,16 @@
 				<RunCode name="向前移动" />
 				<RunCode name="向前移动" />	
 				<WaitTimer waitTime="3"/>
+				<RunCode name="closeSS" />
 				<MoveTo XYZ="-135.7786,-144.5292,-253.5551"/>
                 <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8146)" />
 
 				<WaitTimer waitTime="2"/> 
 				<MoveTo XYZ="-128.9267,-144.5268,-255.1648"/>			
 				
-				<RunCode name="拾取宝箱" />
-				<WaitTimer waitTime="2"/>
+				<If Condition="&boss3box; == 1">
+					<RunCode name="拾取宝箱" />
+				</If>
 				
 				<If Condition="&boss3; == 1">
 					<WaitTimer waitTime="3"/> 
@@ -228,8 +260,8 @@
 		</CodeChunk>
 		<CodeChunk name="拾取宝箱">
 			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).Any() == true) {
-					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).First();
+				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 80 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).Any() == true) {
+					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 80 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).First();
 					
 					while (Treasure.Location.Distance2D(Core.Me.Location) >= 0.5)
                     {

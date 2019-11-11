@@ -103,8 +103,8 @@ namespace Trust
                     r.CastingSpellId == 15796 ||    //小怪熊 扇形
                                                     //r.CastingSpellId == 8906 ||    //重击 扇形  73 2王
                                                     //r.CastingSpellId == 15798 ||   //小怪凯尔派 圆圈
-                    r.CastingSpellId == 15799 ||   //小怪那伊阿得斯 扇形 
-                    r.CastingSpellId == 15800 ||   //小怪那伊阿得斯 圆形
+                    //r.CastingSpellId == 15799 ||   //小怪那伊阿得斯 扇形 
+                    //r.CastingSpellId == 15800 ||   //小怪那伊阿得斯 圆形
                                                    //r.CastingSpellId == 13552 ||    //河童歌唱队	Imp Choir     背对   73 3王
                     r.CastingSpellId == 13551 ||    //青蛙歌唱队	Toad Choir   扇形变形
                                                     //r.CastingSpellId == 13498 ||    //独木桥幻想曲	 读条结束击退出现独木桥
@@ -115,6 +115,10 @@ namespace Trust
                     r.CastingSpellId == 13547 ||    //腐蚀咬     正面范围持续
                     r.CastingSpellId == 13548 ||    //腐蚀咬     正面范围持续
                     r.CastingSpellId == 13952 ||    //触手轰击    十字触手
+					r.CastingSpellId == 13549 ||    //虫毒瘴测试
+					r.CastingSpellId == 5176 ||    //虫毒瘴测试
+					r.CastingSpellId == 13550 ||    //虫毒飞散测试
+					r.CastingSpellId == 5177 ||    //虫毒飞散测试
                     r.CastingSpellId == 13953     //触手轰击   十字触手
                     )
                 );
