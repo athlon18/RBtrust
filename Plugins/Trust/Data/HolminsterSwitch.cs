@@ -86,7 +86,7 @@ namespace Trust
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                await Coroutine.Sleep(3000);                
+                await Coroutine.Sleep(4000);                
             }
 
 
