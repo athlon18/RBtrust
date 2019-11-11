@@ -28,6 +28,8 @@ namespace Trust
             var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
 
             var check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15826 || r.CastingSpellId == 15827));
+			
+			var check1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15842 || r.CastingSpellId == 15833 || r.CastingSpellId == 16777 || r.CastingSpellId == 16790));
 
             //驱魔(分摊)      BOSS 2              
             if (check.Any() == true)
@@ -68,6 +70,23 @@ namespace Trust
 
                     return true;
                 }
+            }
+			
+			                       
+            if (check1.Any() == true)
+            {
+                Logging.Write(Colors.Aquamarine, $"TMFS");
+                
+                var Location = new Vector3("117.1188,23,-474.0881");
+                while (Location.Distance2D(Core.Me.Location) > 1)
+                {
+                    Logging.Write(Colors.Aquamarine, $"分散:{Location.Distance2D(Core.Me.Location)}");
+                    Navigator.PlayerMover.MoveTowards(Location);
+                    await Coroutine.Sleep(100);
+                }
+
+                Navigator.PlayerMover.MoveStop();
+                await Coroutine.Sleep(3000);                
             }
 
 
