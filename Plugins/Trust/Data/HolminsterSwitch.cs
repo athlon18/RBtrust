@@ -86,7 +86,7 @@ namespace Trust
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                await Coroutine.Sleep(4000);                
+                await Coroutine.Sleep(3000);                
             }
 
 
@@ -99,6 +99,26 @@ namespace Trust
                     r.CastingSpellId == 15814 ||    //螺旋突刺
                     r.CastingSpellId == 15818 ||    //处刑之剑
                     r.CastingSpellId == 15819 ||    //光线射击
+					r.CastingSpellId == 15846 ||    //右鞭打测试
+                    r.CastingSpellId == 15847 ||    //左鞭打测试
+					r.CastingSpellId == 15848 ||    //吸取以太测试
+                    r.CastingSpellId == 15849 ||    //吸取以太测试
+					r.CastingSpellId == 17232 ||    //埋没之光测试
+					r.CastingSpellId == 15845 ||    //埋没之光测试
+					r.CastingSpellId == 15834 ||    //捶打测试
+                    r.CastingSpellId == 15835 ||    //捶打测试
+                    r.CastingSpellId == 15836 ||    //捶打测试
+                    r.CastingSpellId == 15837 ||    //捶打测试
+                    r.CastingSpellId == 15838 ||    //捶打测试
+					r.CastingSpellId == 15839 ||    //捶打测试
+                    r.CastingSpellId == 15843 ||    //污浊豪炎测试
+					r.CastingSpellId == 16765 ||    //污浊豪炎测试
+                    r.CastingSpellId == 15840 ||    //九尾猫测试
+                    r.CastingSpellId == 15841 ||    //九尾猫测试
+                    r.CastingSpellId == 16779 ||    //土符文测试
+					r.CastingSpellId == 16780 ||    //土符文测试
+					r.CastingSpellId == 16781 ||    //土符文测试
+					r.CastingSpellId == 16782 ||    //土符文测试
                     r.CastingSpellId == 15822     //异端十字叉
                     )
                 );
@@ -122,10 +142,7 @@ namespace Trust
                     r.NpcId == 4130 ||                       // "阿尔菲诺"
                     r.NpcId == 5239 ||                       // "阿莉塞"
                     r.NpcId == 8889 ||                        // 琳   
-                    r.Name == "雅·修特拉" ||
-                    r.Name == "于里昂热" ||
-                    r.Name == "阿尔菲诺" ||
-                    r.Name == "阿莉塞" ||
+                    r.Name == "桑克瑞德" ||
                     r.Name == "琳")
                     && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
@@ -178,7 +195,7 @@ namespace Trust
                         if (plugin.Enabled == true) plugin.Enabled = false;
                     }
                 }
-                // boss 3 移动    
+                /*// boss 3 移动    
                 if (sC.Any() == true)
                 {
                     if (plugin != null)
@@ -224,7 +241,7 @@ namespace Trust
                         }
 
                     }
-                }
+                }*/
 
             }
 

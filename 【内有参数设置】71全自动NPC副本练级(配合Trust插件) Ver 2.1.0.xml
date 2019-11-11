@@ -114,7 +114,7 @@
 
 				<!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
 				<MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
-				<NoCombatMoveTo XYZ="85.32442,0,-88.8187"/>
+				<NoCombatMoveTo XYZ="85.32442,0,-88.8187" Wait="1"/>
 				<Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)" />
 				
 				<If Condition="&boss2box; == 1">
@@ -166,8 +166,8 @@
 				</If>
 				
 				<!-- 第十五步 BOSS3-->
-				<!-- <MoveTo XYZ="134.34,23,-455.87"/>-->
-				<NoCombatMoveTo XYZ="134.1453,23,-477.03"/>
+				<RunCode name="closeSS" />
+				<NoCombatMoveTo XYZ="134.1453,23,-477.03" Wait="1"/>
 				
 				<Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8301)" />
 
@@ -226,6 +226,18 @@
 					 if (Plugin != null)
                     {
                         if (Plugin.Enabled == false) Plugin.Enabled = true;
+                    }
+				}
+			  ]]>
+		</CodeChunk>
+		<CodeChunk name="closeSS">
+			<![CDATA[	
+				var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避");
+				if(plugin.Any()){
+					var Plugin = plugin.First();
+					 if (Plugin != null)
+                    {
+                        if (Plugin.Enabled == true) Plugin.Enabled = false;
                     }
 				}
 			  ]]>
