@@ -69,8 +69,7 @@
 				<!-- 第六步 得到宽恕的无知 -->
 				<MoveTo XYZ="-12.07,0.08,292.24"/>
 				
-				<!-- 第七步 BOOS1 得到宽恕的失调 -->
-				<RunCode name="closeSS" />
+				<!-- 第七步 BOOS1 得到宽恕的失调 -->				
 				<MoveTo XYZ="-14.87,0, 235.55"/>
 				<Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8299)" />				
 
