@@ -103,9 +103,9 @@ namespace Trust
                     r.CastingSpellId == 15796 ||    //小怪熊 扇形
                                                     //r.CastingSpellId == 8906 ||    //重击 扇形  73 2王
                                                     //r.CastingSpellId == 15798 ||   //小怪凯尔派 圆圈
-                    //r.CastingSpellId == 15799 ||   //小怪那伊阿得斯 扇形 
-                    //r.CastingSpellId == 15800 ||   //小怪那伊阿得斯 圆形
-                                                   //r.CastingSpellId == 13552 ||    //河童歌唱队	Imp Choir     背对   73 3王
+                                                    //r.CastingSpellId == 15799 ||   //小怪那伊阿得斯 扇形 
+                                                    //r.CastingSpellId == 15800 ||   //小怪那伊阿得斯 圆形
+                                                    //r.CastingSpellId == 13552 ||    //河童歌唱队	Imp Choir     背对   73 3王
                     r.CastingSpellId == 13551 ||    //青蛙歌唱队	Toad Choir   扇形变形
                                                     //r.CastingSpellId == 13498 ||    //独木桥幻想曲	 读条结束击退出现独木桥
                                                     //r.CastingSpellId == 15723 ||    // 终章	Finale  独木桥狂暴读条
@@ -115,10 +115,10 @@ namespace Trust
                     r.CastingSpellId == 13547 ||    //腐蚀咬     正面范围持续
                     r.CastingSpellId == 13548 ||    //腐蚀咬     正面范围持续
                     r.CastingSpellId == 13952 ||    //触手轰击    十字触手
-					r.CastingSpellId == 13549 ||    //虫毒瘴测试
-					r.CastingSpellId == 5176 ||    //虫毒瘴测试
-					r.CastingSpellId == 13550 ||    //虫毒飞散测试
-					r.CastingSpellId == 5177 ||    //虫毒飞散测试
+                    r.CastingSpellId == 13549 ||    //虫毒瘴测试
+                    r.CastingSpellId == 5176 ||    //虫毒瘴测试
+                    r.CastingSpellId == 13550 ||    //虫毒飞散测试
+                    r.CastingSpellId == 5177 ||    //虫毒飞散测试
                     r.CastingSpellId == 13953     //触手轰击   十字触手
                     )
                 );
@@ -150,8 +150,7 @@ namespace Trust
                         if (plugin.Enabled == true) plugin.Enabled = false;
                     }
                 }
-                //读条中断
-                if (Core.Me.IsCasting) ActionManager.StopCasting();
+
 
                 var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                     //r.NpcId == 8145||						 // 藤蔓
@@ -169,6 +168,10 @@ namespace Trust
                 //当距离大于跟随距离 再处理跟随
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.3)
                 {
+
+                    //读条中断
+                    if (Core.Me.IsCasting) ActionManager.StopCasting();
+
                     // 选中跟随最近的队友
                     Obj.Target();
 
@@ -207,8 +210,6 @@ namespace Trust
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
-                        //读条中断
-                        if (Core.Me.IsCasting) ActionManager.StopCasting();
 
                         var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                                     (r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
@@ -225,6 +226,9 @@ namespace Trust
                         //当距离大于跟随距离 再处理跟随
                         if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                         {
+                            //读条中断
+                            if (Core.Me.IsCasting) ActionManager.StopCasting();
+                            
                             // 选中跟随最近的队友
                             Obj.Target();
 

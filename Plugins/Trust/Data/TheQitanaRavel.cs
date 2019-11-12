@@ -92,6 +92,9 @@ namespace Trust
 
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.3)
                 {
+                    //读条中断
+                    if (Core.Me.IsCasting) ActionManager.StopCasting();
+
                     Obj.Target();
 
                     Logging.Write(Colors.Aquamarine, $"队友{Obj.Name}距离:{Obj.Location.Distance2D(Core.Me.Location)}");
