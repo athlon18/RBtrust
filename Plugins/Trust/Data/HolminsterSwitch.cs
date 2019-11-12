@@ -143,6 +143,11 @@ namespace Trust
                     r.NpcId == 5239 ||                       // "阿莉塞"
                     r.NpcId == 8889 ||                        // 琳   
                     r.Name == "桑克瑞德" ||
+					r.Name == "阿莉塞" ||
+					r.Name == "水晶公" ||
+					r.Name == "莱楠" ||
+					r.Name == "敏菲利亚" ||
+					r.Name == "雅·修特拉" ||
                     r.Name == "琳")
                     && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
