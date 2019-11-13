@@ -30,6 +30,10 @@ namespace Trust
             var num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
                 .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
                     (
+					r.CastingSpellId == 15918 ||
+                    r.CastingSpellId == 15916 ||
+                    r.CastingSpellId == 15917 ||
+                    r.CastingSpellId == 17223 ||
                     r.CastingSpellId == 15498 ||
                     r.CastingSpellId == 15499 ||
                     r.CastingSpellId == 15500 ||
@@ -86,6 +90,7 @@ namespace Trust
                         r.NpcId == 8889 ||                        // 琳   
                         r.Name == "雅·修特拉" ||
                         r.Name == "阿莉塞" ||
+						r.Name == "敏菲利亚" ||
                         r.Name == "琳")
                     && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
@@ -111,6 +116,43 @@ namespace Trust
                 }
             }
 
+			if (Core.Target != null)
+            {
+
+                var sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8231
+                    );
+                var sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8232
+                    );
+                var sC2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8233
+                    );
+                // boss 1    
+                if (sC.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+                }
+				// boss 2
+                if (sC1.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+                }
+		        // boss 3
+                if (sC2.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+				}
+			}	
             return false;
 
         }

@@ -227,6 +227,8 @@
 		</CodeChunk>
 		<CodeChunk name="checkPlugin">
 			<![CDATA[	
+			    Core.OverlayManager.AddToast(() => "近战如果打不到BOSS,另一个DPS带琳", TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));
+				
 				var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "Trust" || p.Plugin.Name == "亲信战友");
 				if(!plugin.Any()){
 					Core.OverlayManager.AddToast(() => "你必须在Plugins文件夹里存在Trust/亲信战友的插件", TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));

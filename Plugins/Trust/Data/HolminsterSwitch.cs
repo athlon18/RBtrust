@@ -209,7 +209,15 @@ namespace Trust
                         if (plugin.Enabled == true) plugin.Enabled = false;
                     }
                 }
-                /*// boss 3 移动    
+				// boss 2
+                if (sC2.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+                }
+		        // boss 3
                 if (sC.Any() == true)
                 {
                     if (plugin != null)
@@ -217,7 +225,7 @@ namespace Trust
                         if (plugin.Enabled == true) plugin.Enabled = false;
                     }
 
-                    Logging.Write(Colors.Aquamarine, $"boss3");
+                    /*Logging.Write(Colors.Aquamarine, $"boss3");
                     var spellCaster = sC.First();
 
 
@@ -254,8 +262,8 @@ namespace Trust
                             return true;
                         }
 
-                    }
-                }*/
+                    }*/
+                }
 
             }
 

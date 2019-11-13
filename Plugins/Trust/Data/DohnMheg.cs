@@ -28,6 +28,8 @@ namespace Trust
             var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
 
             var check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15723 || r.CastingSpellId == 13520 || r.CastingSpellId == 13844));
+			
+			var check2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 13552));
 
             var sC3 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146);  //73BOSS3
 
@@ -90,6 +92,22 @@ namespace Trust
                     await Coroutine.Sleep(100);
                 }
 
+            }
+			
+			if (check2.Any() == true)
+            {
+                Logging.Write(Colors.Aquamarine, $"背对");
+                
+                var Location = new Vector3("-128.474,-144.5366,-243.2417");
+                while (Location.Distance2D(Core.Me.Location) > 1)
+                {
+                    Logging.Write(Colors.Aquamarine, $"背对:{Location.Distance2D(Core.Me.Location)}");
+                    Navigator.PlayerMover.MoveTowards(Location);
+                    await Coroutine.Sleep(100);
+                }
+
+                Navigator.PlayerMover.MoveStop();
+                await Coroutine.Sleep(3000);                
             }
 
             // 检测附近 对象是否有特定读条技能
@@ -161,6 +179,7 @@ namespace Trust
                     r.NpcId == 8889 ||                        // 琳   
                     r.Name == "雅·修特拉" ||
                     r.Name == "阿莉塞" ||
+					r.Name == "敏菲利亚" ||
                     r.Name == "琳")
                     && r.IsDead == false
                 ).OrderBy(r => r.Distance()).First();
@@ -195,6 +214,12 @@ namespace Trust
                 var sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8141
                     );  //73BOSS1
+				var sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8143
+                    );  //73BOSS2
+				var sC2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146
+                    );  //73BOSS3	
 
                 // 73boss 1 移动 
                 if (sC.Any() == true)
@@ -219,6 +244,7 @@ namespace Trust
                                     r.NpcId == 8889 ||                        // 琳   
                                     r.Name == "雅·修特拉" ||
                                     r.Name == "阿莉塞" ||
+									r.Name == "敏菲利亚" ||
                                     r.Name == "琳")
                                     && r.IsDead == false
                                      ).OrderBy(r => r.Distance()).First();
@@ -246,6 +272,21 @@ namespace Trust
 
                     }
                 }
+				 if (sC1.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+                }
+				if (sC2.Any() == true)
+                {
+                    if (plugin != null)
+                    {
+                        if (plugin.Enabled == true) plugin.Enabled = false;
+                    }
+                }
+
             }
 
             return false;
