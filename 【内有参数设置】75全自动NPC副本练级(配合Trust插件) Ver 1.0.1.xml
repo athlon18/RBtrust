@@ -5,7 +5,7 @@
 <!ENTITY usefood "1"> <!--是否启用食物 -->
 <!ENTITY food "4753"> <!-- 食物为水牛奶 -->
 <!ENTITY foodHQ "False"> <!-- 食物是否为HQ (是 为True)-->
-<!ENTITY foodtime "30"> <!-- 食物剩余时间补充 -->
+<!ENTITY foodtime "25"> <!-- 食物剩余时间补充 -->
 
 <!ENTITY repair "1"> <!-- 0为暗物质修理 1为NPC修理-->
 <!ENTITY repairNum "50"> <!-- 修理数值 -->
