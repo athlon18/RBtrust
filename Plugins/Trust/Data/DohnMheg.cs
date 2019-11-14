@@ -215,9 +215,6 @@ namespace Trust
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8141
                     );  //73BOSS1
 				var sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
-                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8143
-                    );  //73BOSS2
-				var sC2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146
                     );  //73BOSS3	
 
@@ -272,14 +269,7 @@ namespace Trust
 
                     }
                 }
-				 if (sC1.Any() == true)
-                {
-                    if (plugin != null)
-                    {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
-                    }
-                }
-				if (sC2.Any() == true)
+				if (sC1.Any() == true)
                 {
                     if (plugin != null)
                     {
