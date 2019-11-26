@@ -246,8 +246,8 @@
 		</CodeChunk>
 		<CodeChunk name="拾取宝箱">
 			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).Any() == true) {
-					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer")).First();
+				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).Any() == true) {
+					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).First();
 					
 					while (Treasure.Location.Distance2D(Core.Me.Location) >= 0.5)
                     {
