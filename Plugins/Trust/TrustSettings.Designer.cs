@@ -49,7 +49,7 @@
             this.foodLabel.Name = "foodLabel";
             this.foodLabel.Size = new System.Drawing.Size(64, 13);
             this.foodLabel.TabIndex = 1;
-            this.foodLabel.Text = "Select Food";
+            this.foodLabel.Text = "选择食物";
             // 
             // TrustSettings
             // 

@@ -40,7 +40,7 @@ namespace Trust
 
             foreach (var item in InventoryManager.FilledSlots.GetFoodItems())
             {
-                foodDict[item.TrueItemId] = "(" + item.Count + ")" + item.EnglishName + (item.IsHighQuality ? " HQ" : "");
+                foodDict[item.TrueItemId] = "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : "");
             }
 
             foodDropBox.DataSource = new BindingSource(foodDict, null);

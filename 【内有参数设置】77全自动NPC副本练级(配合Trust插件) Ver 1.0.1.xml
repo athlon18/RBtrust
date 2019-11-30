@@ -2,7 +2,7 @@
 
 <!DOCTYPE Profile [
 
-<!ENTITY usefood "1"> <!--是否启用食物 -->
+<!ENTITY usefood "0"> <!--是否启用食物 -->
 <!ENTITY food "4753"> <!-- 食物为水牛奶 -->
 <!ENTITY foodHQ "False"> <!-- 食物是否为HQ (是 为True)-->
 <!ENTITY foodtime "25"> <!-- 食物剩余时间补充 -->
@@ -21,7 +21,6 @@
 <!ENTITY boss3box "1"> 		<!--BOSS3结束箱子 -->
 <!ENTITY halfway "1"> 		<!--路途中的箱子 -->
 
-<!ENTITY URL "【内有参数设置】77全自动NPC副本练级(配合Trust插件) Ver 1.0.1.xml"> <!--退本用和当前脚本名称一致-->
 ]>
 <Profile>
     <Name>【NPC】77全自动副本练级 by athlon and Minami16 and 疾风点破</Name>
@@ -81,7 +80,7 @@
 				<If Condition="&boss1; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
-					<LoadProfile Path="&URL;" />
+					<LoadProfile />
 				</If>				
 				
 				<If Condition="&usefood; == 1">
@@ -130,7 +129,7 @@
 				<If Condition="&boss2; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
-					<LoadProfile Path="&URL;" />
+					<LoadProfile />
 				</If>
 				
 				<If Condition="&usefood; == 1">
@@ -163,7 +162,7 @@
 				<If Condition="&before_boss3; == 1">
 					<WaitTimer waitTime="5"/> 
 					<RunCode name="退出副本" />
-					<LoadProfile Path="&URL;" />
+					<LoadProfile />
 				</If>
 				
                 <!-- 第十六步 BOSS3 斯托尔戈 -->
@@ -211,7 +210,7 @@
 		</CodeChunk>
 		<CodeChunk name="checkPlugin">
 			<![CDATA[
-			    Core.OverlayManager.AddToast(() => "近战如果打不到BOSS,另一个DPS带琳", TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));
+			    Core.OverlayManager.AddToast(() => "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物", TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));
 				
 				var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "Trust" || p.Plugin.Name == "亲信战友");
 				if(!plugin.Any()){
