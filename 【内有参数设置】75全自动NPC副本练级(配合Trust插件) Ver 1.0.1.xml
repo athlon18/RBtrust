@@ -38,6 +38,9 @@
 				<CommenceDuty />
 			</If>
 			<If Condition="IsOnMap(823)">
+
+				<RunCode Name="WaitForInstanceStarted"/>
+
 				<If Condition="&repair; == 0">
 					<SelfRepair Threshhold="&repairNum;"/>
 				</If>
@@ -214,6 +217,15 @@
 				}
 			  ]]>
 		</CodeChunk>
+		<CodeChunk Name="WaitForInstanceStarted">
+			<![CDATA[
+			var _duty = DirectorManager.ActiveDirector as ff14bot.Directors.InstanceContentDirector;
+			while (!_duty.InstanceStarted)
+			{
+				await Coroutine.Yield();
+			}
+			]]>
+		</CodeChunk>
 		<CodeChunk name="openSS">
 			<![CDATA[	
 				var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避");
@@ -239,20 +251,22 @@
 			  ]]>
 		</CodeChunk>
 		<CodeChunk name="拾取宝箱">
-			<![CDATA[	
-				if(GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).Any() == true) {
-					var Treasure = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).First();
-					
-					while (Treasure.Location.Distance2D(Core.Me.Location) >= 0.5)
-                    {
-                        Navigator.PlayerMover.MoveTowards(Treasure.Location);
-                        await Coroutine.Yield();
-                    }
-					Navigator.PlayerMover.MoveStop();
-					Poi.Current = new Poi(Treasure, PoiType.Kill);
-					Poi.Current.Unit.Interact();					
+			<![CDATA[    
+			if (GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).Any())
+			{
+				var _chest = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer")).FirstOrDefault();
+				while (Core.Me.Distance(_chest.Location) > 2)
+				{
+				await CommonTasks.MoveTo(_chest.Location);
+				await Coroutine.Yield();
 				}
-			  ]]>
+				
+				Navigator.PlayerMover.MoveStop();
+				Poi.Current = new Poi(_chest, PoiType.Kill);
+				Poi.Current.Unit.Interact();                    
+				await Coroutine.Sleep(1000);        
+			}
+			]]>
 		</CodeChunk>
 		<CodeChunk name="冲刺">
 			<![CDATA[	
@@ -272,16 +286,8 @@
 		</CodeChunk>		
 		<CodeChunk name="退出副本">
 			<![CDATA[
-				ff14bot.Managers.ChatManager.SendChat("/dfinder");			
-				await Buddy.Coroutines.Coroutine.Sleep(3000);
-				await Buddy.Coroutines.Coroutine.Wait(2000, () => RaptureAtkUnitManager.GetWindowByName("ContentsFinderMenu")!=null);
-				RaptureAtkUnitManager.GetWindowByName("ContentsFinderMenu").SendAction(1,1,0);			
-				await Buddy.Coroutines.Coroutine.Sleep(1000);
-				if (ff14bot.RemoteWindows.SelectYesno.IsOpen)
-				{
-					ff14bot.RemoteWindows.SelectYesno.ClickYes();
-				}
-				await Buddy.Coroutines.Coroutine.Sleep(5000);
+			DutyManager.LeaveActiveDuty();
+			await Coroutine.Sleep(5000);
 			]]>
 		</CodeChunk>	
 		<CodeChunk Name="Interact">
