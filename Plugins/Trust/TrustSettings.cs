@@ -1,8 +1,7 @@
 ﻿using ff14bot.Managers;
 using System;
-using System.Linq;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Trust
 {
@@ -14,25 +13,18 @@ namespace Trust
         {
             foodDict = new Dictionary<uint, string>();
             InitializeComponent();
-
             UpdateFood();
 
-            if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id))
-            {
-                foodDropBox.SelectedValue = Settings.Instance.Id;
-            }
+            if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id)) { foodDropBox.SelectedValue = Settings.Instance.Id; }
         }
 
-        private void foodDropBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void FoodDropBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Instance.Id = (uint)foodDropBox.SelectedValue;
             Settings.Instance.Save();
         }
 
-        private void foodDropBox_Click(object sender, EventArgs e)
-        {
-            UpdateFood();
-        }
+        private void FoodDropBox_Click(object sender, EventArgs e) { UpdateFood(); }
 
         private void UpdateFood()
         {

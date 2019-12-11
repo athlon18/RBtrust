@@ -1,22 +1,12 @@
-using Buddy.Coroutines;
+﻿using Buddy.Coroutines;
 using ff14bot;
-using ff14bot.Enums;
-using ff14bot.AClasses;
-using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
-using ff14bot.Objects;
 using ff14bot.Navigation;
-using Newtonsoft.Json;
-using System;
-using System.Configuration;
-using System.IO;
+using ff14bot.Objects;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Linq;
-using TreeSharp;
-
-using Vector3 = Clio.Utilities.Vector3;
 
 namespace Trust
 {
@@ -26,7 +16,7 @@ namespace Trust
         {
 
             var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
-		
+
             // 检测附近 对象是否有特定读条技能
             var num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
                 .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
@@ -36,12 +26,12 @@ namespace Trust
                     r.CastingSpellId == 15591 ||
                     r.CastingSpellId == 15592 ||
                     r.CastingSpellId == 15593 ||
-					r.CastingSpellId == 15602 ||
+                    r.CastingSpellId == 15602 ||
                     r.CastingSpellId == 15605 ||
                     r.CastingSpellId == 15606 ||
                     r.CastingSpellId == 15607 ||
                     r.CastingSpellId == 15610 ||
-	                r.CastingSpellId == 15609
+                    r.CastingSpellId == 15609
                     )
                 );
 
@@ -66,7 +56,7 @@ namespace Trust
                     r.NpcId == 8889 ||                        // 琳
                     r.Name == "阿莉塞" ||
                     r.Name == "琳" ||
-					r.Name == "水晶公" ||
+                    r.Name == "水晶公" ||
                     r.Name == "敏菲利亚" ||
                     r.Name == "桑克瑞德"
                 ).OrderBy(r => r.Distance()).First();
@@ -74,7 +64,7 @@ namespace Trust
                 //当距离大于跟随距离 再处理跟随
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                 {
-					if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
+                    if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
                     // 选中跟随最近的队友
                     Obj.Target();
 
@@ -120,16 +110,16 @@ namespace Trust
                                     r.NpcId == 5239 ||                       // "阿莉塞"
                                     r.NpcId == 8889 ||                        // 琳   
                                     r.Name == "阿莉塞" ||
-									r.Name == "琳" ||
-									r.Name == "水晶公" ||
-									r.Name == "敏菲利亚" ||
+                                    r.Name == "琳" ||
+                                    r.Name == "水晶公" ||
+                                    r.Name == "敏菲利亚" ||
                                     r.Name == "桑克瑞德"
                                      ).OrderBy(r => r.Distance()).First();
 
                         //当距离大于跟随距离 再处理跟随
                         if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                         {
-							if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
+                            if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
                             // 选中跟随最近的队友
                             Obj.Target();
 
@@ -146,8 +136,8 @@ namespace Trust
                         }
 
                     }
-				}	
-				
+                }
+
             }
             return false;
 

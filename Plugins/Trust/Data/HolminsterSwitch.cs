@@ -1,275 +1,114 @@
 using Buddy.Coroutines;
+using Clio.Utilities;
 using ff14bot;
-using ff14bot.Enums;
-using ff14bot.AClasses;
 using ff14bot.Behavior;
-using ff14bot.Helpers;
 using ff14bot.Managers;
-using ff14bot.Objects;
 using ff14bot.Navigation;
-using Newtonsoft.Json;
-using System;
-using System.Configuration;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Media;
+using ff14bot.Objects;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using TreeSharp;
-
-using Vector3 = Clio.Utilities.Vector3;
+using System.Threading.Tasks;
 
 namespace Trust
 {
-    public static class HolminsterSwitch
+    public class HolminsterSwitch
     {
         public static async Task<bool> Run()
         {
-
-            var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
-
-            var check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15826 || r.CastingSpellId == 15827));
-
-            var check1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15842 || r.CastingSpellId == 15833 || r.CastingSpellId == 16777 || r.CastingSpellId == 16790));
-
-            //驱魔(分摊)      BOSS 2              
-            if (check.Any() == true)
+            #region Spell Filters
+            /// Spellcast Filter (法术过滤器)                 :: Fetters             :: 脚镣
+            HashSet<uint> Fetters = new HashSet<uint>()
             {
-                Logging.Write(Colors.Aquamarine, $"驱魔");
+                292, 504, 510, 667, 668, 770, 800, 822, 901,
+                930, 990, 1010, 1055, 1153, 1258, 1391, 1399,
+                1460, 1477, 1497, 1614, 1726, 1757, 1849, 1908
+            };
+            bool ChainsUp = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => Fetters.Any(r => obj.HasAura(r))).Count() > 0;
+            /// 15602, 15609                                 :: Heretic's Fork
+            /// 15814, 16850                                 :: Thumbscrew
+            /// 15815, 16852                                 :: Wooden Horse
+            /// 15816, 16851                                 :: Gibbet Cage
+            /// 15817, 15820                                 :: Brazen Bull
+            /// 15818                                        :: Executioner's Sword
+            /// 15819                                        :: Light Shot
+            /// 15822, 15886, 17552                          :: Heretic's Fork
+            /// 15834, 15835, 15836, 15837, 15838, 15839     :: Fierce Beating
+            /// 15840, 15841                                 :: Cat o' Nine Tails
+            /// 15843, 16765                                 :: Sickly Inferno
+            /// 15845, 17232                                 :: Into the Light
+            /// 15846                                        :: Right Knout
+            /// 15847                                        :: Left Knout
+            /// 15848, 15849                                 :: Aethersup
+            /// 16779, 16780, 16781, 16782                   :: Land Rune
+            HashSet<uint> Spells = new HashSet<uint>()
+            {
+                15602, 15609, 15814, 15815, 15816, 15817,
+                15818, 15819, 15820, 15822, 15834, 15835,
+                15836, 15837, 15838, 15839, 15840, 15841,
+                15843, 15845, 15846, 15847, 15848, 15849,
+                15886, 16765, 16779, 16780, 16781, 16782,
+                16850, 16851, 16852, 17232, 17552
+            };
+            #endregion
 
-                //中点
-                var Location = new Vector3("78.77, 0, -82.18");
+            #region Custom Mechanics
+            /// Tesleen, the Forgiven (得到宽恕的泰丝琳)
+            /// 15826, 15827                                 :: Exorcise            :: 傩
+            HashSet<uint> Exorcise = new HashSet<uint>() { 15826, 15827 };
+            if (Exorcise.IsCasting())
+            {
+                Vector3 _loc = new Vector3("78.77, 0, -82.18");
 
-                //读条中断
-                if (Location.Distance2D(Core.Me.Location) > 1f && Core.Me.IsCasting) ActionManager.StopCasting();
+                if (Core.Me.Distance(_loc) > 1f && Core.Me.IsCasting) { ActionManager.StopCasting(); }
 
-                while (Location.Distance2D(Core.Me.Location) > 1f)
+                while (Core.Me.Distance(_loc) > 1f)
                 {
-                    Logging.Write(Colors.Aquamarine, $"中点距离:{Location.Distance2D(Core.Me.Location)}");
-                    Navigator.PlayerMover.MoveTowards(Location);
-                    await Coroutine.Sleep(100);
+                    await CommonTasks.MoveTo(_loc);
+                    await Coroutine.Yield();
                 }
 
                 Navigator.PlayerMover.MoveStop();
                 await Coroutine.Sleep(6000);
 
-                if (Helpers.IsHealer() == false)
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                while (sw.ElapsedMilliseconds < 15000)
                 {
-                    //远点
-                    Location = new Vector3("84.92282, 0, -97.60876"); // 远点坐标
-
-                    //读条中断
-                    if (Location.Distance2D(Core.Me.Location) > 1f && Core.Me.IsCasting) ActionManager.StopCasting();
-
-                    while (Location.Distance2D(Core.Me.Location) > 1f)
-                    {
-                        Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
-                        Navigator.PlayerMover.MoveTowards(Location);
-                        await Coroutine.Sleep(100);
-                    }
-
-                    Navigator.PlayerMover.MoveStop();
-                    await Coroutine.Sleep(20000);
-
-                    return true;
+                    await Helpers.GetClosestAlly.Follow(7f);
+                    await Coroutine.Yield();
                 }
+                sw.Stop();
             }
 
-
-            if (check1.Any() == true)
+            /// Philia (斐利亚)
+            /// 15833, 16777, 16790                          :: Pendulum            :: 钟摆
+            /// 15842, 16769                                 :: Taphephobia         :: 恐惧症
+            HashSet<uint> Pendulum = new HashSet<uint>() { 15833, 15842, 16769, 16777, 16790 };
+            if (Pendulum.IsCasting())
             {
-                Logging.Write(Colors.Aquamarine, $"TMFS");
+                Vector3 _loc = new Vector3("117.1188,23,-474.0881");
 
-                var Location = new Vector3("117.1188,23,-474.0881");
+                if (Core.Me.Distance(_loc) > 1 && Core.Me.IsCasting) { ActionManager.StopCasting(); }
 
-                //读条中断
-                if (Location.Distance2D(Core.Me.Location) > 1f && Core.Me.IsCasting) ActionManager.StopCasting();
-
-                while (Location.Distance2D(Core.Me.Location) > 1f)
+                while (Core.Me.Distance(_loc) > 1f)
                 {
-                    Logging.Write(Colors.Aquamarine, $"分散:{Location.Distance2D(Core.Me.Location)}");
-                    Navigator.PlayerMover.MoveTowards(Location);
-                    await Coroutine.Sleep(100);
+                    await CommonTasks.MoveTo(_loc);
+                    await Coroutine.Yield();
                 }
 
-                Navigator.PlayerMover.MoveStop();
+                await CommonTasks.StopMoving();
                 await Coroutine.Sleep(3000);
             }
+            #endregion
 
+            /// Default (缺省)
+            if (Spells.IsCasting(!ChainsUp)) { await Helpers.GetClosestAlly.Follow(); }
 
-            // 检测附近 对象是否有特定读条技能
-            var num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
-                    (
-                    r.CastingSpellId == 15815 ||    //木马  扇形AOE
-                    r.CastingSpellId == 15816 ||    //圆形AOE 不让sidestep处理(绞刑笼)
-                    r.CastingSpellId == 15814 ||    //螺旋突刺
-                    r.CastingSpellId == 15818 ||    //处刑之剑
-                    r.CastingSpellId == 15819 ||    //光线射击
-                    r.CastingSpellId == 15846 ||    //右鞭打测试
-                    r.CastingSpellId == 15847 ||    //左鞭打测试
-                    r.CastingSpellId == 15848 ||    //吸取以太测试
-                    r.CastingSpellId == 15849 ||    //吸取以太测试
-                    r.CastingSpellId == 17232 ||    //埋没之光测试
-                    r.CastingSpellId == 15845 ||    //埋没之光测试
-                    r.CastingSpellId == 15834 ||    //捶打测试
-                    r.CastingSpellId == 15835 ||    //捶打测试
-                    r.CastingSpellId == 15836 ||    //捶打测试
-                    r.CastingSpellId == 15837 ||    //捶打测试
-                    r.CastingSpellId == 15838 ||    //捶打测试
-                    r.CastingSpellId == 15839 ||    //捶打测试
-                    r.CastingSpellId == 15843 ||    //污浊豪炎测试
-                    r.CastingSpellId == 16765 ||    //污浊豪炎测试
-                    r.CastingSpellId == 15840 ||    //九尾猫测试
-                    r.CastingSpellId == 15841 ||    //九尾猫测试
-                    r.CastingSpellId == 16779 ||    //土符文测试
-                    r.CastingSpellId == 16780 ||    //土符文测试
-                    r.CastingSpellId == 16781 ||    //土符文测试
-                    r.CastingSpellId == 16782 ||    //土符文测试
-                    r.CastingSpellId == 15822     //异端十字叉
-                    )
-                );
-
-            if (num != null && num.Count() > 0)
-            {
-                var spell = num.First();
-                Logging.Write(Colors.Aquamarine, $"跟随");
-
-                if (spell.NpcId == 8299)
-                {
-                    if (plugin != null)
-                    {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
-                    }
-                }
-
-                var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                    (r.NpcId == 729 || r.NpcId == 8378 ||       // "雅·修特拉"
-                    r.NpcId == 1492 ||                          // "于里昂热"
-                    r.NpcId == 4130 ||                          // "阿尔菲诺"
-                    r.NpcId == 5239 ||                          // "阿莉塞"
-                    r.NpcId == 8889 ||                          // 琳  
-                    r.NpcId == 8650 ||                          // 水晶公
-                    r.NpcId == 8919 ||                          // 莱楠
-                    r.NpcId == 8917 ||                          // 敏菲利亚 
-                    r.Name == "桑克瑞德" ||
-                    r.Name == "阿莉塞" ||
-                    r.Name == "水晶公" ||
-                    r.Name == "莱楠" ||
-                    r.Name == "敏菲利亚" ||
-                    r.Name == "雅·修特拉" ||
-                    r.Name == "琳")
-                    && r.IsDead == false
-                ).OrderBy(r => r.Distance()).First();
-
-                //当距离大于跟随距离 再处理跟随
-                if (Obj.Location.Distance2D(Core.Me.Location) >= 0.3f)
-                {
-                    //读条中断
-                    if (Core.Me.IsCasting) ActionManager.StopCasting();
-
-                    // 选中跟随最近的队友
-                    Obj.Target();
-
-                    Logging.Write(Colors.Aquamarine, $"队友{Obj.Name}距离:{Obj.Location.Distance2D(Core.Me.Location)}");
-
-                    while (Obj.Location.Distance2D(Core.Me.Location) >= 0.3f)
-                    {
-                        Navigator.PlayerMover.MoveTowards(Obj.Location);
-                        await Coroutine.Sleep(100);
-                    }
-                    Navigator.PlayerMover.MoveStop();
-                    await Coroutine.Sleep(100);
-
-                    return true;
-                }
-            }
-
-
-            if (Core.Target != null)
-            {
-
-                var sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
-                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8301
-                    );
-                var sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
-                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8299
-                    );
-                var sC2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
-                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8300
-                    );
-                var sC3 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
-                    r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8570
-                    );	//锁链
-
-                // boss 1    
-                if (sC1.Any() == true)
-                {
-                    if (plugin != null)
-                    {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
-                    }
-                }
-				// boss 2
-                if (sC2.Any() == true)
-                {
-                    if (plugin != null)
-                    {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
-                    }
-                }
-		        // boss 3
-                if (sC.Any() == true)
-                {
-                    if (plugin != null)
-                    {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
-                    }
-
-                    /*Logging.Write(Colors.Aquamarine, $"boss3");
-                    var spellCaster = sC.First();
-
-
-                    if (spellCaster != null && spellCaster.Name == Core.Target.Name)
-                    {
-                        //读条中断
-                        if (Core.Me.IsCasting) ActionManager.StopCasting();
-
-                        var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
-                                    (r.NpcId == 729 || r.NpcId == 8378 ||        // "雅·修特拉"
-                                    r.NpcId == 8889 ||                          // 琳
-                                    r.NpcId == 5239 ||                          // "阿莉塞"
-                                    r.Name == "阿莉塞" ||
-                                    r.Name == "雅·修特拉" ||
-                                    r.Name == "琳")
-                                    && r.IsDead == false
-                                     ).OrderBy(r => r.Distance()).First();
-
-                        //当距离大于跟随距离 再处理跟随
-                        if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
-                        {
-                            // 选中跟随最近的队友
-                            Obj.Target();
-
-                            Logging.Write(Colors.Aquamarine, $"队友{Obj.Name}距离:{Obj.Location.Distance2D(Core.Me.Location)}");
-
-                            while (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
-                            {
-                                Navigator.PlayerMover.MoveTowards(Obj.Location);
-                                await Coroutine.Sleep(50);
-                            }
-                            Navigator.PlayerMover.MoveStop();
-                            await Coroutine.Sleep(50);
-                            return true;
-                        }
-
-                    }*/
-                }
-
-            }
+            /// SideStep (回避)
+            Helpers.BossIds.ToggleSideStep();
 
             return false;
-
         }
     }
-
 }
