@@ -30,13 +30,21 @@ namespace Trust
 
             if (spellCast)
             {
-                var closest = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(r =>
-                    (r.NpcId == 729 || r.NpcId == 8378 || r.NpcId == 5239 || r.NpcId == 8889 && !r.IsDead)).OrderBy(r => r.Distance()).First();
+
+                HashSet<string> partyMemberNames = new HashSet<string>() { /*"桑克瑞德",*/ "雅·修特拉", "于里昂热", "阿尔菲诺", "阿莉塞", "雅·修特拉", /*"水晶公",*/ "琳", "敏菲利亚", "莱楠" };
+                HashSet<uint> partyMemberIds = new HashSet<uint>() { /*713,*/ 729, 1492, 4130, 5239, 8378, /*8650,*/ 8889, 8917, 8919 };
+#if RB_CN
+				var closest = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
+                partyMemberNames.Contains(obj.Name) && !obj.IsDead).OrderBy(r => r.Distance()).FirstOrDefault();
+#else
+                var closest = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
+                partyMemberIds.Contains(obj.NpcId) && !obj.IsDead).OrderBy(r => r.Distance()).FirstOrDefault();
+#endif
 
                 if (Core.Me.Distance(closest.Location) >= 0.3)
                 {
                     if (Core.Me.IsCasting) ActionManager.StopCasting();
-#if RBCN
+#if RB_CN
                     Logging.Write(Colors.Aquamarine, $"跟随 队友 {closest.Name} [距离: {Core.Me.Distance(closest.Location)}]");
 #else
                     Logging.Write(Colors.Aquamarine, $"Following {closest.Name} [Distance: {Core.Me.Distance(closest.Location)}]");
