@@ -1,0 +1,30 @@
+<Profile>
+	<Order>
+		<While Condition="True">
+			<RunCode Name="LogSpells"/>
+		</While>
+	</Order>
+	<CodeChunks>
+		<CodeChunk Name="LogSpells">
+			<![CDATA[
+				var outputText = "";
+				var outputFilePath = @"C:\Users\Andy\Downloads\Rebornbuddy64\Plugins\Trust\Data\GETSPELLS.txt";
+
+				while (WorldManager.ZoneId == 836)
+				{
+					foreach (var obj in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => obj.Distance() < 50))
+					{
+						if (obj.IsCasting)
+						{
+							outputText = obj.CastingSpellId.ToString();
+							using (StreamWriter sw = new StreamWriter(outputFilePath, true))
+							{
+								await sw.WriteLineAsync(outputText);
+							}
+						}
+					}
+				}
+			]]>
+		</CodeChunk>
+	</CodeChunks>
+</Profile>
