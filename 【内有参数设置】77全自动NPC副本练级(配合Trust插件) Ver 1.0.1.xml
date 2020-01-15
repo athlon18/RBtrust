@@ -34,7 +34,9 @@
 					<NPCRepair Threshhold="&repairNum;" XYZ="79.79,207.03,1.59" ZoneId="478" NpcId="1012094"/>
 				</If>
 				<WaitTimer waitTime="8"/>
-				<RunCode name="选择副本" />
+				<RunCode name="AutoEquip"/>
+				<WaitTimer waitTime="8"/>
+				<RunCode name="选择副本"/>
 				<CommenceDuty />
 			</If>
 			<If Condition="IsOnMap(836)">
@@ -308,7 +310,30 @@
 		</CodeChunk>
     	<CodeChunk Name="CloseWindow">
 		<![CDATA[RaptureAtkUnitManager.GetWindowByName("GrandCompanySupplyList").SendAction(1, 3, 0xFFFFFFFF); await Buddy.Coroutines.Coroutine.Wait(5000, () => ff14bot.RemoteWindows.SelectString.IsOpen); if (ff14bot.RemoteWindows.SelectString.IsOpen) ff14bot.RemoteWindows.SelectString.ClickSlot(3); ]]>
-		</CodeChunk>	
+		</CodeChunk>
+		<CodeChunk Name="AutoEquip">
+            <![CDATA[ 
+            var patternFinder = new GreyMagic.PatternFinder(Core.Memory);
+            IntPtr agentVtable = patternFinder.Find("48 8D 05 ? ? ? ? C6 43 ? ? 48 89 03 48 8B C3 C7 43 ? ? ? ? ? Add 3 TraceRelative");
+            int id = AgentModule.FindAgentIdByVtable(agentVtable);
+
+            AtkAddonControl windowByName = RaptureAtkUnitManager.GetWindowByName("RecommendEquip");
+
+            if (windowByName == null)
+            {
+                AgentModule.GetAgentInterfaceById(id).Toggle();
+            }
+
+            await Coroutine.Wait(10000, () => RaptureAtkUnitManager.GetWindowByName("RecommendEquip") != null);
+            
+            windowByName = RaptureAtkUnitManager.GetWindowByName("RecommendEquip");
+            
+            if (windowByName != null)
+            {
+                windowByName.SendAction(1, 3, 0);
+            }
+            ]]>
+        </CodeChunk>
 	</CodeChunks>		
     <GrindAreas>
 		<GrindArea name="boss1">
