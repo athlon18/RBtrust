@@ -31,7 +31,7 @@ namespace ff14bot.NeoProfiles.Tags
         public bool Void { get; set; }
 
 #if RB_CN
-		public static int AgentId = 33;
+		public static int AgentId = 36;
 #else
         public static int AgentId = 36;
 #endif

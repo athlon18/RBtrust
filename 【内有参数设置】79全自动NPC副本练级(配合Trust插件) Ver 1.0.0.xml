@@ -131,7 +131,7 @@
         if(win == null)
         {
 #if RB_CN
-          var Id = 310;
+          var Id = 314;
 #else
           var Id = 314;
 #endif
