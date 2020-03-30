@@ -55,8 +55,8 @@ namespace ff14bot.NeoProfiles.Tags
                 ),
                 new Decorator(ret => CanRepair(),
                     new PrioritySelector(
-                        new Decorator(ret => CanRepair() && !Repair.IsOpen,
-                            new Action(r =>
+                        new Decorator(ret => !Repair.IsOpen,
+                            new ActionRunCoroutine(async r =>
                             {
                                 if (Void == true)
                                 {
@@ -65,36 +65,24 @@ namespace ff14bot.NeoProfiles.Tags
                                 else
                                 {
                                     ActionManager.ToggleRepairWindow();
+                                    await Coroutine.Wait(3000, () => Repair.IsOpen);
                                 }
+                            })
+                        ),
+                        new Decorator(ret => Repair.IsOpen,
+                            new ActionRunCoroutine(async r =>
+                            {
+                                Repair.RepairAll();
+                                if (await Coroutine.Wait(4000, () => SelectYesno.IsOpen))
+                                {
+                                    SelectYesno.ClickYes();
+                                }
+                                Repair.Close();
+                                await Coroutine.Wait(3000, () => !Repair.IsOpen);
                             })
                         )
                     )
-                ),
-                // repair
-                new Decorator(ret => Repair.IsOpen,
-                    new PrioritySelector(
-                        new Decorator(ret => Repaired,
-                            new Action(r =>
-                            {
-                                Repair.Close();
-                                _done = true;
-                            })
-                        ),
-                        new Decorator(ret => Repair.IsOpen && !RepairAllClicked,
-                            new Action(r =>
-                            {
-                                RepairAllClicked = true;
-                                Repair.RepairAll();
-                            })
-                        ),
-                        new Decorator(ret => SelectYesno.IsOpen,
-                            new Action(r =>
-                            {
-                                SelectYesno.ClickYes();
-                                Repaired = true;
-                            })
-                        )
-                ))
+                )
             );
         }
 
