@@ -131,9 +131,9 @@
         if(win == null)
         {
 #if RB_CN
-          var Id = 314;
+          var Id = 319;
 #else
-          var Id = 314;
+          var Id = 319;
 #endif
           AgentModule.ToggleAgentInterfaceById(Id);
         }
