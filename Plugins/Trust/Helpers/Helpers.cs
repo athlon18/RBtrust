@@ -80,10 +80,25 @@ namespace Trust
             4385, 7864, 8201, 8210, 8260, 8261, 8262, 8270, 8299, 8300, 8301, 8570, 8925
         };
 
-        private static bool IsFoodItem(this BagSlot slot) =>  (slot.Item.EquipmentCatagory == ItemUiCategory.Meal || slot.Item.EquipmentCatagory == ItemUiCategory.Ingredient);
-        public static IEnumerable<BagSlot> GetFoodItems(this IEnumerable<BagSlot> bags) => bags.Where(s => s.IsFoodItem());
-        public static bool ContainsFooditem(this IEnumerable<BagSlot> bags, uint id) => bags.Select(s => s.TrueItemId).Contains(id);
-        public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id) => bags.First(s => s.TrueItemId == id);
+        private static bool IsFoodItem(this BagSlot slot)
+        {
+            return (slot.Item.EquipmentCatagory == ItemUiCategory.Meal || slot.Item.EquipmentCatagory == ItemUiCategory.Ingredient);
+        }
+
+        public static IEnumerable<BagSlot> GetFoodItems(this IEnumerable<BagSlot> bags)
+        {
+            return bags.Where(s => s.IsFoodItem());
+        }
+
+        public static bool ContainsFooditem(this IEnumerable<BagSlot> bags, uint id)
+        {
+            return bags.Select(s => s.TrueItemId).Contains(id);
+        }
+
+        public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id)
+        {
+            return bags.First(s => s.TrueItemId == id);
+        }
 
         public static bool IsHealer()
         {

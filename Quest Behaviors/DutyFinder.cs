@@ -12,13 +12,7 @@ namespace ff14bot.NeoProfiles.Tags
 {
     public class ExtendedContentsFinder
     {
-        public static bool IsOpen
-        {
-            get
-            {
-                return RaptureAtkUnitManager.GetWindowByName("ContentsFinder") != null;
-            }
-        }
+        public static bool IsOpen => RaptureAtkUnitManager.GetWindowByName("ContentsFinder") != null;
         public static async Task<bool> Open()
         {
             while (!IsOpen)
@@ -32,20 +26,26 @@ namespace ff14bot.NeoProfiles.Tags
 
         public static async Task<bool> Join()
         {
-            if (!IsOpen) return false;
+            if (!IsOpen)
+            {
+                return false;
+            }
 
             RaptureAtkUnitManager.GetWindowByName("ContentsFinder").SendAction(1, 1, 3);
-            if (await Coroutine.Wait(5000, () => !IsOpen)) return true;
+            if (await Coroutine.Wait(5000, () => !IsOpen))
+            {
+                return true;
+            }
 
             return false;
         }
     }
 
     [XmlElement("JoinDutyFinder")]
-    class DutyFinderJoinTag : ProfileBehavior
+    internal class DutyFinderJoinTag : ProfileBehavior
     {
         private bool _done = false;
-        public override bool IsDone { get { return _done; } }
+        public override bool IsDone => _done;
         protected override void OnResetCachedDone() { _done = false; }
 
         protected override Composite CreateBehavior()
@@ -76,14 +76,14 @@ namespace ff14bot.NeoProfiles.Tags
     }
 
     [XmlElement("CommenceDuty")]
-    class CommenceDutyTag : ProfileBehavior
+    internal class CommenceDutyTag : ProfileBehavior
     {
         [XmlAttribute("WaitTime")]
         [DefaultValue(60)]
         public int WaitTime { get; set; }
 
         private bool _done = false;
-        public override bool IsDone { get { return _done; } }
+        public override bool IsDone => _done;
         protected override void OnResetCachedDone() { _done = false; }
 
         protected override Composite CreateBehavior()

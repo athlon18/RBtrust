@@ -17,24 +17,27 @@ namespace Trust
         public static async Task<bool> Run()
         {
 
-            var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
+            PluginContainer plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
 
-            var check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15723 || r.CastingSpellId == 13520 || r.CastingSpellId == 13844));
-			
-			var check2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 13552));
+            IEnumerable<BattleCharacter> check = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 15723 || r.CastingSpellId == 13520 || r.CastingSpellId == 13844));
 
-            var sC3 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146);  //73BOSS3
+            IEnumerable<BattleCharacter> check2 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 && (r.CastingSpellId == 13552));
+
+            IEnumerable<BattleCharacter> sC3 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146);  //73BOSS3
 
             //过独木桥     BOSS 3             
             if (check.Any() == true && sC3.First().Location.Distance2D(Core.Me.Location) >= 10)
             {
                 //读条中断
-                if (Core.Me.IsCasting) ActionManager.StopCasting();
+                if (Core.Me.IsCasting)
+                {
+                    ActionManager.StopCasting();
+                }
 
                 await Coroutine.Sleep(3000);
                 Logging.Write(Colors.Aquamarine, $"过独木桥");
                 //过桥
-                var Location = new Vector3("-142.8355,-144.5264,-232.6624");
+                Vector3 Location = new Vector3("-142.8355,-144.5264,-232.6624");
                 while (Location.Distance2D(Core.Me.Location) > 0.2)
                 {
                     Logging.Write(Colors.Aquamarine, $"远点距离:{Location.Distance2D(Core.Me.Location)}");
@@ -89,8 +92,8 @@ namespace Trust
 			if (check2.Any() == true)
             {
                 Logging.Write(Colors.Aquamarine, $"背对");
-                
-                var Location = new Vector3("-128.474,-144.5366,-243.2417");
+
+                Vector3 Location = new Vector3("-128.474,-144.5366,-243.2417");
                 while (Location.Distance2D(Core.Me.Location) > 1)
                 {
                     Logging.Write(Colors.Aquamarine, $"背对:{Location.Distance2D(Core.Me.Location)}");
@@ -126,10 +129,10 @@ namespace Trust
             if (Core.Target != null)
             {
 
-                var sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                IEnumerable<BattleCharacter> sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8141
                     );  //73BOSS1
-				var sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                IEnumerable<BattleCharacter> sC1 = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8146
                     );  //73BOSS3	
 
@@ -138,17 +141,20 @@ namespace Trust
                 {
                     if (plugin != null)
                     {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
+                        if (plugin.Enabled == true)
+                        {
+                            plugin.Enabled = false;
+                        }
                     }
 
                     Logging.Write(Colors.Aquamarine, $"boss1");
-                    var spellCaster = sC.First();
+                    BattleCharacter spellCaster = sC.First();
 
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
 
-                        var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+                        BattleCharacter Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                                     (r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
                                                                               //r.NpcId == 1492 ||                       // "于里昂热"
                                                                               //r.NpcId == 4130 ||                       // "阿尔菲诺"
@@ -165,8 +171,11 @@ namespace Trust
                         if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                         {
                             //读条中断
-                            if (Core.Me.IsCasting) ActionManager.StopCasting();
-                            
+                            if (Core.Me.IsCasting)
+                            {
+                                ActionManager.StopCasting();
+                            }
+
                             // 选中跟随最近的队友
                             Obj.Target();
 
@@ -188,7 +197,10 @@ namespace Trust
                 {
                     if (plugin != null)
                     {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
+                        if (plugin.Enabled == true)
+                        {
+                            plugin.Enabled = false;
+                        }
                     }
                 }
 

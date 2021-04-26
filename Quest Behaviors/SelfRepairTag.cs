@@ -1,21 +1,12 @@
 ﻿using Buddy.Coroutines;
-using Clio.Utilities;
 using Clio.XmlEngine;
-using ff14bot;
-using ff14bot.AClasses;
 using ff14bot.Behavior;
-using ff14bot.Helpers;
-using ff14bot.Enums;
 using ff14bot.Managers;
-using ff14bot.Objects;
 using ff14bot.RemoteWindows;
+using GreyMagic;
 using System;
 using System.Linq;
-using System.Reflection;
-using GreyMagic;
-using System.Threading.Tasks;
 using TreeSharp;
-
 using Action = TreeSharp.Action;
 
 namespace ff14bot.NeoProfiles.Tags
@@ -38,20 +29,14 @@ namespace ff14bot.NeoProfiles.Tags
 
         private bool _done = false;
 
-        private bool RepairAllClicked = false;
-        private bool Repaired = false;
+        public override bool IsDone => _done;
 
-        public override bool IsDone { get { return _done; } }
-
-        protected Composite Behavior()
+        public new Composite Behavior()
         {
             return new PrioritySelector(
                 // can tag execute?
                 new Decorator(ret => !CanRepair(),
-                    new Action(r =>
-                    {
-                        _done = true;
-                    })
+                    new Action(r => _done = true)
                 ),
                 new Decorator(ret => CanRepair(),
                     new PrioritySelector(
@@ -88,24 +73,25 @@ namespace ff14bot.NeoProfiles.Tags
 
         public bool CanRepair()
         {
-            if (Threshhold == null || Threshhold <= 0 || Threshhold > 100)
+            if (Threshhold <= 0 || Threshhold > 100)
+            {
                 Threshhold = 100f;
+            }
+
             return InventoryManager.EquippedItems.Where(r => r.IsFilled && r.Condition < Threshhold).Count() > 0;
         }
 
         public static void OpenRepair()
         {
-            var patternFinder = new PatternFinder(Core.Memory);
-            var off = patternFinder.Find("4C 8D 0D ? ? ? ? 45 33 C0 33 D2 48 8B C8 E8 ? ? ? ? Add 3 TraceRelative");
-            var func = patternFinder.Find("48 89 5C 24 ? 57 48 83 EC ? 88 51 ? 49 8B F9");
+            PatternFinder patternFinder = new PatternFinder(Core.Memory);
+            IntPtr off = patternFinder.Find("4C 8D 0D ? ? ? ? 45 33 C0 33 D2 48 8B C8 E8 ? ? ? ? Add 3 TraceRelative");
+            IntPtr func = patternFinder.Find("48 89 5C 24 ? 57 48 83 EC ? 88 51 ? 49 8B F9");
 
             Core.Memory.CallInjected64<IntPtr>(func, AgentModule.GetAgentInterfaceById(AgentId).Pointer, 0, 0, off);
         }
 
         protected override void OnResetCachedDone()
         {
-            RepairAllClicked = false;
-            Repaired = false;
             _done = false;
         }
 

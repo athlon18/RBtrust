@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5459F0C3-4FB6-44A4-AE1E-8CE9CBCA67F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RBTrust</RootNamespace>
+    <AssemblyName>RBTrust</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GreyMagic, Version=1.0.41.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
+      <HintPath>packages\RB.Assemblies.1.0.412\lib\net461\GreyMagic.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RebornBuddy, Version=1.0.412.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
+      <HintPath>packages\RB.Assemblies.1.0.412\lib\net461\RebornBuddy.exe</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Plugins\Trust\Data\Amaurot.cs" />
+    <Compile Include="Plugins\Trust\Data\DohnMheg.cs" />
+    <Compile Include="Plugins\Trust\Data\HolminsterSwitch.cs" />
+    <Compile Include="Plugins\Trust\Data\MalikahWell.cs" />
+    <Compile Include="Plugins\Trust\Data\MtGulg.cs" />
+    <Compile Include="Plugins\Trust\Data\TheGrandCosmos.cs" />
+    <Compile Include="Plugins\Trust\Data\TheQitanaRavel.cs" />
+    <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
+    <Compile Include="Plugins\Trust\Helpers\Helpers.cs" />
+    <Compile Include="Plugins\Trust\Trust.cs" />
+    <Compile Include="Plugins\Trust\TrustSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\Trust\TrustSettings.Designer.cs">
+      <DependentUpon>TrustSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
+    <Compile Include="Quest Behaviors\DutyFinder.cs" />
+    <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
+    <Compile Include="Quest Behaviors\LoadProfile.cs" />
+    <Compile Include="Quest Behaviors\LootTreasureTag.cs" />
+    <Compile Include="Quest Behaviors\NPCRepairTag.cs" />
+    <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
+    <Compile Include="Quest Behaviors\SelfRepairTag.cs" />
+    <Compile Include="Quest Behaviors\UpdateGearsetTag.cs" />
+    <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nuget.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Plugins\Trust\Data\GETSPELLS.txt" />
+    <Content Include="Plugins\Trust\Data\GETSPELLS.XML" />
+    <Content Include="Profiles\【内有参数设置】71全自动NPC副本练级%28配合Trust插件%29 Ver 2.1.0.xml" />
+    <Content Include="Profiles\【内有参数设置】73全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
+    <Content Include="Profiles\【内有参数设置】75全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
+    <Content Include="Profiles\【内有参数设置】77全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
+    <Content Include="Profiles\【内有参数设置】79全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.0.xml" />
+    <Content Include="Profiles\【内有参数设置】80全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.0.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">
+      <DependentUpon>TrustSettings.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CopyMarkdownFiles" AfterTargets="AfterBuild">
+    <!-- Copy selected solution items to project build output directory -->
+    <CreateItem Include="$(SolutionDir)\*.md">
+      <Output TaskParameter="Include" ItemName="MarkdownFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(MarkdownFiles)" DestinationFiles="@(MarkdownFiles->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+</Project>

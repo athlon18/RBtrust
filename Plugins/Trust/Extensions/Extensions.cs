@@ -81,12 +81,12 @@ namespace Trust
         {
             if (Core.Target != null)
             {
-                var npcIds = new HashSet<uint>();
+                HashSet<uint> npcIds = new HashSet<uint>();
                 PluginContainer p = PluginManager.Plugins.Where(r => r.Plugin.Name == "SideStep" || r.Plugin.Name == "回避").FirstOrDefault();
 
                 if (ignoreIds != null && ignoreIds.Count() > 0)
                 {
-                    foreach (var id in bossIds)
+                    foreach (uint id in bossIds)
                     {
                         if (ignoreIds.Contains(id)) { continue; }
                         npcIds.Add(id);
