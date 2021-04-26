@@ -5,69 +5,76 @@
 <!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
 <!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
 
-<!ENTITY repair "2"> <!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
+<!ENTITY repair "2"><!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
 <!ENTITY repairNum "30"><!-- 修理数值 -->
 ]>
 <Profile>
   <Name>【NPC】79全自动副本练级 by sodimm</Name>
-  <BehaviorDirectory>Quest Behaviors</BehaviorDirectory>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
-    <RunCode name="Plugin"/>
+    <CheckPlugins/>
+
     <While Condition="True">
       <If Condition="not IsOnMap(822)">
-        <WaitTimer WaitTime="8"/>
-        <If Condition="&repair; == 1">
-					<NPCRepair Threshhold="&repairNum;" XYZ="79.79,207.03,1.59" ZoneId="478" NpcId="1012094"/>
-				</If>
-		<WaitTimer waitTime="8"/>
-        <RunCode name="AutoEquip"/>
-		<WaitTimer waitTime="8"/>
-        <RunCode name="EnterDuty"/>
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="MtGulg"/>
         <CommenceDuty/>
+        <WaitForLoading/>
       </If>
+
       <If Condition="IsOnMap(822)">
+        <WaitForLoading/>
+        
         <If Condition="&usefood; == 1">
           <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
         </If>
-        <RunCode Name="WaitForDutyStarted"/>
-        
-        <If Condition="&repair; == 0">
-					<SelfRepair Threshhold="&repairNum;" Void="false"/>
-				</If>
 
-				<If Condition="&repair; == 2">
-					<SelfRepair Threshhold="&repairNum;" Void="true"/>
-				</If>
-
-		<MoveTo XYZ="194.0202, -48, -169.6748"/>
-		<WaitTimer WaitTime="3"/>
+        <MoveTo XYZ="194.0202, -48, -169.6748"/>
+        <WaitTimer WaitTime="3"/>
         <Grind GrindRef="ForgivenCruelty" PostCombatDelay="2.0" While="ObjectExistsWithId(8260)"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo XYZ="-32.9995, -25.36692, -196.2716"/>
-		<RunCode Name="Transition"/>
+        <RunCode Name="Transition"/>
         <MoveTo XYZ="-82.59937, 172.735, -247.665"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo XYZ="-239.5555, 201.9996, -97.39667"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo Distance="1" XYZ="-236.4691, 210.0001, -54.79517"/>
-		<WaitTimer WaitTime="3"/>
+        <WaitTimer WaitTime="3"/>
         <Grind GrindRef="ForgivenWhimsy" PostCombatDelay="2.0" While="ObjectExistsWithId(8261)"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo XYZ="-288.0424, 194, 84.65469"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo XYZ="-252.7066, 202, 140.1571"/>
-        <RunCode name="LootChest"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
         <MoveTo XYZ="-240.237, 204.3701, 160.873"/>
-		<WaitTimer WaitTime="5"/>
+        <WaitTimer WaitTime="5"/>
+        
         <MoveTo XYZ="-240.1017, 204.3701, 174.6434"/>
-		<WaitTimer WaitTime="10"/>
-		<MoveTo Distance="1" XYZ="-239.9252, 210, 214.856"/>
-		<WaitWhile Condition="not ObjectExistsWithId(8262)"/>
-		<MoveTo XYZ="-239.9695, 210, 224.6006"/>
+        <WaitTimer WaitTime="10"/>
+        
+        <MoveTo Distance="1" XYZ="-239.9252, 210, 214.856"/>
+        <WaitWhile Condition="not ObjectExistsWithId(8262)"/>
+        <MoveTo XYZ="-239.9695, 210, 224.6006"/>
         <Grind GrindRef="ForgivenObscenity" PostCombatDelay="2.0" While="ObjectExistsWithId(8262)"/>
-        <RunCode name="LootChest"/>
-        <RunCode name="LeaveDuty"/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
+        
+        <LeavyDuty/>
+      </If>
     </While>
   </Order>
   <GrindAreas>
@@ -103,115 +110,13 @@
     </GrindArea>
   </GrindAreas>
   <CodeChunks>
-    <CodeChunk name="Plugin">
-      <![CDATA[
-        var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "Trust" || p.Plugin.Name == "亲信战友");
-        var text1 = string.Empty;
-        var text2 = string.Empty;
-        
-#if RB_CN
-        text1 = "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物";
-        text2 = "你必须在Plugins文件夹里存在Trust/亲信战友的插件";
-#else
-        text1 = "There may be difficulty with Melee DPS on Bosses. Set your food via the settings if required.";
-        text2 = "This profile will not work without the Trust plugin being installed, and enabled.";
-#endif
-
-        Core.OverlayManager.AddToast(() => text1, TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));
-        await Coroutine.Sleep(6000);
-
-        if (!plugin.Any()) 
-        {
-          Core.OverlayManager.AddToast(() => text2, TimeSpan.FromMilliseconds(5000), System.Windows.Media.Color.FromRgb(29,213,226), System.Windows.Media.Color.FromRgb(13,106,175), new System.Windows.Media.FontFamily("Gautami"));
-          await Coroutine.Sleep(6000);
-        }
-      ]]>
-    </CodeChunk>
-    <CodeChunk name="EnterDuty">
-      <![CDATA[
-        var win = RaptureAtkUnitManager.GetWindowByName("Dawn");
-        if(win == null)
-        {
-#if RB_CN
-          var Id = 319;
-#else
-          var Id = 319;
-#endif
-          AgentModule.ToggleAgentInterfaceById(Id);
-        }
-        
-        await Coroutine.Sleep(1000);
-        
-        win = RaptureAtkUnitManager.GetWindowByName("Dawn");
-        if(win != null)
-        {
-          win.SendAction(2,3,15,4,4);//最后是副本选择0-5 (Indexed 0-5)
-          await Coroutine.Sleep(100);
-          RaptureAtkUnitManager.GetWindowByName("Dawn").SendAction(1,3,14);
-        }
-      ]]>
-    </CodeChunk>
-    <CodeChunk Name="WaitForDutyStarted">
-      <![CDATA[
-        var _duty = DirectorManager.ActiveDirector as ff14bot.Directors.InstanceContentDirector;
-        while (!_duty.InstanceStarted)  {  await Coroutine.Yield();  }
-      ]]>
-    </CodeChunk>
     <CodeChunk Name="Transition">
       <![CDATA[
         Core.Me.SetFacing(4.231756f);
         MovementManager.MoveForwardStart();
-		while (WorldManager.SubZoneId != 3004)  {  await Coroutine.Yield();  }
+    while (WorldManager.SubZoneId != 3004)  {  await Coroutine.Yield();  }
         Navigator.PlayerMover.MoveStop();
       ]]>
     </CodeChunk>
-    <CodeChunk name="LootChest">
-      <![CDATA[
-      var _chest = GameObjectManager.GetObjectsOfType<Treasure>().Where(r => r.Distance() < 50 && (r.Name == "宝箱" || r.Name == "Treasure Coffer" || r.Name == "treasure coffer"));
-      if (_chest.Any())
-      {
-        var box = _chest.FirstOrDefault();
-        while (Core.Me.Distance(box.Location) > 1f)
-        {
-          await CommonTasks.MoveTo(box.Location);
-          await Coroutine.Yield();
-        }
-    
-        Navigator.PlayerMover.MoveStop();
-        Poi.Current = new Poi(box, PoiType.Kill);
-        Poi.Current.Unit.Interact();					
-        await Coroutine.Sleep(1000);		
-      }
-    ]]>
-    </CodeChunk>
-    <CodeChunk name="LeaveDuty">
-      <![CDATA[
-        DutyManager.LeaveActiveDuty();
-        await Coroutine.Sleep(5000);
-      ]]>
-    </CodeChunk>
-	<CodeChunk Name="AutoEquip">
-            <![CDATA[ 
-            var patternFinder = new GreyMagic.PatternFinder(Core.Memory);
-            IntPtr agentVtable = patternFinder.Find("48 8D 05 ? ? ? ? C6 43 ? ? 48 89 03 48 8B C3 C7 43 ? ? ? ? ? Add 3 TraceRelative");
-            int id = AgentModule.FindAgentIdByVtable(agentVtable);
-
-            AtkAddonControl windowByName = RaptureAtkUnitManager.GetWindowByName("RecommendEquip");
-
-            if (windowByName == null)
-            {
-                AgentModule.GetAgentInterfaceById(id).Toggle();
-            }
-
-            await Coroutine.Wait(10000, () => RaptureAtkUnitManager.GetWindowByName("RecommendEquip") != null);
-            
-            windowByName = RaptureAtkUnitManager.GetWindowByName("RecommendEquip");
-            
-            if (windowByName != null)
-            {
-                windowByName.SendAction(1, 3, 0);
-            }
-            ]]>
-	</CodeChunk>
   </CodeChunks>
 </Profile>

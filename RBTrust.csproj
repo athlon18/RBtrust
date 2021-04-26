@@ -84,6 +84,7 @@
       <DependentUpon>TrustSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\DutyFinder.cs" />
     <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
@@ -92,7 +93,8 @@
     <Compile Include="Quest Behaviors\NPCRepairTag.cs" />
     <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
     <Compile Include="Quest Behaviors\SelfRepairTag.cs" />
-    <Compile Include="Quest Behaviors\UpdateGearsetTag.cs" />
+    <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
+    <Compile Include="Quest Behaviors\SetPluginsTag.cs" />
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
   </ItemGroup>
   <ItemGroup>
