@@ -48,6 +48,8 @@ namespace ff14bot.NeoProfiles.Tags
                 );
 
                 await Coroutine.Sleep(6000);
+
+                TreeRoot.Stop(pluginMissingError);
             }
 
             return false;
