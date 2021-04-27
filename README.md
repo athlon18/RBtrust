@@ -1,49 +1,106 @@
-# RBtrust RB 全自动npc副本(序列模式)
+# [RBTrust][0]
 
+[![Download][1]][2]
+[![Discord][3]][4]
 
-从目前测试表现看，T0桑克瑞德、阿莉塞、阿尔菲诺；T1琳；板凳-雅修特拉、于里昂热
+🌎 **English**, [中文][101]
 
-Plugins 放RB Plugins里(每次更新覆盖前需先删干净Trust文件夹里东西再覆盖，之后重启1次RB，插件列表里有显示“亲信战友”即读取成功）
+**RBTrust** is a Trust plugin + OrderBot scripts for [RebornBuddy][5]. It automatically runs Trust dungeons.
 
-唯一指定食物水牛奶，各主城素材商有卖，多备点货，没这东西序列不运行，运行前最好先点掉自身已存在的其他食物BUFF
+## Features
 
-闪避插件SideStep会根据进度自动开关，某些BOSS你如果手动开了反而要死
+- Automatically completes Trust dungeons:
 
-【关于战斗模块的选择，建议T用神罗；读条职业用magi；治疗用magi需要精调“职业设置”；远程近战随意用】
+  ✔️ Lv. 71: Holminster Switch\
+  ✔️ Lv. 73: Dohn Mheg\
+  ✔️ Lv. 75: The Qitana Ravel\
+  ✔️ Lv. 77: Malikah's Well\
+  ✔️ Lv. 79: Mt. Gulg\
+  ⚠️ Lv. 80: Amaurot\
+  ❌ Lv. 80: The Grand Cosmos\
+  ❌ Lv. 80: Anamnesis Anyder\
+  ❌ Lv. 80: The Heroes' Gauntlet\
+  ❌ Lv. 80: Matoya's Relict\
+  ❌ Lv. 80: Paglth'an
 
-71本 已更新最新版，尾王GA100、紫圈炸NPC问题解决。      
+## Installation
 
------T要过本战斗模块不可用Magitek,会穿BOSS吃技能。
+### Prerequisites
 
------H要过本需要调整战斗模块，否则会遇到奶的不勤快，先奶NPC不奶自己等问题。
+- [RebornBuddy][5] with active license (paid)
+- (Optional) Better combat routine, such as [Magitek][6] (free)
+- (Optional) Self-repair plugin, such as [AutoRepair][7] (free)
 
-73本 比较稳定,还有很多地方需要优化   推荐带阿莉塞、琳，最好别带雅修特拉(2王击杀荆棘太慢)
-     
------偶尔会卡死的地方是去3王路上，停留在滑坡上会卡死
-     
------偶尔会猝死的地方是尾王前的最后一波怪
-     
-75本 T战斗模块最好用神罗，推荐带阿莉塞、阿尔菲诺。
+### Setup
 
------瀑布下去之后，如果不幸死了，脚本会卡死
+0. Fully delete old versions of RBTrust in the `RebornBuddy\Plugins\` folder.
+1. Download the [latest version][2].
+2. On the `.zip` file, right click > `Properties` > `Unblock` > `Apply`.
+3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this:
 
------二王石柱，琳和于里昂热两个傻子经常会自己吃，建议别带
+```
+RebornBuddy
+└── Plugins
+    └── RBTrust
+        ├── Plugins\
+        ├── Profiles\
+        ├── Quest Behaviors\
+        ├── RBTrust.sln
+        ├── README.md
+        └── ...
+```
 
-77本 已放出，欢迎测试
+4. Start RebornBuddy as normal.
+5. In the Plugins tab, enable the `Trust` plugin.
 
-结束
+## Usage
 
-等船新版本 抛弃序列
+⚠️ Some classes may not survive certain bosses. ⚠️ If you can't clear even after tuning combat routine settings, try running the previous dungeon until you out-level and can skip the "difficult" one.
 
-Tips:
+Each dungeon is handled by a separate OrderBot script that repeats the dungeon infinitely. Graduating to the next dungeon must be done manually by changing scripts.
 
-1) 一开始在国际服测试的,后来回国服测试,国际服5.1 可能会出问题 还没测试过
+To load a dungeon script:
 
-2) 有自带修理 Agil 可能会影响,推荐关闭 或者 在xml 修理那里输入2 不使用修理
+1. Start RebornBuddy and set the BotBase dropdown to `Order Bot`.
+2. Click `Load Profile` and navigate to `RebornBuddy\Plugins\RBTrust\Profiles`.
+3. Select the `.xml` script for the desired dungeon.
+4. Back in RebornBuddy, click `Start`.
 
+For live volunteer support, join the [RBTrust Discord][4]. When asking for help, tell us:
 
-有问题联系 QQ:250717291
+- what you tried to do
+- what went wrong
+- attach relevant logs from the `RebornBuddy\Logs` folder
 
-discord: https://discord.gg/WqxpkqG
+No need to ask if anyone's around or for permission to ask -- just go for it!
 
-QQ群: 938170067 
+## Troubleshooting
+
+### How can I stop dying to a certain boss?
+
+Maybe you can, maybe you can't.
+
+RBTrust has limited combat abilities, so some classes struggle with certain bosses. Some things to try:
+
+- Upgrade your gear and food to better survive big hits.
+- Adjust your combat routine to better use damage mitigation, heals, life steal, etc.
+- Change class (not a real solution)
+
+Worst case scenario: out-level and skip that dungeon by grinding the previous one, or kill the boss manually if needed for MSQ progression.
+
+### When starting a script, why does it says the "Trust" plugin isn't installed?
+
+The RBTrust folder might not have been fully extracted or put in the correct place.
+
+Check your Plugins tab to see if the "Trust" plugin is listed and enable if it is. If the plugin isn't there, try closing RebornBuddy and cleanly [reinstalling](#Installation) RBTrust.
+
+[0]: https://github.com/athlon18/RBtrust "RBTrust on GitHub"
+[1]: https://img.shields.io/badge/-DOWNLOAD-success
+[2]: https://github.com/athlon18/RBtrust/archive/refs/heads/master.zip "Download"
+[3]: https://img.shields.io/badge/DISCORD-7389D8?logo=discord&logoColor=ffffff&labelColor=6A7EC2
+[4]: https://discord.gg/XtAneKksv4 "Discord"
+[5]: https://www.rebornbuddy.com/ "RebornBuddy"
+[6]: https://discord.gg/rDsFbKr "Magitek Discord"
+[7]: https://github.com/nt153133/AutoRepair "AutoRepair"
+[100]: ./README.md "English"
+[101]: ./README.zh.md "中文"
