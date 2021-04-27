@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+<!ENTITY usefood "0"><!--是否启用食物 -->
+<!ENTITY food "4753"><!-- 食物为水牛奶 -->
+<!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
+<!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
+
+<!ENTITY repair "2"><!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
+<!ENTITY repairNum "30"><!-- 修理数值 -->
+]>
+<Profile>
+  <Name>【NPC】80全自动副本练级 by sodimm</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <If Condition="not IsOnMap(838)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="Amaurot"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(838)">
+        <WaitForLoading/>
+
+        <If Condition="&usefood; == 1">
+          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
+        </If>
+
+        <MoveTo XYZ="-79.58617, 748.2328, 100.5795"/>
+        <Grind GrindRef="TheFirstBeast" PostCombatDelay="2.0" While="ObjectExistsWithId(8201)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-60.50607, 748.2327, 62.50991"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="25.74221, 728.4708, -119.9524"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="48.94165, 729.0496, -225.3814"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="59.6765, 728, -344.0564"/>
+
+        <MoveTo XYZ="60.01367, 728, -361.0438"/>
+        <WaitWhile Condition="ObjectExistsWithId(8202)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+        <RunCode Name="AetherialFlow"/>
+
+        <MoveTo XYZ="-0.01531982, -735.0118, 279.7742"/>
+        <RunCode Name="Transition1"/>
+
+        <MoveTo XYZ="0.04636243, -729.9998, 197.4371"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="0.1779838, -729.9998, 180.7759"/>
+        <RunCode Name="Transition2"/>
+
+        <MoveTo XYZ="0.09161426, -732.0001, 62.09192"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="0.163903, -732.0001, 46.89133"/>
+        <RunCode Name="Transition3"/>
+
+        <MoveTo XYZ="-0.01531982, -720.0275, -23.23956"/>
+
+        <MoveTo XYZ="-0.0480026, -720.0001, -39.52992"/>
+        <Grind GrindRef="Therion" PostCombatDelay="2.0" While="ObjectExistsWithId(8210)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="TheFirstBeast">
+      <Hotspots>
+        <Hotspot XYZ="-80.0041, 748.2328, 75.27725" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8201"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Therion">
+      <Hotspots>
+        <Hotspot XYZ="-0.01531982, -720.0275, -23.23956" Radius="200"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8210"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition1">
+      <![CDATA[
+        Core.Me.SetFacing(3.13531f);
+        MovementManager.MoveForwardStart();
+    await Coroutine.Sleep(2000);
+        Navigator.PlayerMover.MoveStop();
+      ]]>
+    </CodeChunk>
+    <CodeChunk Name="Transition2">
+      <![CDATA[
+        Core.Me.SetFacing(3.131345f);
+        MovementManager.MoveForwardStart();
+    await Coroutine.Sleep(2000);
+        Navigator.PlayerMover.MoveStop();
+      ]]>
+    </CodeChunk>
+    <CodeChunk Name="Transition3">
+      <![CDATA[
+        Core.Me.SetFacing(3.144462f);
+        MovementManager.MoveForwardStart();
+    await Coroutine.Sleep(2000);
+        Navigator.PlayerMover.MoveStop();
+      ]]>
+    </CodeChunk>
+  </CodeChunks>
+</Profile>

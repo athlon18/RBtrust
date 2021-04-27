@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- From https://stackoverflow.com/a/41945190 -->
+<!-- Fixes AL1073 Warning due to x64 only build target -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkSDKToolsDirectory Condition=" '$(PlatformTarget)' == 'x64'">$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</TargetFrameworkSDKToolsDirectory>
+  </PropertyGroup>
+</Project>

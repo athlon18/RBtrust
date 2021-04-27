@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+<!ENTITY usefood "0"><!--是否启用食物 -->
+<!ENTITY food "4753"><!-- 食物为水牛奶 -->
+<!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
+<!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
+
+<!ENTITY repair "2"><!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
+<!ENTITY repairNum "50"><!-- 修理数值 -->
+
+<!-- 什么时候退本 -->
+<!ENTITY boss1 "0"><!--BOSS1结束 -->
+<!ENTITY boss2 "0"><!--BOSS2结束 -->
+<!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
+<!ENTITY boss3 "1"><!--打完全部 -->
+
+<!-- 拾取箱子 -->
+<!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
+<!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
+<!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
+<!ENTITY halfway "1"><!--路途中的箱子 -->
+]>
+<Profile>
+  <Name>【NPC】71全自动副本练级 by athlon and Minami16 and 疾风点破</Name>
+  <KillRadius>50</KillRadius>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <If Condition="not IsOnMap(837)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="HolminsterSwitch"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(837)">
+        <WaitForLoading/>
+
+        <If Condition="&usefood; == 1">
+          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
+        </If>
+
+        <!-- 第一步 得到宽恕的自负 -->
+        <MoveTo XYZ="-127.256,2.538,403.434"/>
+        <!-- 第二步 得到宽恕的喧哗 -->
+        <MoveTo XYZ="-148.1962,-1.056138,339.3869"/>
+        <!-- 第三步 得到宽恕的愚行 -->
+        <MoveTo XYZ="-98.134636,-0.230948,321.217957"/>
+        <!-- 第四步 得到宽恕的自负 -->
+        <MoveTo XYZ="-66.7244,0.7372842,346.6774"/>
+        <!-- 第五步 得到宽恕的喧哗 -->
+        <MoveTo XYZ="-50.47,0.05,352.05"/>
+        <!-- 第六步 得到宽恕的无知 -->
+        <MoveTo XYZ="-12.07,0.08,292.24"/>
+
+        <!-- 第七步 BOSS1 得到宽恕的失调 -->
+        <MoveTo XYZ="-14.87,0, 235.55"/>
+        <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8299)"/>
+        <If Condition="&boss1box; == 1">
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <If Condition="&boss1; == 1">
+          <WaitTimer waitTime="5"/>
+          <LeaveDuty/>
+          <WaitForLoading/>
+          <LoadProfile/>
+        </If>
+
+        <If Condition="&usefood; == 1">
+          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
+        </If>
+
+        <!-- 第八步  打怪 -->
+        <MoveTo XYZ="-15.98,2.05, 127.16"/>
+        <MoveTo XYZ="-4.837286,-1.260272,106.3564"/>
+        <If Condition="&halfway; == 1">
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <!-- 第九步  打怪 -->
+        <MoveTo XYZ="-4.61,-4.48,68.4"/>
+        <!-- 第九步  打怪 -->
+        <MoveTo XYZ="24.02,-8.12,40.39"/>
+        <!-- 第十步  打怪 -->
+        <MoveTo XYZ="73.73,-5.25,-0.73"/>
+        <If Condition="&halfway; == 1">
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
+        <MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
+        <NoCombatMoveTo XYZ="85.32442,0,-88.8187" Wait="1"/>
+        <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)"/>
+        <If Condition="&boss2box; == 1">
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <If Condition="&boss2; == 1">
+          <WaitTimer waitTime="5"/>
+          <LeaveDuty/>
+          <WaitForLoading/>
+          <LoadProfile/>
+        </If>
+
+        <If Condition="&usefood; == 1">
+          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
+        </If>
+
+        <If Condition="&halfway; == 1">
+          <MoveTo XYZ="86.15449,0.512633,-189.4477"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <!-- 第十一步 打怪-->
+        <MoveTo XYZ="77.4,0,-208.51"/>
+        <!-- 第十二步 打怪-->
+        <MoveTo XYZ="89.05,3.93,-241.38"/>
+        <!-- 第十三步 打怪-->
+        <MoveTo XYZ="63.87,4.05,-251.26"/>
+        <!-- 第十四步 打怪-->
+        <MoveTo XYZ="72.46,3.45,-273.49"/>
+        <WaitTimer waitTime="3"/>
+        <If Condition="&halfway; == 1">
+          <MoveTo XYZ="71.46906,1.502112,-326.3975"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <If Condition="&before_boss3; == 1">
+          <WaitTimer waitTime="5"/>
+          <LeaveDuty/>
+          <WaitForLoading/>
+          <LoadProfile/>
+        </If>
+
+        <!-- 第十五步 BOSS3-->
+        <NoCombatMoveTo XYZ="134.1453,23,-477.03" Wait="1"/>
+        <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8301)"/>
+        <WaitTimer waitTime="3"/>
+        <MoveTo XYZ="133.34,23,-455.87"/>
+        <If Condition="&boss3box; == 1">
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+        <If Condition="&boss3; == 1">
+          <WaitTimer waitTime="3"/>
+          <LeaveDuty/>
+          <WaitForLoading/>
+        </If>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea name="boss1">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="-14.87,0, 235.55"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="得到宽恕的失调" Id="8299"/>
+        <!-- FORGIVEN DISSONANCE -->
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="boss2">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="77.77,0,-79.51"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="得到宽恕的泰丝琳" Id="8300"/>
+        <!-- TESLEEN, THE FORGIVEN -->
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="boss3">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="134.34,23,-455.87"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="斐利亚" Id="8301" Weight="100"/>
+        <!-- PHILIA -->
+        <TargetMob Name="锁链" Id="8570" Weight="999"/>
+        <!-- CHAINS -->
+      </TargetMobs>
+    </GrindArea>
+  </GrindAreas>
+</Profile>

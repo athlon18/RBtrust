@@ -15,10 +15,10 @@ namespace Trust
         public static async Task<bool> Run()
         {
 
-            var plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
+            PluginContainer plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").First();
 
             // 检测附近 对象是否有特定读条技能
-            var num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
+            System.Collections.Generic.IEnumerable<BattleCharacter> num = GameObjectManager.GetObjectsOfType<BattleCharacter>()
                 .Where(r => r.CastingSpellId != 0 && !r.IsMe && r.Distance() < 50 &&
                     (
                     r.CastingSpellId == 15594 ||
@@ -37,18 +37,21 @@ namespace Trust
 
             if (num != null && num.Count() > 0)
             {
-                var spell = num.First();
+                BattleCharacter spell = num.First();
                 Logging.Write(Colors.Aquamarine, $"跟随");
 
                 if (spell.NpcId == 8299)
                 {
                     if (plugin != null)
                     {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
+                        if (plugin.Enabled == true)
+                        {
+                            plugin.Enabled = false;
+                        }
                     }
                 }
 
-                var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+                BattleCharacter Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                     r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
                     r.NpcId == 1492 ||                       // "于里昂热"
                     r.NpcId == 4130 ||                       // "阿尔菲诺"
@@ -64,7 +67,10 @@ namespace Trust
                 //当距离大于跟随距离 再处理跟随
                 if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                 {
-                    if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
+                    if (Core.Me.IsCasting)
+                    {
+                        ActionManager.StopCasting();  //断读条
+                    }
                     // 选中跟随最近的队友
                     Obj.Target();
 
@@ -85,7 +91,7 @@ namespace Trust
             if (Core.Target != null)
             {
 
-                var sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
+                System.Collections.Generic.IEnumerable<BattleCharacter> sC = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(
                     r => !r.IsMe && r.Distance() < 50 && r.NpcId == 8250
                     );  //77BOSS2
 
@@ -94,16 +100,19 @@ namespace Trust
                 {
                     if (plugin != null)
                     {
-                        if (plugin.Enabled == true) plugin.Enabled = false;
+                        if (plugin.Enabled == true)
+                        {
+                            plugin.Enabled = false;
+                        }
                     }
 
                     Logging.Write(Colors.Aquamarine, $"boss2");
-                    var spellCaster = sC.First();
+                    BattleCharacter spellCaster = sC.First();
 
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
-                        var Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
+                        BattleCharacter Obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true).Where(r =>
                                     r.NpcId == 729 || r.NpcId == 8378 ||     // "雅·修特拉"
                                     r.NpcId == 1492 ||                       // "于里昂热"
                                     r.NpcId == 4130 ||                       // "阿尔菲诺"
@@ -119,7 +128,10 @@ namespace Trust
                         //当距离大于跟随距离 再处理跟随
                         if (Obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                         {
-                            if (Core.Me.IsCasting) ActionManager.StopCasting();  //断读条
+                            if (Core.Me.IsCasting)
+                            {
+                                ActionManager.StopCasting();  //断读条
+                            }
                             // 选中跟随最近的队友
                             Obj.Target();
 

@@ -7,7 +7,7 @@ namespace Trust
 {
     public partial class TrustSettings : Form
     {
-        private Dictionary<uint, string> foodDict;
+        private readonly Dictionary<uint, string> foodDict;
 
         public TrustSettings()
         {
@@ -30,7 +30,7 @@ namespace Trust
         {
             foodDict.Clear();
 
-            foreach (var item in InventoryManager.FilledSlots.GetFoodItems())
+            foreach (BagSlot item in InventoryManager.FilledSlots.GetFoodItems())
             {
                 foodDict[item.TrueItemId] = "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : "");
             }

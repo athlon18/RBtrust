@@ -19,22 +19,26 @@ namespace Trust
     {
         private Composite _coroutine;
         private TrustSettings _settingsForm;
-        private static uint _buff = 48;
+        private static readonly uint _buff = 48;
 
-        public override string Author { get { return "athlon"; } }
+        public override string Author => "athlon";
 #if RB_CN
         public override string Name => "亲信战友";
 #else
         public override string Name => "Trust";
 #endif
-        public override Version Version { get { return new Version(1, 2, 0); } }
+        public override Version Version => new Version(1, 2, 0);
 
-        private bool CanTrust() => Array.IndexOf(new int[] { 837, 821, 823, 836, 822, 838, 884 }, WorldManager.ZoneId) >= 0;
+        private bool CanTrust()
+        {
+            return Array.IndexOf(new int[] { 837, 821, 823, 836, 822, 838, 884 }, WorldManager.ZoneId) >= 0;
+        }
+
         public override void OnInitialize()
         {
             if (PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").Any())
             {
-                var _plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").FirstOrDefault();
+                PluginContainer _plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").FirstOrDefault();
                 if (_plugin.Enabled == false) { _plugin.Enabled = true; }
             }
 
@@ -59,7 +63,7 @@ namespace Trust
 
         public override void OnShutdown() { OnDisabled(); }
 
-        public override bool WantButton { get { return true; } }
+        public override bool WantButton => true;
 
         public override void OnButtonPress()
         {
@@ -91,9 +95,12 @@ namespace Trust
 
             if (GatheringManager.WindowOpen) { return false; }
 
-            var item = InventoryManager.FilledSlots.GetFoodItem(Settings.Instance.Id);
+            BagSlot item = InventoryManager.FilledSlots.GetFoodItem(Settings.Instance.Id);
 
-            if (item == null) return false;
+            if (item == null)
+            {
+                return false;
+            }
 
             Logging.Write(Colors.Aquamarine, "[吃食物] Eating " + item.Name);
             item.UseItem();
