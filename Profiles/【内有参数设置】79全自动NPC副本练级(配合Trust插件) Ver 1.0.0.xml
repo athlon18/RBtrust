@@ -4,9 +4,6 @@
 <!ENTITY food "4753"><!-- 食物为水牛奶 -->
 <!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
 <!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
-
-<!ENTITY repair "2"><!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
-<!ENTITY repairNum "30"><!-- 修理数值 -->
 ]>
 <Profile>
   <Name>【NPC】79全自动副本练级 by sodimm</Name>
