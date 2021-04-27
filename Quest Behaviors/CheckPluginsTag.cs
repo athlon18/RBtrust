@@ -16,7 +16,7 @@ namespace ff14bot.NeoProfiles.Tags
             {
                 string usabilityWarning = "Melee classes may have difficulty with some bosses.";
 #if RB_CN
-                startupText = "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物";
+                usabilityWarning = "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物";
 #endif
 
                 Core.OverlayManager.AddToast(() => usabilityWarning,
