@@ -5,9 +5,6 @@
 <!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
 <!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
 
-<!ENTITY repair "2"><!-- 0为暗物质修理 1为NPC修理 2为虚空修理-->
-<!ENTITY repairNum "50"><!-- 修理数值 -->
-
 <!-- 什么时候退本 -->
 <!ENTITY boss1 "0"><!--BOSS1结束 -->
 <!ENTITY boss2 "0"><!--BOSS2结束 -->
