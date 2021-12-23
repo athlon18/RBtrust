@@ -25,6 +25,19 @@ namespace Trust.Dungeons
                 { ZoneId.MtGulg, new MtGulg() },
                 { ZoneId.Amaurot, new Amaurot() },
                 { ZoneId.TheGrandCosmos, new TheGrandCosmos() },
+
+                // TODO: { ZoneId.AnamnesisAnyder, new AnamnesisAnyder() },
+                // TODO: { ZoneId.TheHeroesGauntlet, new TheHeroesGauntlet() },
+                // TODO: { ZoneId.MatoyasRelict, new MatoyasRelict() },
+                // TODO: { ZoneId.Paglthan, new Paglthan() },
+                // TODO: { ZoneId.TheTowerOfZot, new TheTowerOfZot() },
+                { ZoneId.TheTowerOfBabil, new TheTowerOfBabil() },
+
+                // TODO: { ZoneId.Vanaspati, new Vanaspati() },
+                // TODO: { ZoneId.KtisisHyperboreia, new KtisisHyperboreia() },
+                // TODO: { ZoneId.TheAitiascope, new TheAitiascope() },
+                // TODO: { ZoneId.TheMothercrystal, new TheMothercrystal() },
+                // TODO: { ZoneId.TheDeadEnds, new TheDeadEnds() },
             };
         }
 
