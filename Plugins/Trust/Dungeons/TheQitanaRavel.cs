@@ -8,12 +8,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Trust.Helpers;
 
-namespace Trust
+namespace Trust.Dungeons
 {
-    public static class TheQitanaRavel
+    /// <summary>
+    /// Lv. 75 The Qitana Ravel dungeon logic.
+    /// </summary>
+    public class TheQitanaRavel : AbstractDungeon
     {
-        public static async Task<bool> Run()
+        /// <summary>
+        /// Gets zone ID for this dungeon.
+        /// </summary>
+        public new const ZoneId ZoneId = Dungeons.ZoneId.TheQitanaRavel;
+
+        /// <inheritdoc/>
+        public override DungeonId DungeonId => DungeonId.TheQitanaRavel;
+
+        /// <inheritdoc/>
+        public override async Task<bool> RunAsync()
         {
             HashSet<uint> spellCastIds = new HashSet<uint>()
             {
@@ -22,7 +35,7 @@ namespace Trust
                 15509, 15510, 15511, 15512, 15926, 17213,
                 15570, 16263, 14730, 16260, 15514, 15516,
                 15517, 15518, 15519, 15520, 16923, 15524,
-                15523, 15527, 15522, 15526, 15521, 15525
+                15523, 15527, 15522, 15526, 15521, 15525,
             };
 
             bool spellCast = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
@@ -30,7 +43,6 @@ namespace Trust
 
             if (spellCast)
             {
-
                 HashSet<string> partyMemberNames = new HashSet<string>() { /*"桑克瑞德",*/ "雅·修特拉", "于里昂热", "阿尔菲诺", "阿莉塞", "雅·修特拉", /*"水晶公",*/ "琳", "敏菲利亚", "莱楠" };
                 HashSet<uint> partyMemberIds = new HashSet<uint>() { /*713,*/ 729, 1492, 4130, 5239, 8378, /*8650,*/ 8889, 8917, 8919 };
 #if RB_CN
@@ -67,12 +79,21 @@ namespace Trust
 
             if (Core.Target != null)
             {
-                PluginContainer p = PluginManager.Plugins.Where(r => r.Plugin.Name == "SideStep" || r.Plugin.Name == "回避").First();
+                PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
 
                 IEnumerable<BattleCharacter> isBoss = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(r => r.Distance() < 50 &&
                     (r.NpcId == 8231 || r.NpcId == 8232 || r.NpcId == 8233));
 
-                if (isBoss.Any()) { if (p != null) { if (p.Enabled == true) { p.Enabled = false; } } }
+                if (isBoss.Any())
+                {
+                    if (sidestepPlugin != null)
+                    {
+                        if (sidestepPlugin.Enabled)
+                        {
+                            sidestepPlugin.Enabled = false;
+                        }
+                    }
+                }
             }
 
             return false;

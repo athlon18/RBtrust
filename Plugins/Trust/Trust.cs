@@ -6,54 +6,67 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using System;
-using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using TreeSharp;
+using Trust.Dungeons;
+using Trust.Helpers;
 
 namespace Trust
 {
+    /// <summary>
+    /// Main RebornBuddy plugin class for RB Trust.
+    /// </summary>
     public class Trust : BotPlugin
     {
-        private Composite _coroutine;
-        private TrustSettings _settingsForm;
-        private static readonly uint _buff = 48;
+        private Composite root;
+        private TrustSettings settingsForm;
+        private DungeonManager dungeonManager;
 
+        /// <inheritdoc/>
         public override string Author => "athlon";
 #if RB_CN
+        /// <inheritdoc/>
         public override string Name => "亲信战友";
 #else
+        /// <inheritdoc/>
         public override string Name => "Trust";
 #endif
+
+        /// <inheritdoc/>
         public override Version Version => new Version(1, 2, 0);
 
-        private bool CanTrust()
-        {
-            return Array.IndexOf(new int[] { 837, 821, 823, 836, 822, 838, 884 }, WorldManager.ZoneId) >= 0;
-        }
+        /// <inheritdoc/>
+        public override bool WantButton => true;
 
+        /// <inheritdoc/>
         public override void OnInitialize()
         {
-            if (PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").Any())
+            PluginContainer plugin = PluginHelpers.GetSideStepPlugin();
+            if (plugin != null)
             {
-                PluginContainer _plugin = PluginManager.Plugins.Where(p => p.Plugin.Name == "SideStep" || p.Plugin.Name == "回避").FirstOrDefault();
-                if (_plugin.Enabled == false) { _plugin.Enabled = true; }
+                plugin.Enabled = true;
             }
 
-            _coroutine = new Decorator(c => CanTrust(), new ActionRunCoroutine(r => RunTrust()));
+            root = new Decorator(c => CanTrust(), new ActionRunCoroutine(r => RunTrust()));
         }
 
+        /// <inheritdoc/>
         public override void OnEnabled()
         {
             TreeRoot.OnStart += OnBotStart;
             TreeRoot.OnStop += OnBotStop;
             TreeHooks.Instance.OnHooksCleared += OnHooksCleared;
 
-            if (TreeRoot.IsRunning) { AddHooks(); }
+            if (TreeRoot.IsRunning)
+            {
+                AddHooks();
+            }
+
+            dungeonManager = new DungeonManager();
         }
 
+        /// <inheritdoc/>
         public override void OnDisabled()
         {
             TreeRoot.OnStart -= OnBotStart;
@@ -61,53 +74,76 @@ namespace Trust
             RemoveHooks();
         }
 
-        public override void OnShutdown() { OnDisabled(); }
+        /// <inheritdoc/>
+        public override void OnShutdown()
+        {
+            OnDisabled();
+        }
 
-        public override bool WantButton => true;
-
+        /// <inheritdoc/>
         public override void OnButtonPress()
         {
-            if (_settingsForm == null || _settingsForm.IsDisposed || _settingsForm.Disposing) { _settingsForm = new TrustSettings(); }
-            _settingsForm.ShowDialog();
+            if (settingsForm == null || settingsForm.IsDisposed || settingsForm.Disposing)
+            {
+                settingsForm = new TrustSettings();
+            }
+
+            settingsForm.ShowDialog();
         }
 
         private void AddHooks()
         {
             Logging.Write(Colors.Aquamarine, "Adding Trust Hook");
-            TreeHooks.Instance.AddHook("TreeStart", _coroutine);
+            TreeHooks.Instance.AddHook("TreeStart", root);
         }
 
         private void RemoveHooks()
         {
             Logging.Write(Colors.Aquamarine, "Removing Trust Hook");
-            TreeHooks.Instance.RemoveHook("TreeStart", _coroutine);
+            TreeHooks.Instance.RemoveHook("TreeStart", root);
         }
 
-        private void OnBotStop(BotBase bot) { RemoveHooks(); }
-
-        private void OnBotStart(BotBase bot) { AddHooks(); }
-
-        private void OnHooksCleared(object sender, EventArgs e) { RemoveHooks(); }
-
-        private static async Task<bool> EatFood()
+        private void OnBotStop(BotBase bot)
         {
-            if (Settings.Instance.Id == 0 || !InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id)) { return false; }
+            RemoveHooks();
+        }
 
-            if (GatheringManager.WindowOpen) { return false; }
+        private void OnBotStart(BotBase bot)
+        {
+            AddHooks();
+        }
 
-            BagSlot item = InventoryManager.FilledSlots.GetFoodItem(Settings.Instance.Id);
+        private void OnHooksCleared(object sender, EventArgs e)
+        {
+            RemoveHooks();
+        }
 
-            if (item == null)
+        private bool CanTrust()
+        {
+            return Array.IndexOf(new int[] { 837, 821, 823, 836, 822, 838, 884 }, WorldManager.ZoneId) >= 0;
+        }
+
+        private async Task<bool> RunTrust()
+        {
+            if (!Core.Me.InCombat && ActionManager.IsSprintReady && MovementManager.IsMoving)
             {
-                return false;
+                ActionManager.Sprint();
+                await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
             }
 
-            Logging.Write(Colors.Aquamarine, "[吃食物] Eating " + item.Name);
-            item.UseItem();
-            await Coroutine.Wait(5000, () => Core.Player.HasAura(_buff));
+            if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
+            {
+                await FoodHelpers.EatFood();
+            }
 
-            return true;
+            if (await PlayerCheck())
+            {
+                return true;
+            }
+
+            return await dungeonManager.RunAsync();
         }
+
         private static async Task<bool> PlayerCheck()
         {
             if (Core.Me.CurrentHealthPercent <= 0)
@@ -126,52 +162,5 @@ namespace Trust
 
             return false;
         }
-        private async Task<bool> RunTrust()
-        {
-            if (!Core.Me.InCombat && ActionManager.IsSprintReady && MovementManager.IsMoving)
-            {
-                ActionManager.Sprint();
-                await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
-            }
-
-            if (!Core.Player.HasAura(_buff)) { await EatFood(); }
-
-            switch (WorldManager.ZoneId)
-            {
-                case 837: //71本 水滩村
-                    return await HolminsterSwitch.Run();
-                case 821: //73本 多恩美格禁园
-                    if (await PlayerCheck())  {  return true; }
-                    return await DohnMheg.Run();
-                case 823: //75本 奇坦那神影洞
-                    if (await PlayerCheck())  {  return true; }
-                    return await TheQitanaRavel.Run();
-                case 836: //77本 马利卡大井
-                    if (await PlayerCheck())  {  return true; }
-                    return await MalikahWell.Run();
-                case 822: //79本 格鲁格火山
-                    if (await PlayerCheck())  {  return true; }
-                    return await MtGulg.Run();
-                case 838: //80本 亚马乌罗提
-                    if (await PlayerCheck())  {  return true; }
-                    return await Amaurot.Run();
-                case 884: //80本 国际服 5.1
-                    if (await PlayerCheck())  {  return true; }
-                    return await TheGrandCosmos.Run();
-                default:
-                    return false;
-            }
-        }
-    }
-
-    public class Settings : JsonSettings
-    {
-        private static Settings _instance;
-        public static Settings Instance { get { return _instance ?? (_instance = new Settings()); ; } }
-
-        public Settings() : base(Path.Combine(CharacterSettingsDirectory, "Trust.json")) { }
-
-        [Setting]
-        public uint Id { get; set; }
     }
 }

@@ -38,6 +38,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile>bin\x64\Debug\RBTrust.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -49,12 +50,12 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreyMagic, Version=1.0.41.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
-      <HintPath>packages\RB.Assemblies.1.0.412\lib\net461\GreyMagic.dll</HintPath>
+    <Reference Include="GreyMagic, Version=1.0.60.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.464\lib\net461\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.412.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
-      <HintPath>packages\RB.Assemblies.1.0.412\lib\net461\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.464.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.464\lib\net461\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,15 +68,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Plugins\Trust\Data\Amaurot.cs" />
-    <Compile Include="Plugins\Trust\Data\DohnMheg.cs" />
-    <Compile Include="Plugins\Trust\Data\HolminsterSwitch.cs" />
-    <Compile Include="Plugins\Trust\Data\MalikahWell.cs" />
-    <Compile Include="Plugins\Trust\Data\MtGulg.cs" />
-    <Compile Include="Plugins\Trust\Data\TheGrandCosmos.cs" />
-    <Compile Include="Plugins\Trust\Data\TheQitanaRavel.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\AbstractDungeon.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\Amaurot.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\DohnMheg.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\DungeonManager.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\HolminsterSwitch.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\MalikahsWell.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\MtGulg.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheGrandCosmos.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheQitanaRavel.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\ZoneId.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
-    <Compile Include="Plugins\Trust\Helpers\Helpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\MovementHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\PluginHelpers.cs" />
+    <Compile Include="Plugins\Trust\Settings.cs" />
     <Compile Include="Plugins\Trust\Trust.cs" />
     <Compile Include="Plugins\Trust\TrustSettings.cs">
       <SubType>Form</SubType>
@@ -86,9 +95,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
-    <Compile Include="Quest Behaviors\DutyFinder.cs" />
+    <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\DungeonId.cs" />
+    <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
+    <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
+    <Compile Include="Quest Behaviors\InstanceFlags.cs" />
+    <Compile Include="Windows\ExtendedContentsFinder.cs" />
     <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
-    <Compile Include="Quest Behaviors\LoadProfile.cs" />
     <Compile Include="Quest Behaviors\LootTreasureTag.cs" />
     <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
     <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
@@ -96,12 +109,10 @@
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nuget.config" />
     <None Include="packages.config" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Plugins\Trust\Data\GETSPELLS.txt" />
-    <Content Include="Plugins\Trust\Data\GETSPELLS.XML" />
     <Content Include="Profiles\【内有参数设置】71全自动NPC副本练级%28配合Trust插件%29 Ver 2.1.0.xml" />
     <Content Include="Profiles\【内有参数设置】73全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
     <Content Include="Profiles\【内有参数设置】75全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
@@ -113,6 +124,10 @@
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">
       <DependentUpon>TrustSettings.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.376\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.376\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="CopyMarkdownFiles" AfterTargets="AfterBuild">
