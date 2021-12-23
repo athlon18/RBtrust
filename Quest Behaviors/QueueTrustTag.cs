@@ -104,6 +104,16 @@ namespace ff14bot.NeoProfiles.Tags
             /// Lv. 80: Paglth'an
             /// </summary>
             Paglthan = 11,
+
+            /// <summary>
+            /// Lv. 81: The Tower of Zot
+            /// </summary>
+            TheTowerofZot = 12,
+
+            /// <summary>
+            /// Lv. 83: The Tower of Babil
+            /// </summary>
+            TheTowerofBabil = 13,
         }
     }
 }

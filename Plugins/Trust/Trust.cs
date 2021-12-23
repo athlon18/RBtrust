@@ -158,6 +158,9 @@ namespace Trust
                 case 884: //80本 国际服 5.1
                     if (await PlayerCheck())  {  return true; }
                     return await TheGrandCosmos.Run();
+                case 969: //83本 The Tower of Babil
+                    if (await PlayerCheck()) { return true; }
+                    return await TheTowerofBabil.Run();
                 default:
                     return false;
             }
