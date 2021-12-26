@@ -114,12 +114,12 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Profiles\【内有参数设置】71全自动NPC副本练级%28配合Trust插件%29 Ver 2.1.0.xml" />
-    <Content Include="Profiles\【内有参数设置】73全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
-    <Content Include="Profiles\【内有参数设置】75全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
-    <Content Include="Profiles\【内有参数设置】77全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.1.xml" />
-    <Content Include="Profiles\【内有参数设置】79全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.0.xml" />
-    <Content Include="Profiles\【内有参数设置】80全自动NPC副本练级%28配合Trust插件%29 Ver 1.0.0.xml" />
+    <Content Include="Profiles\[O][RBTrust] 71 Holminster Switch.xml" />
+    <Content Include="Profiles\[O][RBTrust] 73 Dohn Mheg.xml" />
+    <Content Include="Profiles\[O][RBTrust] 75 The Qitana Ravel.xml" />
+    <Content Include="Profiles\[O][RBTrust] 77 Malikah%27s Well.xml" />
+    <Content Include="Profiles\[O][RBTrust] 79 Mt. Gulg.xml" />
+    <Content Include="Profiles\[O][RBTrust] 80 Amaurot.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">

@@ -6,7 +6,7 @@
 <!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
 ]>
 <Profile>
-  <Name>【NPC】80全自动副本练级 by sodimm</Name>
+  <Name>[O][RBTrust] 80 Amaurot by sodimm, Manta</Name>
   <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
