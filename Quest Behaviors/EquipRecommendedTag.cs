@@ -7,26 +7,30 @@ using System.Threading.Tasks;
 
 namespace ff14bot.NeoProfiles.Tags
 {
+    /// <summary>
+    /// Runs the in-game Equip Recommended feature. Only considers Armory Chest.
+    /// </summary>
     [XmlElement("EquipRecommended")]
     public class EquipRecommendedTag : AbstractTaskTag
     {
-        private readonly string _windowName = "RecommendEquip";
-        private readonly string _agentOffset = "Search 48 8D 05 ? ? ? ? C6 43 ? ? 48 89 03 48 8B C3 C7 43 ? ? ? ? ? Add 3 TraceRelative";
+        private readonly string windowName = "RecommendEquip";
+        private readonly string agentOffset = "Search 48 8D 05 ? ? ? ? C6 43 ? ? 48 89 03 48 8B C3 C7 43 ? ? ? ? ? Add 3 TraceRelative";
 
+        /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
-            AtkAddonControl window = RaptureAtkUnitManager.GetWindowByName(_windowName);
+            AtkAddonControl window = RaptureAtkUnitManager.GetWindowByName(windowName);
 
             if (window == null)
             {
                 PatternFinder patternFinder = new PatternFinder(Core.Memory);
-                IntPtr agentVtable = patternFinder.Find(_agentOffset);
+                IntPtr agentVtable = patternFinder.Find(agentOffset);
                 int agentId = AgentModule.FindAgentIdByVtable(agentVtable);
 
                 AgentModule.GetAgentInterfaceById(agentId).Toggle();
-                await Coroutine.Wait(5000, () => RaptureAtkUnitManager.GetWindowByName(_windowName) != null);
+                await Coroutine.Wait(5000, () => RaptureAtkUnitManager.GetWindowByName(windowName) != null);
 
-                window = RaptureAtkUnitManager.GetWindowByName(_windowName);
+                window = RaptureAtkUnitManager.GetWindowByName(windowName);
             }
 
             if (window != null)
