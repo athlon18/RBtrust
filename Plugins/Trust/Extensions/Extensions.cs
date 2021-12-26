@@ -127,7 +127,7 @@ namespace Trust.Extensions
 
             if (sidestepPlugin != null)
             {
-                HashSet<uint> filteredIds = new HashSet<uint>(bossIds.Where(id => !ignoreIds.Contains(id)));
+                HashSet<uint> filteredIds = new HashSet<uint>(bossIds.Where(id => ignoreIds == null || !ignoreIds.Contains(id)));
 
                 bool isBoss = ignoreIds != null
                 ? GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
