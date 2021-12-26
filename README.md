@@ -10,11 +10,11 @@
 
 [-2]: ./README.zh.md "中文"
 [-1]: ./README.md "English"
-[0]: https://github.com/athlon18/RBtrust "RBtrust on GitHub"
+[0]: https://github.com/TheManta/RBtrust/tree/ew-beta "RBtrust on GitHub"
 [1]: https://img.shields.io/badge/-Download-brightgreen
-[2]: https://github.com/athlon18/RBtrust/archive/refs/heads/master.zip "Download"
+[2]: https://github.com/TheManta/RBtrust/archive/refs/heads/ew-beta.zip "Download"
 [3]: https://img.shields.io/badge/Discord-7389D8?logo=discord&logoColor=ffffff&labelColor=6A7EC2
-[4]: https://discord.gg/XtAneKksv4 "Discord"
+[4]: https://discord.gg/bmgCq39 "Discord"
 [5]: https://www.rebornbuddy.com/ "RebornBuddy"
 
 ## Supported Dungeons
@@ -72,7 +72,7 @@ In case your repoBuddy config is too old or otherwise missing `RBtrust`, you can
 
 - **Name:** RBtrust
 - **Type:** Plugin
-- **URL:** `https://github.com/athlon18/RBtrust.git/trunk`
+- **URL:** `https://github.com/TheManta/RBtrust.git/branches/ew-beta`
 
 ![repBuddy Settings](https://i.imgur.com/q53jzEX.png)
 
@@ -82,7 +82,7 @@ OR by first closing the bot, then editing `RebornBuddy\Plugins\repoBuddy\repoBud
 <Repo>
   <Name>RBtrust</Name>
   <Type>Plugin</Type>
-  <URL>https://github.com/athlon18/RBtrust.git/trunk</URL>
+  <URL>https://github.com/TheManta/RBtrust.git/branches/ew-beta</URL>
 </Repo>
 ```
 
@@ -123,14 +123,15 @@ To load a dungeon script:
 
 ## Troubleshooting
 
-For live volunteer support, join the [RBtrust Discord][4].
+For live volunteer support, join the [Project BR Discord][4] channel `#rbtrust-issues`.
 
 When asking for help, always include:
 
 - which `.xml` script you loaded,
+- your class + Trust NPC list + scenario vs. avatar mode,
 - what you tried to do,
 - what went wrong,
-- relevant logs from the `RebornBuddy\Logs\` folder.
+- **logs from the `RebornBuddy\Logs\` folder.**
 
 No need to ask if anyone's around or for permission to ask -- just go for it!
 
