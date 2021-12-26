@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!DOCTYPE Profile [
+  <!-- 什么时候退本 -->
+  <!ENTITY boss1 "0"><!--BOSS1结束 -->
+  <!ENTITY boss2 "0"><!--BOSS2结束 -->
+  <!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
+  <!ENTITY boss3 "1"><!--打完全部 -->
 
-<!ENTITY usefood "0"><!--是否启用食物 -->
-<!ENTITY food "4753"><!-- 食物为水牛奶 -->
-<!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
-<!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
-
-<!-- 什么时候退本 -->
-<!ENTITY boss1 "0"><!--BOSS1结束 -->
-<!ENTITY boss2 "0"><!--BOSS2结束 -->
-<!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
-<!ENTITY boss3 "1"><!--打完全部 -->
-
-<!-- 拾取箱子 -->
-<!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
-<!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
-<!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
-<!ENTITY halfway "1"><!--路途中的箱子 -->
-
+  <!-- 拾取箱子 -->
+  <!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
+  <!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
+  <!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
+  <!ENTITY halfway "1"><!--路途中的箱子 -->
 ]>
 <Profile>
   <Name>[O][RBTrust] 73 Dohn Mheg by athlon, Minami16, 疾风点破, Manta</Name>
@@ -38,12 +30,6 @@
 
       <If Condition="IsOnMap(821)">
         <WaitForLoading/>
-
-        <If Condition="&usefood; == 1">
-          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
-        </If>
-
-
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
 
         <!-- 第一步 禁园风花 -->
@@ -73,11 +59,7 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-
-        <If Condition="&usefood; == 1">
-          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
-        </If>
-
+        
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <!-- 第六步  打怪 禁园石莲猬 -->
@@ -124,12 +106,7 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-
-        <If Condition="&usefood; == 1">
-          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
-        </If>
-
-
+        
         <!-- 第十一步 打怪 上个BOSS打完要往前去到下一层 再往前右键互动石柱才能开怪-->
         <MoveTo XYZ="8.755135,20.0074,-400.4264"/>
         <RunCode name="向前移动"/>
@@ -247,7 +224,7 @@
         <Hotspot Radius="200" XYZ="6.234492,6.851405,21.12165"/>
       </Hotspots>
       <TargetMobs>
-        <TargetMob Name="美眼 因克·佐恩" Id="8141 " Weight="1"/>
+        <TargetMob Name="美眼 因克·佐恩" Id="8141" Weight="1"/>
       </TargetMobs>
     </GrindArea>
     <GrindArea name="boss2">
@@ -264,8 +241,8 @@
         <Hotspot Radius="200" XYZ="-135.7786,-144.5292,-253.5551"/>
       </Hotspots>
       <TargetMobs>
-        <TargetMob Name="乐圣 因克·佐恩  " Id="8146" Weight="1"/>
-        <TargetMob Name="恐怖幻影" Id="8171 " Weight="1"/>
+        <TargetMob Name="乐圣 因克·佐恩" Id="8146" Weight="1"/>
+        <TargetMob Name="恐怖幻影" Id="8171" Weight="1"/>
       </TargetMobs>
     </GrindArea>
   </GrindAreas>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-<!ENTITY usefood "0"><!--是否启用食物 -->
-<!ENTITY food "4753"><!-- 食物为水牛奶 -->
-<!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
-<!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
+
 ]>
 <Profile>
   <Name>[O][RBTrust] 80 Amaurot by sodimm, Manta</Name>
@@ -22,11 +19,7 @@
 
       <If Condition="IsOnMap(838)">
         <WaitForLoading/>
-
-        <If Condition="&usefood; == 1">
-          <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
-        </If>
-
+        
         <MoveTo XYZ="-79.58617, 748.2328, 100.5795"/>
         <Grind GrindRef="TheFirstBeast" PostCombatDelay="2.0" While="ObjectExistsWithId(8201)"/>
         <LootTreasure/>
