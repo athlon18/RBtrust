@@ -10,9 +10,9 @@
 
 [-2]: ./README.zh.md "中文"
 [-1]: ./README.md "English"
-[0]: https://github.com/TheManta/RBtrust/tree/ew-beta "RBtrust on GitHub"
+[0]: https://github.com/TheManta/RBtrust "RBtrust on GitHub"
 [1]: https://img.shields.io/badge/-Download-brightgreen
-[2]: https://github.com/TheManta/RBtrust/archive/refs/heads/ew-beta.zip "Download"
+[2]: #installation "Download"
 [3]: https://img.shields.io/badge/Discord-7389D8?logo=discord&logoColor=ffffff&labelColor=6A7EC2
 [4]: https://discord.gg/bmgCq39 "Discord"
 [5]: https://www.rebornbuddy.com/ "RebornBuddy"
@@ -66,13 +66,16 @@ Install the [RepoBuddy][103] plugin -- `RBtrust` is configured by default!
 
 #### Adding `RBtrust` to RepoBuddy
 
-ℹ️ New users can skip this step.
+ℹ️ New RepoBuddy users can skip this step.
+
+⚠️ Older RepoBuddy users may need to update the `RBtrust` URL!
+
 
 In case your repoBuddy config is too old or otherwise missing `RBtrust`, you can add it via repoBuddy's settings menu:
 
 - **Name:** RBtrust
 - **Type:** Plugin
-- **URL:** `https://github.com/TheManta/RBtrust.git/branches/ew-beta`
+- **URL:** `https://github.com/TheManta/RBtrust.git/trunk`
 
 ![repBuddy Settings](https://i.imgur.com/q53jzEX.png)
 
@@ -82,14 +85,14 @@ OR by first closing the bot, then editing `RebornBuddy\Plugins\repoBuddy\repoBud
 <Repo>
   <Name>RBtrust</Name>
   <Type>Plugin</Type>
-  <URL>https://github.com/TheManta/RBtrust.git/branches/ew-beta</URL>
+  <URL>https://github.com/TheManta/RBtrust.git/trunk</URL>
 </Repo>
 ```
 
-### Setup
+### Manual Setup
 
 0. Fully delete old versions of RBtrust in the `RebornBuddy\Plugins\` folder.
-1. Download the [latest version][2].
+1. Download the [latest version][104].
 2. On the `.zip` file, right click > `Properties` > `Unblock` > `Apply`.
 3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this:
 
@@ -107,6 +110,8 @@ RebornBuddy
 
 4. Start RebornBuddy as normal.
 5. In the Plugins tab, enable the `Trust` plugin.
+
+[104]: https://github.com/TheManta/RBtrust/archive/refs/heads/master.zip "RBtrust.zip"
 
 ## Usage
 
