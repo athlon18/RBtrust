@@ -174,7 +174,8 @@ namespace Trust.Dungeons
                     {
                         BattleCharacter obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true)
                             .Where(r =>
-                              r.NpcId == 729 || r.NpcId == 8378 || // "雅·修特拉"
+                              r.IsAlive &&
+                              (r.NpcId == 729 || r.NpcId == 8378 || // "雅·修特拉"
                               r.NpcId == 1492 || // "于里昂热"
                               r.NpcId == 4130 || // "阿尔菲诺"
                               r.NpcId == 5239 || // "阿莉塞"
@@ -189,8 +190,7 @@ namespace Trust.Dungeons
                               r.Name == "琳" ||
                               r.Name == "水晶公" ||
                               r.Name == "敏菲利亚" ||
-                              r.Name == "桑克瑞德")
-							  && r.IsDead == false
+                              r.Name == "桑克瑞德"))
                             .OrderBy(r => r.Distance())
                             .First();
 
