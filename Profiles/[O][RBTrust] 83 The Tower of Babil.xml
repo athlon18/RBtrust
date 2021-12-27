@@ -6,7 +6,7 @@
 <!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
 ]>
 <Profile>
-    <Name>【NPC】83全自动副本练级 by y2krazy</Name>
+    <Name>[O][RBTrust] 83 The Tower of Babil by y2krazy</Name>
     <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
     <Order>
         <CheckPlugins/>

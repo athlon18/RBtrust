@@ -120,6 +120,7 @@
     <Content Include="Profiles\[O][RBTrust] 77 Malikah%27s Well.xml" />
     <Content Include="Profiles\[O][RBTrust] 79 Mt. Gulg.xml" />
     <Content Include="Profiles\[O][RBTrust] 80 Amaurot.xml" />
+    <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">
