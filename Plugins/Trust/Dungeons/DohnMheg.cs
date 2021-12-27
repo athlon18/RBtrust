@@ -171,19 +171,24 @@ namespace Trust.Dungeons
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
-                        BattleCharacter obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true)
+                        BattleCharacter obj1 = GameObjectManager.GetObjectsOfType<BattleCharacter>(true)
                             .Where(r =>
-                              (r.NpcId == 729 || r.NpcId == 8378 || // "雅·修特拉"
-
-                              // r.NpcId == 1492 ||                       // "于里昂热"
-                              // r.NpcId == 4130 ||                       // "阿尔菲诺"
+                              r.NpcId == 729 || r.NpcId == 8378 || // "雅·修特拉"
+                              r.NpcId == 1492 || // "于里昂热"
+                              r.NpcId == 4130 || // "阿尔菲诺"
                               r.NpcId == 5239 || // "阿莉塞"
                               r.NpcId == 8889 || // 琳
-                              r.Name == "雅·修特拉" ||
+							  r.NpcId == 11264 || // Alphinaud's avatar
+							  r.NpcId == 11265 || // Alisaie's avatar
+							  r.NpcId == 11267 || // Urianger's avatar
+							  r.NpcId == 11268 || // Y'shtola's avatar
+							  r.NpcId == 11269 || // Ryne's avatar
+							  r.NpcId == 11270 || // Estinien's avatar
                               r.Name == "阿莉塞" ||
+                              r.Name == "琳" ||
+                              r.Name == "水晶公" ||
                               r.Name == "敏菲利亚" ||
-                              r.Name == "琳")
-                              && r.IsDead == false)
+                              r.Name == "桑克瑞德")
                             .OrderBy(r => r.Distance())
                             .First();
 
