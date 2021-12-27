@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Trust.Data;
 using Trust.Extensions;
 using Trust.Helpers;
 
@@ -22,7 +23,7 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        public new const ZoneId ZoneId = Dungeons.ZoneId.HolminsterSwitch;
+        public new const ZoneId ZoneId = Data.ZoneId.HolminsterSwitch;
 
         /// <summary>
         /// Set of boss-related monster IDs.

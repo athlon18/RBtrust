@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Trust.Data;
 using Trust.Helpers;
 
 namespace Trust.Dungeons
@@ -20,7 +21,7 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        public new const ZoneId ZoneId = Dungeons.ZoneId.TheQitanaRavel;
+        public new const ZoneId ZoneId = Data.ZoneId.TheQitanaRavel;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.TheQitanaRavel;

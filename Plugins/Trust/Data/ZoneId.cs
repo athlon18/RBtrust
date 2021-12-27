@@ -1,4 +1,4 @@
-﻿namespace Trust.Dungeons
+﻿namespace Trust.Data
 {
     /// <summary>
     /// Static map of dungeon names to Zone IDs.

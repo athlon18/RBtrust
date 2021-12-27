@@ -79,7 +79,7 @@
     <Compile Include="Plugins\Trust\Dungeons\TheGrandCosmos.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheQitanaRavel.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfBabil.cs" />
-    <Compile Include="Plugins\Trust\Dungeons\ZoneId.cs" />
+    <Compile Include="Plugins\Trust\Data\ZoneId.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
     <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
-    <Compile Include="Plugins\Trust\Dungeons\DungeonId.cs" />
+    <Compile Include="Plugins\Trust\Data\DungeonId.cs" />
     <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
     <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
     <Compile Include="Quest Behaviors\InstanceFlags.cs" />

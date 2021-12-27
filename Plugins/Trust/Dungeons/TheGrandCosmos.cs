@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Trust.Data;
 
 namespace Trust.Dungeons
 {
@@ -10,7 +11,7 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        public new const ZoneId ZoneId = Dungeons.ZoneId.TheGrandCosmos;
+        public new const ZoneId ZoneId = Data.ZoneId.TheGrandCosmos;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.TheGrandCosmos;

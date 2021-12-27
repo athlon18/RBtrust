@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Trust.Data;
 using Trust.Extensions;
 using Trust.Helpers;
 
@@ -22,7 +23,7 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        public new const ZoneId ZoneId = Dungeons.ZoneId.DohnMheg;
+        public new const ZoneId ZoneId = Data.ZoneId.DohnMheg;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.DohnMheg;
@@ -171,19 +172,19 @@ namespace Trust.Dungeons
 
                     if (spellCaster != null && spellCaster.Name == Core.Target.Name)
                     {
-                        BattleCharacter obj1 = GameObjectManager.GetObjectsOfType<BattleCharacter>(true)
+                        BattleCharacter obj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true)
                             .Where(r =>
                               r.NpcId == 729 || r.NpcId == 8378 || // "雅·修特拉"
                               r.NpcId == 1492 || // "于里昂热"
                               r.NpcId == 4130 || // "阿尔菲诺"
                               r.NpcId == 5239 || // "阿莉塞"
                               r.NpcId == 8889 || // 琳
-							  r.NpcId == 11264 || // Alphinaud's avatar
-							  r.NpcId == 11265 || // Alisaie's avatar
-							  r.NpcId == 11267 || // Urianger's avatar
-							  r.NpcId == 11268 || // Y'shtola's avatar
-							  r.NpcId == 11269 || // Ryne's avatar
-							  r.NpcId == 11270 || // Estinien's avatar
+                              r.NpcId == 11264 || // Alphinaud's avatar
+                              r.NpcId == 11265 || // Alisaie's avatar
+                              r.NpcId == 11267 || // Urianger's avatar
+                              r.NpcId == 11268 || // Y'shtola's avatar
+                              r.NpcId == 11269 || // Ryne's avatar
+                              r.NpcId == 11270 || // Estinien's avatar
                               r.Name == "阿莉塞" ||
                               r.Name == "琳" ||
                               r.Name == "水晶公" ||

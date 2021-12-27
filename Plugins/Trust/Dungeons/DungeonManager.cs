@@ -1,6 +1,7 @@
 ﻿using ff14bot.Managers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Trust.Data;
 
 namespace Trust.Dungeons
 {

@@ -4,7 +4,7 @@ using ff14bot.Managers;
 using GreyMagic;
 using System;
 using System.Threading.Tasks;
-using Trust.Dungeons;
+using Trust.Data;
 
 namespace ff14bot.NeoProfiles.Tags
 {

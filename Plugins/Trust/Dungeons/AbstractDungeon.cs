@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Trust.Data;
 
 namespace Trust.Dungeons
 {
@@ -10,7 +11,7 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        public const ZoneId ZoneId = Dungeons.ZoneId.NONE;
+        public const ZoneId ZoneId = Data.ZoneId.NONE;
 
         /// <summary>
         /// Gets <see cref="DungeonId"/> for this dungeon.
