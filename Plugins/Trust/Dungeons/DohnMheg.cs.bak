@@ -190,7 +190,6 @@ namespace Trust.Dungeons
                               r.Name == "水晶公" ||
                               r.Name == "敏菲利亚" ||
                               r.Name == "桑克瑞德")
-							  && r.IsDead == false
                             .OrderBy(r => r.Distance())
                             .First();
 
