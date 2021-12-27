@@ -69,6 +69,12 @@ namespace Trust.Dungeons
                       r.NpcId == 4130 || // "阿尔菲诺"
                       r.NpcId == 5239 || // "阿莉塞"
                       r.NpcId == 8889 || // 琳
+					  r.NpcId == 11264 || // Alphinaud's avatar
+					  r.NpcId == 11265 || // Alisaie's avatar
+					  r.NpcId == 11267 || // Urianger's avatar
+					  r.NpcId == 11268 || // Y'shtola's avatar
+					  r.NpcId == 11269 || // Ryne's avatar
+					  r.NpcId == 11270 || // Estinien's avatar
                       r.Name == "阿莉塞" ||
                       r.Name == "琳" ||
                       r.Name == "水晶公" ||
@@ -131,6 +137,12 @@ namespace Trust.Dungeons
                               r.NpcId == 4130 || // "阿尔菲诺"
                               r.NpcId == 5239 || // "阿莉塞"
                               r.NpcId == 8889 || // 琳
+							  r.NpcId == 11264 || // Alphinaud's avatar
+							  r.NpcId == 11265 || // Alisaie's avatar
+							  r.NpcId == 11267 || // Urianger's avatar
+							  r.NpcId == 11268 || // Y'shtola's avatar
+							  r.NpcId == 11269 || // Ryne's avatar
+							  r.NpcId == 11270 || // Estinien's avatar
                               r.Name == "阿莉塞" ||
                               r.Name == "琳" ||
                               r.Name == "水晶公" ||
