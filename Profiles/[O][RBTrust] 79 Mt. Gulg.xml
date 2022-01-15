@@ -55,6 +55,7 @@
 
         <MoveTo XYZ="-240.1017, 204.3701, 174.6434"/>
         <WaitTimer WaitTime="12"/>
+        <Grind GrindRef="ForgivenRevelry" PostCombatDelay="2.0" While="ObjectExistsWithId(8270)"/>
 
         <MoveTo Distance="1" XYZ="-240, 204, 188"/>
         <RunCode Name="CollapsedStairs"/>
