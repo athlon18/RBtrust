@@ -54,7 +54,7 @@
         <WaitTimer WaitTime="5"/>
 
         <MoveTo XYZ="-240.1017, 204.3701, 174.6434"/>
-        <WaitTimer WaitTime="10"/>
+        <WaitTimer WaitTime="12"/>
 
         <MoveTo Distance="1" XYZ="-240, 204, 188"/>
         <RunCode Name="CollapsedStairs"/>
@@ -87,6 +87,16 @@
       </Hotspots>
       <TargetMobs>
         <TargetMob Id="8261"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ForgivenRevelry">
+      <Hotspots>
+        <Hotspot XYZ="-240, 204, 188" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8270"/>
       </TargetMobs>
       <MinLevel/>
       <MaxLevel/>
