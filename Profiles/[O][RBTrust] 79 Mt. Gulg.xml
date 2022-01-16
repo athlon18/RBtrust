@@ -50,15 +50,14 @@
         <LootTreasure/>
         <EquipRecommended/>
 
-        <MoveTo XYZ="-240.237, 204.3701, 160.873"/>
+        <MoveTo XYZ="-240, 204, 188"/>
         <WaitTimer WaitTime="5"/>
 
-        <MoveTo XYZ="-240.1017, 204.3701, 174.6434"/>
+        <MoveTo XYZ="-240, 204, 188"/>
         <WaitTimer WaitTime="12"/>
-        <Grind GrindRef="ForgivenRevelry" PostCombatDelay="2.0" While="ObjectExistsWithId(8270)"/>
+        <Grind GrindRef="ForgivenRevelry" PostCombatDelay="2.0" While="GameObjectManager.GetObjectByNPCId(8270).IsTargetable"/>
 
-        <MoveTo Distance="1" XYZ="-240, 204, 188"/>
-        <RunCode Name="CollapsedStairs"/>
+        <ClimbHill Start="-240, 204, 188" End="-240, 210, 210" Distance="2.5" />
 
         <MoveTo Distance="1" XYZ="-239.9252, 210, 214.856"/>
         <WaitWhile Condition="not ObjectExistsWithId(8262)"/>
@@ -119,20 +118,6 @@
         Core.Me.SetFacing(4.231756f);
         MovementManager.MoveForwardStart();
         while (WorldManager.SubZoneId != 3004)  {  await Coroutine.Yield();  }
-        Navigator.PlayerMover.MoveStop();
-      ]]>
-    </CodeChunk>
-    <CodeChunk Name="CollapsedStairs">
-      <![CDATA[
-        var destination = new Clio.Utilities.Vector3(-240f, 210f, 210f);
-
-        while (Core.Me.Distance2D(destination) > 1f)
-        {
-          MovementManager.MoveForwardStart();
-          Core.Me.Face(destination);
-          await Coroutine.Yield();
-        }
-
         Navigator.PlayerMover.MoveStop();
       ]]>
     </CodeChunk>
