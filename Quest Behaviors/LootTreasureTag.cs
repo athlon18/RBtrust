@@ -17,6 +17,7 @@ namespace ff14bot.NeoProfiles.Tags
     public class LootTreasureTag : AbstractTaskTag
     {
         private readonly string[] chestNames = { "宝箱", "Treasure Coffer" };
+        private const float InteractRange = 2.5f;
 
         /// <summary>
         /// Gets or sets max search radius for Treasure Coffers.
@@ -33,7 +34,7 @@ namespace ff14bot.NeoProfiles.Tags
 
             foreach (Treasure chest in nearbyChests)
             {
-                while (Core.Me.Distance(chest.Location) > 2.5f)
+                while (Core.Me.Distance(chest.Location) > InteractRange)
                 {
                     await CommonTasks.MoveTo(chest.Location);
                     await Coroutine.Yield();
@@ -41,11 +42,8 @@ namespace ff14bot.NeoProfiles.Tags
 
                 Navigator.PlayerMover.MoveStop();
 
-                while (!chest.IsOpen)
-                {
-                    chest.Interact();
-                    await Coroutine.Sleep(1000);
-                }
+                chest.Interact();
+                await Coroutine.Sleep(1000);
             }
 
             return false;
