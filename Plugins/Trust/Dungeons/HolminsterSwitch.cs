@@ -30,9 +30,10 @@ namespace Trust.Dungeons
         /// </summary>
         private static readonly HashSet<uint> BossIds = new HashSet<uint>
         {
-            8300,             // Tesleen, the Forgiven :: 得到宽恕的泰丝琳
-            8301,             // Philia                :: 斐利亚
-            8570,             // Iron Chain            :: 锁链
+            8299,  // Forgiven Dissonance
+            8300,  // Tesleen, the Forgiven :: 得到宽恕的泰丝琳
+            8301,  // Philia                :: 斐利亚
+            8570,  // Iron Chain            :: 锁链
         };
 
         /// <inheritdoc/>

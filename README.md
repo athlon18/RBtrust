@@ -26,12 +26,12 @@
   ✔️ Lv. 75: The Qitana Ravel\
   ✔️ Lv. 77: Malikah's Well\
   ✔️ Lv. 79: Mt. Gulg\
-  ⚠️ Lv. 80: Amaurot\
-  ❌ Lv. 80: The Grand Cosmos\
-  ❌ Lv. 80: Anamnesis Anyder\
-  ❌ Lv. 80: The Heroes' Gauntlet\
-  ❌ Lv. 80: Matoya's Relict\
-  ❌ Lv. 80: Paglth'an
+  ⚠️ Lv. 80.1: Amaurot\
+  ❌ Lv. 80.2: The Grand Cosmos\
+  ❌ Lv. 80.3: Anamnesis Anyder\
+  ❌ Lv. 80.4: The Heroes' Gauntlet\
+  ❌ Lv. 80.5: Matoya's Relict\
+  ❌ Lv. 80.6: Paglth'an
 
 ### 6.0 Endwalker
 
@@ -39,9 +39,9 @@
   ❌ Lv. 83: The Tower of Babil\
   ❌ Lv. 85: Vanaspati\
   ❌ Lv. 87: Ktisis Hyperboreia\
-  ❌ Lv. 89: The Aitiascope\
-  ❌ Lv. 89: The Mothercrystal\
-  ❌ Lv. 90: The Dead Ends
+  ❌ Lv. 89.1: The Aitiascope\
+  ❌ Lv. 89.2: The Mothercrystal\
+  ❌ Lv. 90.1 The Dead Ends
 
 ## Installation
 

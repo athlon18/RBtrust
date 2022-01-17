@@ -37,32 +37,32 @@
         MtGulg = 822,
 
         /// <summary>
-        /// Lv. 80: Amaurot
+        /// Lv. 80.1: Amaurot
         /// </summary>
         Amaurot = 838,
 
         /// <summary>
-        /// Lv. 80: The Grand Cosmos
+        /// Lv. 80.2: The Grand Cosmos
         /// </summary>
         TheGrandCosmos = 884,
 
         /// <summary>
-        /// Lv. 80: Anamnesis Anyder
+        /// Lv. 80.3: Anamnesis Anyder
         /// </summary>
         AnamnesisAnyder = 898,
 
         /// <summary>
-        /// Lv. 80: The Heroes' Gauntlet
+        /// Lv. 80.4: The Heroes' Gauntlet
         /// </summary>
         TheHeroesGauntlet = 916,
 
         /// <summary>
-        /// Lv. 80: Matoya's Relict
+        /// Lv. 80.5: Matoya's Relict
         /// </summary>
         MatoyasRelict = 933,
 
         /// <summary>
-        /// Lv. 80: Paglth'an
+        /// Lv. 80.6: Paglth'an
         /// </summary>
         Paglthan = 938,
 
@@ -87,17 +87,17 @@
         KtisisHyperboreia = 974,
 
         /// <summary>
-        /// Lv. 89: The Aitiascope
+        /// Lv. 89.1: The Aitiascope
         /// </summary>
         TheAitiascope = 978,
 
         /// <summary>
-        /// Lv. 89: The Mothercrystal
+        /// Lv. 89.2: The Mothercrystal
         /// </summary>
         TheMothercrystal = 995,
 
         /// <summary>
-        /// Lv. 90: The Dead Ends
+        /// Lv. 90.1: The Dead Ends
         /// </summary>
         TheDeadEnds = 973,
 #pragma warning restore SA1629 // Documentation text should end with a period
