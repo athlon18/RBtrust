@@ -16,8 +16,8 @@ namespace ff14bot.NeoProfiles.Tags
     [XmlElement("LootTreasure")]
     public class LootTreasureTag : AbstractTaskTag
     {
+        private const float InteractRange = 1.5f;
         private readonly string[] chestNames = { "宝箱", "Treasure Coffer" };
-        private const float InteractRange = 2.5f;
 
         /// <summary>
         /// Gets or sets max search radius for Treasure Coffers.
