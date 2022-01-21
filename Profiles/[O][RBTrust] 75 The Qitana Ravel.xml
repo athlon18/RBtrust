@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-  <!-- 什么时候退本 -->
-  <!ENTITY boss1 "0"><!--BOSS1结束 -->
-  <!ENTITY boss2 "0"><!--BOSS2结束 -->
-  <!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
-  <!ENTITY boss3 "1"><!--打完全部 -->
 
-  <!-- 拾取箱子 -->
-  <!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
-  <!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
-  <!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
-  <!ENTITY halfway "1"><!--路途中的箱子 -->
 ]>
 <Profile>
   <Name>[O][RBTrust] 75 The Qitana Ravel by athlon, Minami16, 疾风点破, Manta</Name>
@@ -20,6 +10,8 @@
     <CheckPlugins/>
 
     <While Condition="True">
+      <WaitForLoading/>
+
       <If Condition="not IsOnMap(823)">
         <EquipRecommended/>
 
@@ -61,7 +53,7 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-        
+
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <!-- 第六步  小怪5 -->
@@ -108,7 +100,7 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-        
+
         <!-- 第十二步 打怪10 跳瀑布-->
         <MoveTo XYZ="38.48219,-22.1,-155.9829"/>
         <RunCode name="向前移动"/>

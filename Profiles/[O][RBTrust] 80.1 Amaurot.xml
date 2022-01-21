@@ -3,12 +3,14 @@
 
 ]>
 <Profile>
-  <Name>[O][RBTrust] 80 Amaurot by sodimm, Manta</Name>
+  <Name>[O][RBTrust] 80.1 Amaurot by sodimm, Manta</Name>
   <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 
     <While Condition="True">
+      <WaitForLoading/>
+
       <If Condition="not IsOnMap(838)">
         <EquipRecommended/>
 
@@ -19,7 +21,7 @@
 
       <If Condition="IsOnMap(838)">
         <WaitForLoading/>
-        
+
         <MoveTo XYZ="-79.58617, 748.2328, 100.5795"/>
         <Grind GrindRef="TheFirstBeast" PostCombatDelay="2.0" While="ObjectExistsWithId(8201)"/>
         <LootTreasure/>

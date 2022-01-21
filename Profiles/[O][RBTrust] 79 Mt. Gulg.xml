@@ -9,6 +9,8 @@
     <CheckPlugins/>
 
     <While Condition="True">
+      <WaitForLoading/>
+
       <If Condition="not IsOnMap(822)">
         <EquipRecommended/>
 

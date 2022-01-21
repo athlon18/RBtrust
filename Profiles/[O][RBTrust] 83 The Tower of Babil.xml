@@ -1,159 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-<!ENTITY usefood "0"><!--是否启用食物 -->
-<!ENTITY food "4753"><!-- 食物为水牛奶 -->
-<!ENTITY foodHQ "False"><!-- 食物是否为HQ (是 为True)-->
-<!ENTITY foodtime "25"><!-- 食物剩余时间补充 -->
 ]>
 <Profile>
-    <Name>[O][RBTrust] 83 The Tower of Babil by y2krazy</Name>
-    <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
-    <Order>
-        <CheckPlugins/>
+  <Name>[O][RBTrust] 83 The Tower of Babil by y2krazy</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
 
-        <While Condition="True">
-            <If Condition="not IsOnMap(969)">
-                <EquipRecommended/>
+    <While Condition="True">
+      <WaitForLoading/>
+      <If Condition="not IsOnMap(969)">
+        <EquipRecommended/>
 
-                <QueueTrust Dungeon="TheTowerofBabil"/>
-                <CommenceDuty/>
-                <WaitForLoading/>
-            </If>
+        <QueueTrust Dungeon="TheTowerofBabil"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
 
-            <If Condition="IsOnMap(969)">
-                <If Condition="&usefood; == 1">
-                    <EatFood ItemId="&food;" Name="水煮蛋" HqOnly="&foodHQ;" MinDuration="&foodtime;"/>
-                </If>
+      <If Condition="IsOnMap(969)">
+        <If Condition="IsOnSubMap(4127) or IsOnSubMap(4128)">
+          <MoveTo XYZ="-300, -175, 71"/>
+          <Grind GrindRef="Barnabas" PostCombatDelay="2.0" While="ObjectExistsWithId(10279)"/>
+          <!--TO DO: Add custom spell logic to stack on NPC's during Shocking Force-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-				<If Condition="IsOnSubMap(4127) or IsOnSubMap(4128)">
-					<MoveTo XYZ="-300, -175, 71"/>
-					<Grind GrindRef="Barnabas" PostCombatDelay="2.0" While="ObjectExistsWithId(10279)"/>
-					<!--TO DO: Add custom spell logic to stack on NPC's during Shocking Force-->
-					<LootTreasure/>
-					<EquipRecommended/>
+          <MoveTo XYZ="-299.8641, -174.98, 25.57108"/>
+          <While Condition="IsOnSubMap(4128)">
+            <RunCode Name="Transition1"/>
+          </While>
+        </If>
 
-					<MoveTo XYZ="-299.8641, -174.98, 25.57108"/>
-					<While Condition="IsOnSubMap(4128)">
-						<RunCode Name="Transition1"/>
-					</While>
-				</If>
+        <If Condition="IsOnSubMap(4129)">
+          <If Condition="GameObjectManager.GetObjectByNPCId(2011745).IsVisible">
+            <UseObject NpcId="2011745" XYZ="400, 0.1000001, -177.5" Radius="10" UseTimes="1" />
+            <!--Control Terminal-->
+          </If>
 
-				<If Condition="IsOnSubMap(4129)">
-					<If Condition="GameObjectManager.GetObjectByNPCId(2011745).IsVisible">
-						<UseObject NpcId="2011745" XYZ="400, 0.1000001, -177.5" Radius="10" UseTimes="1" /> <!--Control Terminal-->
-					</If>
+          <MoveTo XYZ="400.1074, 0, -155.7414"/>
+          <While Condition="IsOnSubMap(4129)">
+            <RunCode Name="Transition2"/>
+          </While>
+        </If>
 
-					<MoveTo XYZ="400.1074, 0, -155.7414"/>
-					<While Condition="IsOnSubMap(4129)">
-						<RunCode Name="Transition2"/>
-					</While>
-				</If>
+        <If Condition="IsOnSubMap(4130) or IsOnSubMap(4125) or IsOnSubMap(4131)">
+          <MoveTo XYZ="343.7821, 5.841255E-06, 377.5255"/>
+          <!--Treasure Coffer-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-				<If Condition="IsOnSubMap(4130) or IsOnSubMap(4125) or IsOnSubMap(4131)">
-					<MoveTo XYZ="343.7821, 5.841255E-06, 377.5255"/> <!--Treasure Coffer-->
-					<LootTreasure/>
-					<EquipRecommended/>
-					
-					<MoveTo XYZ="219.0335, -7.510185E-06, 373.1359"/> <!--Treasure Coffer-->
-					<LootTreasure/>
-					<EquipRecommended/>
-					
-					<MoveTo XYZ="221, 1, 295"/>
-					<Grind GrindRef="Lugae" PostCombatDelay="2.0" While="ObjectExistsWithId(10282)"/>
-					<!--TO DO: Add custom logic to avoid having the Minimum debuff-->
-					<!--TO DO: Research toad mechanic-->
-					<LootTreasure/>
-					<EquipRecommended/>
+          <MoveTo XYZ="219.0335, -7.510185E-06, 373.1359"/>
+          <!--Treasure Coffer-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-					<MoveTo XYZ="149.9771, 1.597404E-05, 201.5869"/>
-					<While Condition="IsOnSubMap(4131)">
-						<RunCode Name="Transition3"/>
-					</While>
-				</If>
+          <MoveTo XYZ="221, 1, 295"/>
+          <Grind GrindRef="Lugae" PostCombatDelay="2.0" While="ObjectExistsWithId(10282)"/>
+          <!--TO DO: Add custom logic to avoid having the Minimum debuff-->
+          <!--TO DO: Research toad mechanic-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-				<If Condition="IsOnSubMap(4132) or IsOnSubMap(4133) or IsOnSubMap(4126) or IsOnSubMap(4134)">
-					<If Condition="GameObjectManager.GetObjectByNPCId(2011746).IsVisible">
-						<UseObject NpcId="2011746" XYZ="0, 499.9999, 1.192093E-07" Radius="10" UseTimes="1" /> <!--Control Terminal-->
-					</If>
+          <MoveTo XYZ="149.9771, 1.597404E-05, 201.5869"/>
+          <While Condition="IsOnSubMap(4131)">
+            <RunCode Name="Transition3"/>
+          </While>
+        </If>
 
-					<MoveTo XYZ="-0.002707131, 493, -61.90952"/> <!--Treasure Coffer-->
-					<LootTreasure/>
-					<EquipRecommended/>
+        <If Condition="IsOnSubMap(4132) or IsOnSubMap(4133) or IsOnSubMap(4126) or IsOnSubMap(4134)">
+          <If Condition="GameObjectManager.GetObjectByNPCId(2011746).IsVisible">
+            <UseObject NpcId="2011746" XYZ="0, 499.9999, 1.192093E-07" Radius="10" UseTimes="1" />
+            <!--Control Terminal-->
+          </If>
 
-					<MoveTo XYZ="-43.02309, 484, -118.1612"/> <!--Treasure Coffer-->
-					<LootTreasure/>
-					<EquipRecommended/>
+          <MoveTo XYZ="-0.002707131, 493, -61.90952"/>
+          <!--Treasure Coffer-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-					<MoveTo XYZ="-0.08154679, 480, -184.8952"/>
-					<Grind GrindRef="Anima" PostCombatDelay="2.0" While="ObjectExistsWithId(10285) or ObjectExistsWithId(10288)"/>
-					<!--<Grind GrindRef="Anima" PostCombatDelay="2.0" While="DirectorManager.ActiveDirector.GetTodoArgs(6).Item1 == 1"/>-->
-					<!--TO DO: Research Mega Graviton mechanic-->
-					<!--TO DO: Avoid Boundless Pain AoE (ID:2011705) by 20y?-->
-					<LootTreasure/>
-					<EquipRecommended/>
-				</If>
+          <MoveTo XYZ="-43.02309, 484, -118.1612"/>
+          <!--Treasure Coffer-->
+          <LootTreasure/>
+          <EquipRecommended/>
 
-				<LeaveDuty/>
-            </If>
-        </While>
-    </Order>
-    <GrindAreas>
-        <GrindArea Name="Barnabas">
-            <Hotspots>
-                <Hotspot XYZ="-300, -175, 71" Radius="250"/>
-            </Hotspots>
-            <TargetMobs>
-                <TargetMob Id="10279"/>
-            </TargetMobs>
-            <MinLevel/>
-            <MaxLevel/>
-        </GrindArea>
-        <GrindArea Name="Lugae">
-            <Hotspots>
-                <Hotspot XYZ="221, 1, 295" Radius="250"/>
-            </Hotspots>
-            <TargetMobs>
-                <TargetMob Id="10282"/>
-            </TargetMobs>
-            <MinLevel/>
-            <MaxLevel/>
-        </GrindArea>
-		<GrindArea Name="Anima">
-			<Hotspots>
-				<Hotspot XYZ="-0.01531982, 480, -199.5117" Radius="250"/>
-			</Hotspots>
-			<TargetMobs>
-				<TargetMob Id="10288"/> <!--Anima (Phase 1)-->
-				<TargetMob Id="10285"/> <!--Anima (Phase 2)-->
-			</TargetMobs>
-			<MinLevel/>
-			<MaxLevel/>
-		</GrindArea>
-	</GrindAreas>
-    <CodeChunks>
-        <CodeChunk Name="Transition1">
-            <![CDATA[
+          <MoveTo XYZ="-0.08154679, 480, -184.8952"/>
+          <Grind GrindRef="Anima" PostCombatDelay="2.0" While="ObjectExistsWithId(10285) or ObjectExistsWithId(10288)"/>
+          <!--<Grind GrindRef="Anima" PostCombatDelay="2.0" While="DirectorManager.ActiveDirector.GetTodoArgs(6).Item1 == 1"/>-->
+          <!--TO DO: Research Mega Graviton mechanic-->
+          <!--TO DO: Avoid Boundless Pain AoE (ID:2011705) by 20y?-->
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Barnabas">
+      <Hotspots>
+        <Hotspot XYZ="-300, -175, 71" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10279"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Lugae">
+      <Hotspots>
+        <Hotspot XYZ="221, 1, 295" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10282"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Anima">
+      <Hotspots>
+        <Hotspot XYZ="-0.01531982, 480, -199.5117" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10288"/>
+        <!--Anima (Phase 1)-->
+        <TargetMob Id="10285"/>
+        <!--Anima (Phase 2)-->
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition1">
+      <![CDATA[
             Core.Me.SetFacing(3.136657f);
             MovementManager.MoveForwardStart();
             await Coroutine.Sleep(2000);
             Navigator.PlayerMover.MoveStop();
             ]]>
-        </CodeChunk>
-        <CodeChunk Name="Transition2">
-            <![CDATA[
+    </CodeChunk>
+    <CodeChunk Name="Transition2">
+      <![CDATA[
             Core.Me.SetFacing(0.003331661f);
             MovementManager.MoveForwardStart();
             await Coroutine.Sleep(2000);
             Navigator.PlayerMover.MoveStop();
             ]]>
-        </CodeChunk>
-		<CodeChunk Name="Transition3">
-			<![CDATA[
+    </CodeChunk>
+    <CodeChunk Name="Transition3">
+      <![CDATA[
             Core.Me.SetFacing(3.154251f);
             MovementManager.MoveForwardStart();
             await Coroutine.Sleep(2000);
             Navigator.PlayerMover.MoveStop();
             ]]>
-		</CodeChunk>
-    </CodeChunks>
+    </CodeChunk>
+  </CodeChunks>
 </Profile>

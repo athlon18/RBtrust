@@ -84,7 +84,7 @@ namespace Trust.Dungeons
             HashSet<uint> exorcise = new HashSet<uint>() { 15826, 15827 };
             if (exorcise.IsCasting())
             {
-                Vector3 location = new Vector3("78.77, 0, -82.18");
+                Vector3 location = new Vector3("79.24156, 0, -81.55303");
 
                 if (Core.Me.Distance(location) > 1f && Core.Me.IsCasting)
                 {
@@ -98,11 +98,11 @@ namespace Trust.Dungeons
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                await Coroutine.Sleep(6000);
+                await Coroutine.Sleep(5000);
 
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                while (sw.ElapsedMilliseconds < 15000)
+                while (sw.ElapsedMilliseconds < 5000)
                 {
                     await MovementHelpers.GetClosestAlly.Follow(7f);
                     await Coroutine.Yield();

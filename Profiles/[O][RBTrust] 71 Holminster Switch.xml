@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-
+  <!ENTITY ForgivenDissonance "8299">
+  <!ENTITY TesleenTheForgiven "8300">
+  <!ENTITY Philia "8301">
 ]>
 <Profile>
   <Name>[O][RBTrust] 71 Holminster Switch by athlon, Minami16, 疾风点破, Manta</Name>
@@ -38,7 +40,7 @@
         <MoveTo XYZ="-12.07,0.08,292.24"/>
         <!-- 第七步 BOSS1 得到宽恕的失调 -->
         <MoveTo XYZ="-14.87,0, 235.55"/>
-        <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8299)"/>
+        <Grind GrindRef="ForgivenDissonance" While="GameObjectManager.GetObjectByNPCId(&ForgivenDissonance;)"/>
 
         <LootTreasure/>
         <EquipRecommended/>
@@ -63,7 +65,7 @@
         <!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
         <MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
         <NoCombatMoveTo XYZ="85.32442,0,-88.8187" Wait="1"/>
-        <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8300)"/>
+        <Grind GrindRef="TesleenTheForgiven" While="GameObjectManager.GetObjectByNPCId(&TesleenTheForgiven;)"/>
 
         <LootTreasure/>
         <EquipRecommended/>
@@ -86,9 +88,9 @@
         <LootTreasure/>
         <EquipRecommended/>
 
-        <!-- 第十五步 BOSS3-->
+        <!-- 第十五步 Philia-->
         <NoCombatMoveTo XYZ="134.1453,23,-477.03" Wait="1"/>
-        <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8301)"/>
+        <Grind GrindRef="Philia" While="GameObjectManager.GetObjectByNPCId(&Philia;)"/>
         <WaitTimer waitTime="3"/>
         <MoveTo XYZ="133.34,23,-455.87"/>
 
@@ -100,33 +102,30 @@
     </While>
   </Order>
   <GrindAreas>
-    <GrindArea name="boss1">
+    <GrindArea name="ForgivenDissonance">
       <Hotspots>
-        <Hotspot Radius="200" XYZ="-14.87,0, 235.55"/>
+        <Hotspot Radius="120" XYZ="-14.87,0, 235.55"/>
       </Hotspots>
       <TargetMobs>
-        <TargetMob Name="得到宽恕的失调" Id="8299"/>
-        <!-- FORGIVEN DISSONANCE -->
+        <TargetMob Id="&ForgivenDissonance;"/>
       </TargetMobs>
     </GrindArea>
-    <GrindArea name="boss2">
+    <GrindArea name="TesleenTheForgiven">
       <Hotspots>
-        <Hotspot Radius="200" XYZ="77.77,0,-79.51"/>
+        <Hotspot Radius="120" XYZ="77.77,0,-79.51"/>
       </Hotspots>
       <TargetMobs>
-        <TargetMob Name="得到宽恕的泰丝琳" Id="8300"/>
-        <!-- TESLEEN, THE FORGIVEN -->
+        <TargetMob Id="&TesleenTheForgiven;"/>
       </TargetMobs>
     </GrindArea>
-    <GrindArea name="boss3">
+    <GrindArea name="Philia">
       <Hotspots>
-        <Hotspot Radius="200" XYZ="134.34,23,-455.87"/>
+        <Hotspot Radius="120" XYZ="134.34,23,-455.87"/>
       </Hotspots>
       <TargetMobs>
-        <TargetMob Name="斐利亚" Id="8301" Weight="100"/>
-        <!-- PHILIA -->
-        <TargetMob Name="锁链" Id="8570" Weight="999"/>
+        <TargetMob Id="&Philia;" Weight="100"/>
         <!-- CHAINS -->
+        <TargetMob Id="8570" Weight="999"/>
       </TargetMobs>
     </GrindArea>
   </GrindAreas>

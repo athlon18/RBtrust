@@ -13,7 +13,7 @@ using Trust.Helpers;
 namespace Trust.Dungeons
 {
     /// <summary>
-    /// Lv. 80 Amaurot dungeon logic.
+    /// Lv. 80.1 Amaurot dungeon logic.
     /// </summary>
     public class Amaurot : AbstractDungeon
     {

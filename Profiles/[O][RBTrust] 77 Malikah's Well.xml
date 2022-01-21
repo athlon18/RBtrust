@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
   <!-- 什么时候退本 -->
-  <!ENTITY boss1 "0"><!--BOSS1结束 -->
-  <!ENTITY boss2 "0"><!--BOSS2结束 -->
-  <!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
-  <!ENTITY boss3 "1"><!--打完全部 -->
 
-  <!-- 拾取箱子 -->
-  <!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
-  <!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
-  <!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
-  <!ENTITY halfway "1"><!--路途中的箱子 -->
 ]>
 <Profile>
   <Name>[O][RBTrust] 77 Malikah's Well by athlon, Minami16, 疾风点破, Manta</Name>
@@ -20,6 +11,8 @@
     <CheckPlugins/>
 
     <While Condition="True">
+      <WaitForLoading/>
+
       <If Condition="not IsOnMap(836)">
         <EquipRecommended/>
 
@@ -55,10 +48,9 @@
         <NoCombatMoveTo XYZ="276.333,16.99999,199.2001"/>
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8252)"/>
 
-        <If Condition="&boss1box; == 1">
+        
           <LootTreasure/>
           <EquipRecommended/>
-        </If>
 
         <If Condition="&boss1; == 1">
           <WaitTimer waitTime="5"/>
@@ -66,9 +58,9 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-        
+
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
-        
+
         <!-- 第六步  小怪5 -->
         <MoveTo XYZ="201.6176,11.99017,118.0604"/>
 
@@ -116,7 +108,7 @@
           <WaitForLoading/>
           <LoadProfile/>
         </If>
-        
+
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <!-- 第十一步 打怪8 -->

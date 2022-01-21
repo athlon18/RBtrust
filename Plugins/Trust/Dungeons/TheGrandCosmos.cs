@@ -4,7 +4,7 @@ using Trust.Data;
 namespace Trust.Dungeons
 {
     /// <summary>
-    /// Lv. 80 The Grand Cosmos dungeon logic.
+    /// Lv. 80.2 The Grand Cosmos dungeon logic.
     /// </summary>
     public class TheGrandCosmos : AbstractDungeon
     {
