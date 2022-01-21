@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using ff14bot.Managers;
+using System.Threading.Tasks;
 using Trust.Data;
+using Trust.Helpers;
 
 namespace Trust.Dungeons
 {
@@ -17,6 +19,11 @@ namespace Trust.Dungeons
         /// Gets <see cref="DungeonId"/> for this dungeon.
         /// </summary>
         public abstract DungeonId DungeonId { get; }
+
+        /// <summary>
+        /// Gets SideStep Plugin reference.
+        /// </summary>
+        protected static PluginContainer SidestepPlugin { get; } = PluginHelpers.GetSideStepPlugin();
 
         /// <summary>
         /// Executes dungeon logic.
