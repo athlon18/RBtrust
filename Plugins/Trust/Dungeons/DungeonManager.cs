@@ -19,6 +19,7 @@ namespace Trust.Dungeons
         {
             availableDungeons = new Dictionary<ZoneId, AbstractDungeon>()
             {
+                // 5.0 Shadowbringers
                 { ZoneId.HolminsterSwitch, new HolminsterSwitch() },
                 { ZoneId.DohnMheg, new DohnMheg() },
                 { ZoneId.TheQitanaRavel, new TheQitanaRavel() },
@@ -26,19 +27,19 @@ namespace Trust.Dungeons
                 { ZoneId.MtGulg, new MtGulg() },
                 { ZoneId.Amaurot, new Amaurot() },
                 { ZoneId.TheGrandCosmos, new TheGrandCosmos() },
+                { ZoneId.AnamnesisAnyder, new AnamnesisAnyder() },
+                { ZoneId.TheHeroesGauntlet, new TheHeroesGauntlet() },
+                { ZoneId.MatoyasRelict, new MatoyasRelict() },
+                { ZoneId.Paglthan, new Paglthan() },
 
-                // TODO: { ZoneId.AnamnesisAnyder, new AnamnesisAnyder() },
-                // TODO: { ZoneId.TheHeroesGauntlet, new TheHeroesGauntlet() },
-                // TODO: { ZoneId.MatoyasRelict, new MatoyasRelict() },
-                // TODO: { ZoneId.Paglthan, new Paglthan() },
-                // TODO: { ZoneId.TheTowerOfZot, new TheTowerOfZot() },
+                // 6.0 Endwalker
+                { ZoneId.TheTowerOfZot, new TheTowerOfZot() },
                 { ZoneId.TheTowerOfBabil, new TheTowerOfBabil() },
-
-                // TODO: { ZoneId.Vanaspati, new Vanaspati() },
-                // TODO: { ZoneId.KtisisHyperboreia, new KtisisHyperboreia() },
-                // TODO: { ZoneId.TheAitiascope, new TheAitiascope() },
-                // TODO: { ZoneId.TheMothercrystal, new TheMothercrystal() },
-                // TODO: { ZoneId.TheDeadEnds, new TheDeadEnds() },
+                { ZoneId.Vanaspati, new Vanaspati() },
+                { ZoneId.KtisisHyperboreia, new KtisisHyperboreia() },
+                { ZoneId.TheAitiascope, new TheAitiascope() },
+                { ZoneId.TheMothercrystal, new TheMothercrystal() },
+                { ZoneId.TheDeadEnds, new TheDeadEnds() },
             };
         }
 

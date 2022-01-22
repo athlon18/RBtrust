@@ -69,19 +69,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheHeroesGauntlet.cs" />
     <Compile Include="Plugins\Trust\Dungeons\AbstractDungeon.cs" />
     <Compile Include="Plugins\Trust\Dungeons\Amaurot.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\AnamnesisAnyder.cs" />
     <Compile Include="Plugins\Trust\Dungeons\DohnMheg.cs" />
     <Compile Include="Plugins\Trust\Dungeons\DungeonManager.cs" />
     <Compile Include="Plugins\Trust\Dungeons\HolminsterSwitch.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\KtisisHyperboreia.cs" />
     <Compile Include="Plugins\Trust\Dungeons\MalikahsWell.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\MatoyasRelict.cs" />
     <Compile Include="Plugins\Trust\Dungeons\MtGulg.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\Paglthan.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheAitiascope.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheDeadEnds.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheGrandCosmos.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheMothercrystal.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheQitanaRavel.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfBabil.cs" />
     <Compile Include="Plugins\Trust\Data\ZoneId.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheTowerOfZot.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\Vanaspati.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
     <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\InstanceHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\MovementHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\PluginHelpers.cs" />
