@@ -120,7 +120,13 @@
     <Content Include="Profiles\[O][RBTrust] 77 Malikah%27s Well.xml" />
     <Content Include="Profiles\[O][RBTrust] 79 Mt. Gulg.xml" />
     <Content Include="Profiles\[O][RBTrust] 80.1 Amaurot.xml" />
+    <Content Include="Profiles\[O][RBTrust] 81 The Tower of Zot.xml" />
     <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
+    <Content Include="Profiles\[O][RBTrust] 85 Vanaspati.xml" />
+    <Content Include="Profiles\[O][RBTrust] 87 Ktisis Hyperboreia.xml" />
+    <Content Include="Profiles\[O][RBTrust] 89 The Aitiascope.xml" />
+    <Content Include="Profiles\[O][RBTrust] 89 The Mothercrystal.xml" />
+    <Content Include="Profiles\[O][RBTrust] 90.1 The Dead Ends.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">

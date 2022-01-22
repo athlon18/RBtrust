@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-<!ENTITY Shortcut "2000700">
-<!ENTITY ShellMoundPortal "2011767">
-<!ENTITY DeterrenceGroundsPortal "2011768">
+  <!ENTITY Shortcut "2000700">
+  <!ENTITY ShellMoundPortal "2011767">
+  <!ENTITY DeterrenceGroundsPortal "2011768">
 
-<!ENTITY CausticGrebuloff "10313">
-<!ENTITY Peacekeeper "10315">
-<!ENTITY Rala "10316">
+  <!ENTITY CausticGrebuloff "10313">
+  <!ENTITY Peacekeeper "10315">
+  <!ENTITY Rala "10316">
 ]>
 <Profile>
   <Name>[O][RBTrust] 90.1 The Dead Ends by Manta</Name>
@@ -14,110 +14,107 @@
   <Order>
     <CheckPlugins/>
 
-    <!--<While Condition="True">-->
-    <WaitForLoading/>
-
-    <If Condition="not IsOnMap(973)">
-      <EquipRecommended/>
-
-      <QueueTrust Dungeon="TheDeadEnds"/>
-      <CommenceDuty/>
-      <WaitForLoading/>
-    </If>
-
-    <If Condition="IsOnMap(973)">
+    <While Condition="True">
       <WaitForLoading/>
 
-      <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
-        <!-- Shortcut available -->
-        <UseTransport NpcId="&Shortcut;" XYZ="359.8188, 499.5619, 188.9725"/>
-      </If>
-
-      <If Condition="WorldManager.SubZoneId == 4107">
-        <!-- Pestilent Sands -->
-        <MoveTo XYZ="403.1951, 500.0121, 136.7636"/>
-        <MoveTo XYZ="407.1537, 500.698, 101.9104"/>
-        <MoveTo XYZ="360.6028, 500.4016, 25.13674"/>
-      </If>
-
-      <If Condition="WorldManager.SubZoneId in [4107, 4108]">
-        <!-- Grebuloff Pillars -->
-        <MoveTo XYZ="306.6599, 502.5, -9.593277"/>
-        <MoveTo XYZ="311.3987, 500.9443, -84.18119"/>
-        <MoveTo XYZ="266.4059, 500.5, -118.1882"/>
-        <MoveTo XYZ="266.6268, 501.0067, -160.6848"/>
-      </If>
-
-      <If Condition="WorldManager.SubZoneId in [4108, 4104]">
-        <!-- Shell Mound -->
-        <Grind GrindRef="CausticGrebuloff" PostCombatDelay="2.0" While="ObjectExistsWithId(&CausticGrebuloff;)"/>
-
-        <LootTreasure/>
+      <If Condition="not IsOnMap(973)">
         <EquipRecommended/>
 
-        <MoveTo XYZ="266.6553, 500.4002, -218.991"/>
-        <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&ShellMoundPortal;).IsTargetable"/>
-        <UseObject NpcId="&ShellMoundPortal;" XYZ="266.4988, 500.4002, -221.3627" Condition="WorldManager.SubZoneId == 4104"/>
+        <QueueTrust Dungeon="TheDeadEnds"/>
+        <CommenceDuty/>
         <WaitForLoading/>
       </If>
 
-      <If Condition="WorldManager.SubZoneId == 4109">
-        <!-- Judgment Day -->
-        <MoveTo XYZ="-14.99242, 0.0001438856, 14.03172"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-
-        <MoveTo XYZ="6.240906, -0.0001268019, -20.24878"/>
-        <MoveTo XYZ="-104.7037, 0, -114.254"/>
-        <MoveTo XYZ="-83.48212, -0.01531982, -163.0122"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-
-        <MoveTo XYZ="-105.1539, 0.02963114, -187.3821"/>
-      </If>
-
-      <If Condition="WorldManager.SubZoneId in [4109, 4105]">
-        <!-- Deterrence Grounds -->
-        <Grind GrindRef="Peacekeeper" PostCombatDelay="2.0" While="ObjectExistsWithId(&Peacekeeper;)"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-
-        <MoveTo XYZ="-107.9689, -8.000126, -287.6669"/>
-        <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&DeterrenceGroundsPortal;).IsTargetable"/>
-        <UseObject NpcId="&DeterrenceGroundsPortal;" XYZ="-110.7042, -7.854956, -289.3874" Condition="WorldManager.SubZoneId == 4105"/>
+      <If Condition="IsOnMap(973)">
         <WaitForLoading/>
+
+        <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
+          <!-- Shortcut available -->
+          <UseTransport NpcId="&Shortcut;" XYZ="359.8188, 499.5619, 188.9725"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId == 4107">
+          <!-- Pestilent Sands -->
+          <MoveTo XYZ="360.6028, 500.4016, 25.13674"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [4107, 4108]">
+          <!-- Grebuloff Pillars -->
+          <MoveTo XYZ="266.4059, 500.5, -118.1882"/>
+          <MoveTo XYZ="266.6268, 501.0067, -160.6848"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [4108, 4104]">
+          <!-- Shell Mound -->
+          <Grind GrindRef="CausticGrebuloff" PostCombatDelay="2.0" While="ObjectExistsWithId(&CausticGrebuloff;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="266.6553, 500.4002, -218.991"/>
+          <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&ShellMoundPortal;).IsTargetable"/>
+          <UseObject NpcId="&ShellMoundPortal;" XYZ="266.4988, 500.4002, -221.3627" Condition="WorldManager.SubZoneId == 4104"/>
+          <WaitForLoading/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId == 4109">
+          <!-- Judgment Day -->
+          <MoveTo XYZ="-14.99242, 0.0001438856, 14.03172"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="6.240906, -0.0001268019, -20.24878"/>
+          <MoveTo XYZ="-104.7037, 0, -114.254"/>
+          <MoveTo XYZ="-83.48212, -0.01531982, -163.0122"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="-105.1539, 0.02963114, -187.3821"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [4109, 4105]">
+          <!-- Deterrence Grounds -->
+          <Grind GrindRef="Peacekeeper" PostCombatDelay="2.0" While="ObjectExistsWithId(&Peacekeeper;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="-107.9689, -8.000126, -287.6669"/>
+          <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&DeterrenceGroundsPortal;).IsTargetable"/>
+          <UseObject NpcId="&DeterrenceGroundsPortal;" XYZ="-110.7042, -7.854956, -289.3874" Condition="WorldManager.SubZoneId == 4105"/>
+          <WaitForLoading/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId == 4110">
+          <!-- The Plenty -->
+          <MoveTo XYZ="-297.6578, -610.15, 92.24072"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="-296.7371, -605.0003, 49.38559"/>
+          <MoveTo XYZ="-379.6894, -587.4899, -31.56436"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="-379.9816, -576.9999, -116.87"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [4110, 4106]">
+          <!-- The World Tree -->
+          <Grind GrindRef="Rala" PostCombatDelay="2.0" While="ObjectExistsWithId(&Rala;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <StopBot/>
+          <LeaveDuty/>
+        </If>
       </If>
-
-      <If Condition="WorldManager.SubZoneId == 4110">
-        <!-- The Plenty -->
-        <MoveTo XYZ="-297.6578, -610.15, 92.24072"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-
-        <MoveTo XYZ="-296.7371, -605.0003, 49.38559"/>
-        <MoveTo XYZ="-379.6894, -587.4899, -31.56436"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-
-        <MoveTo XYZ="-379.9816, -576.9999, -116.87"/>
-      </If>
-
-      <If Condition="WorldManager.SubZoneId in [4110, 4106]">
-        <!-- The World Tree -->
-        <Grind GrindRef="Rala" PostCombatDelay="2.0" While="ObjectExistsWithId(&Rala;)"/>
-
-        <LootTreasure/>
-        <EquipRecommended/>
-        
-        <LeaveDuty/>
-      </If>
-    </If>
-    <!--</While>-->
+    </While>
   </Order>
   <GrindAreas>
     <GrindArea Name="CausticGrebuloff">

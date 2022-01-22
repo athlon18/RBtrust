@@ -42,17 +42,8 @@
         <NoCombatMoveTo XYZ="-2.767347,5.35,315.614"/>
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8231)"/>
 
-        <If Condition="&boss1box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
-
-        <If Condition="&boss1; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -60,10 +51,9 @@
         <MoveTo XYZ="36.74485,-2.278083,200.4485"/>
 
         <MoveTo XYZ="133.7429,-8.545856,186.1049"/>
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第七步  小怪6 -->
         <MoveTo XYZ="84.77122,-2,159.0878"/>
@@ -75,10 +65,9 @@
         <MoveTo XYZ="100.6198,-11.37864,93.50124"/>
 
         <MoveTo XYZ="48.53169,-11,78.59581"/>
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十步  小怪8 -->
         <MoveTo XYZ="64.61283,-11,71.81774"/>
@@ -89,17 +78,8 @@
         <NoCombatMoveTo XYZ="64.75812,-21,-41.91465"/>
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8232)"/>
 
-        <If Condition="&boss2box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
-
-        <If Condition="&boss2; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十二步 打怪10 跳瀑布-->
         <MoveTo XYZ="38.48219,-22.1,-155.9829"/>
@@ -110,10 +90,9 @@
 
 
         <MoveTo XYZ="42.02502,-60.00004,-301.4867"/>
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十三步 打怪11 -->
         <MoveTo XYZ="28.86912,-60.00003,-333.6031"/>
@@ -125,17 +104,9 @@
         <MoveTo XYZ="-18.97575,-57.00001,-394.8925"/>
 
         <MoveTo XYZ="-7.775939,-57.00002,-423.3626"/>
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
 
-        <If Condition="&before_boss3; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十六步 BOSS3 艾洛斯 -->
         <MoveTo XYZ="17.0723,-57.74398,-433.5704"/>
@@ -148,16 +119,8 @@
         <WaitTimer waitTime="3"/>
         <MoveTo XYZ="20.98305,-77,-547.7723"/>
 
-        <If Condition="&boss3box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
-
-        <If Condition="&boss3; == 1">
-          <WaitTimer waitTime="3"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
       </If>
     </While>
   </Order>

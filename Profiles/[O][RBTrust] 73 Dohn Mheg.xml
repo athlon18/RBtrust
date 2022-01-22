@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-  <!-- 什么时候退本 -->
-  <!ENTITY boss1 "0"><!--BOSS1结束 -->
-  <!ENTITY boss2 "0"><!--BOSS2结束 -->
-  <!ENTITY before_boss3 "0"><!--BOSS3之前结束 -->
-  <!ENTITY boss3 "1"><!--打完全部 -->
-
-  <!-- 拾取箱子 -->
-  <!ENTITY boss1box "1"><!--BOSS1结束箱子 -->
-  <!ENTITY boss2box "1"><!--BOSS2结束箱子 -->
-  <!ENTITY boss3box "1"><!--BOSS3结束箱子 -->
-  <!ENTITY halfway "1"><!--路途中的箱子 -->
 ]>
 <Profile>
   <Name>[O][RBTrust] 73 Dohn Mheg by athlon, Minami16, 疾风点破, Manta</Name>
@@ -48,18 +37,9 @@
         <NoCombatMoveTo XYZ="6.234492,6.851405,21.12165" Wait="1"/>
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8141)"/>
 
-        <If Condition="&boss1box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
-        <If Condition="&boss1; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
-        
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <!-- 第六步  打怪 禁园石莲猬 -->
@@ -72,10 +52,8 @@
         <MoveTo XYZ="-35.63404,1.916844,-89.18874"/>
         <WaitTimer waitTime="1"/>
 
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第八步  打怪 猎蜜熊 -->
         <MoveTo XYZ="-67.10806,16.14704,-186.3012"/>
@@ -86,27 +64,16 @@
         <MoveTo XYZ="-4.79935,11.95175,-235.6158"/>
         <WaitTimer waitTime="2"/>
 
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十步  BOSS2 格里奥勒 -->
         <NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528" Wait="1"/>
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8143)"/>
 
-        <If Condition="&boss2box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
-        <If Condition="&boss2; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
-        
         <!-- 第十一步 打怪 上个BOSS打完要往前去到下一层 再往前右键互动石柱才能开怪-->
         <MoveTo XYZ="8.755135,20.0074,-400.4264"/>
         <RunCode name="向前移动"/>
@@ -116,10 +83,8 @@
         <WaitTimer waitTime="5"/>
         <MoveTo XYZ="-170.8162,-182.7501,35.80744"/>
 
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <MoveTo XYZ="-171.8794,-178.75,-6.813273"/>
         <RunCode name="贝壳王冠"/>
@@ -147,17 +112,8 @@
         <RunCode name="向前移动"/>
         <WaitTimer waitTime="1"/>
 
-        <If Condition="&halfway; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
-
-        <If Condition="&before_boss3; == 1">
-          <WaitTimer waitTime="5"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-          <LoadProfile/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
 
         <!-- 第十六步 BOSS3 乐圣 因克·佐恩 -->
         <MoveTo XYZ="-128.4545,-156.0078,-160.0941"/>
@@ -173,16 +129,8 @@
         <WaitTimer waitTime="2"/>
         <MoveTo XYZ="-128.9267,-144.5268,-255.1648"/>
 
-        <If Condition="&boss3box; == 1">
-          <LootTreasure/>
-          <EquipRecommended/>
-        </If>
-
-        <If Condition="&boss3; == 1">
-          <WaitTimer waitTime="3"/>
-          <LeaveDuty/>
-          <WaitForLoading/>
-        </If>
+        <LootTreasure/>
+        <EquipRecommended/>
       </If>
     </While>
   </Order>
