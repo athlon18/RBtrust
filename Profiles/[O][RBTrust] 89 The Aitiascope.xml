@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+]>
+<Profile>
+  <Name>[O][RBTrust] 89 The Aitiascope</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+      <If Condition="not IsOnMap(978)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="TheAitiascope"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(978)">	  
+	  
+        <If Condition="IsOnSubMap(3995)">
+	      <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
+		    <!-- Shortcut available -->
+		    <UseTransport NpcId="2000700" XYZ="-8.697377, 200.0116, 557.8609"/>
+		  </If>	
+          <MoveTo XYZ="-5.918441, 164, 487.636" Distance="0.5"/>
+        </If>   
+	  
+        <If Condition="IsOnSubMap(3992)">
+          <Grind GrindRef="LiviatheUndeterred" PostCombatDelay="2.0" While="ObjectExistsWithId(10290)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+		  <!-- Post Boss Movement to Next Area -->
+		  <UseObject NpcId="2011758" XYZ="-6.0001, 163.99, 471" Radius="10" UseTimes="1" BlacklistAfter="True"/>
+		  <WaitWhile Condition="not IsOnSubMap(3996)"/>
+        </If>  
+	  
+        <If Condition="IsOnSubMap(3996)">
+          <MoveTo XYZ="28.43319, -199.905, 361.9099"/>	  
+          <LootTreasure/>
+          <MoveTo XYZ="-5.726303, -211.8298, 231.0701"/>
+          <LootTreasure/>
+          <EquipRecommended/>	
+          <MoveTo XYZ="11.03978, -211.1853, 169.1452"/>
+          <MoveTo XYZ="10.77671, -211.405, 156.6219" Distance="0.5" UseMesh="False"/>	
+        </If>
+	  
+        <If Condition="IsOnSubMap(3993)">	
+          <Grind GrindRef="RhitahtyntheUnshakable" PostCombatDelay="2.0" While="ObjectExistsWithId(10292)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+		  <!-- Post Boss Movement to Next Area -->
+          <MoveTo XYZ="11, -211.405, 134" Distance="0.5"/>
+          <While Condition="IsOnSubMap(3993) or IsOnSubMap(3996)">
+            <RunCode Name="Transition1"/>
+          </While>
+		  <WaitWhile Condition="not IsOnSubMap(3997)"/>
+        </If>		
+	  
+        <If Condition="IsOnSubMap(3997)">
+          <MoveTo XYZ="-10.41967, -236.1048, -223.2608"/>	
+          <LootTreasure/>
+          <MoveTo XYZ="-21.30529, -238.9498, -419.6876"/>	
+          <LootTreasure/>
+          <MoveTo XYZ="11.34129, -236, -486.4798" Distance="0.5"/>	
+        </If>
+	  
+        <If Condition="IsOnSubMap(3994)">
+          <Grind GrindRef="AmontheUndying" PostCombatDelay="2.0" While="ObjectExistsWithId(10293)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+		
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="LiviatheUndeterred">
+      <Hotspots>
+        <Hotspot XYZ="-6.0001, 164, 461" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10290"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="RhitahtyntheUnshakable">
+      <Hotspots>
+        <Hotspot XYZ="11, -211.405, 134" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10292"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="AmontheUndying">
+      <Hotspots>
+        <Hotspot XYZ="11, -236, -510" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10293"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition1">
+      <![CDATA[
+            Core.Me.SetFacing(3.103176f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(10000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+  </CodeChunks>
+</Profile>
