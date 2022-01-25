@@ -13,30 +13,12 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>bin\x64\Debug\RBTrust.xml</DocumentationFile>
   </PropertyGroup>
@@ -46,16 +28,15 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GreyMagic, Version=1.0.60.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.464\lib\net461\GreyMagic.dll</HintPath>
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.464.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.464\lib\net461\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.477.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Plugins\Trust\Dungeons\TheHeroesGauntlet.cs" />
+    <Compile Include="Plugins\Trust\Data\DungeonId.cs" />
+    <Compile Include="Plugins\Trust\Data\SubZoneId.cs" />
+    <Compile Include="Plugins\Trust\Data\ZoneId.cs" />
     <Compile Include="Plugins\Trust\Dungeons\AbstractDungeon.cs" />
     <Compile Include="Plugins\Trust\Dungeons\Amaurot.cs" />
     <Compile Include="Plugins\Trust\Dungeons\AnamnesisAnyder.cs" />
@@ -84,10 +67,10 @@
     <Compile Include="Plugins\Trust\Dungeons\TheAitiascope.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheDeadEnds.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheGrandCosmos.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\TheHeroesGauntlet.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheMothercrystal.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheQitanaRavel.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfBabil.cs" />
-    <Compile Include="Plugins\Trust\Data\ZoneId.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfZot.cs" />
     <Compile Include="Plugins\Trust\Dungeons\Vanaspati.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
@@ -108,17 +91,16 @@
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
-    <Compile Include="Plugins\Trust\Data\DungeonId.cs" />
-    <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
-    <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
+    <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
     <Compile Include="Quest Behaviors\InstanceFlags.cs" />
-    <Compile Include="Windows\ExtendedContentsFinder.cs" />
+    <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
     <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
+    <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
     <Compile Include="Quest Behaviors\LootTreasureTag.cs" />
     <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
-    <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
     <Compile Include="Quest Behaviors\SetPluginsTag.cs" />
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
+    <Compile Include="Windows\ExtendedContentsFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -149,11 +131,38 @@
     <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.376\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="CopyMarkdownFiles" AfterTargets="AfterBuild">
-    <!-- Copy selected solution items to project build output directory -->
+  <PropertyGroup>
+    <!-- One of: BotBases, Plugins, Profiles, Quest Behaviors, Routines -->
+    <AddonType>Plugins</AddonType>
+    <!-- $(TargetName) auto-populated by Project Properties > Application > Assembly Name -->
+    <AddonName>$(TargetName)</AddonName>
+    <RebornDir>$(RB_DIR)</RebornDir>
+    <RootDir>$(SolutionDir)</RootDir>
+    <IsInRebornDir>$(RootDir.StartsWith($(RebornDir), System.StringComparison.OrdinalIgnoreCase))</IsInRebornDir>
+  </PropertyGroup>
+  <Target Name="CopySolutionItems" AfterTargets="AfterBuild;AfterRebuild">
+    <!-- Copy selected solution items to project build output directory (e.g., README.md, LICENSE.md) -->
+    <!-- Special project items should instead use Properties > Copy to Output Directory: Copy Always -->
+    <!-- RebornBuddy requires at least one uncompiled C# file set to Copy Always (e.g., Loader.cs) -->
     <CreateItem Include="$(SolutionDir)\*.md">
-      <Output TaskParameter="Include" ItemName="MarkdownFiles" />
+      <Output TaskParameter="Include" ItemName="SolutionItems" />
     </CreateItem>
-    <Copy SourceFiles="@(MarkdownFiles)" DestinationFiles="@(MarkdownFiles->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Message Importance="High" Text="Copying solution items to build output..." />
+    <Copy SourceFiles="@(SolutionItems)" DestinationFiles="@(SolutionItems->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="DeployToRebornBuddy" AfterTargets="CopySolutionItems" Condition="'$(RebornDir)' != '' And !$(IsInRebornDir)">
+    <!-- For development convenience of pre-compiled addons, auto-copy build output to RebornBuddy if RB_DIR env var set -->
+    <Error Condition="!Exists('$(RebornDir)')" Text="RB_DIR set but directory doesn't exist! RB_DIR='$(RebornDir)'" />
+    <CreateItem Include="$(TargetDir)\**\*" Exclude="$(TargetDir)\**\*.tmp">
+      <Output TaskParameter="Include" ItemName="BuildOutput" />
+    </CreateItem>
+    <Message Importance="High" Text="Copying build output to '$(RebornDir)\$(AddonType)\$(AddonName)'" />
+    <Copy SourceFiles="@(BuildOutput)" DestinationFiles="@(BuildOutput->'$(RebornDir)\$(AddonType)\$(AddonName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="CleanIfInRebornBuddy" AfterTargets="CopySolutionItems" Condition="'$(RebornDir)' == '' Or $(IsInRebornDir)">
+    <!-- RebornBuddy does its own compilation and fails due to bin\obj folders, but manual VS builds are useful for finding compile-time errors -->
+    <!-- If solution is under RebornDir, clean build artifacts so RebornBuddy can do its own thing -->
+    <Message Importance="High" Text="Solution within RebornBuddy directory; cleaning build artifacts to avoid RB compile errors..." />
+    <CallTarget Targets="Clean" />
   </Target>
 </Project>
