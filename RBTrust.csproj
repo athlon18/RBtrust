@@ -112,14 +112,14 @@
     <Content Include="Profiles\[O][RBTrust] 75 The Qitana Ravel.xml" />
     <Content Include="Profiles\[O][RBTrust] 77 Malikah%27s Well.xml" />
     <Content Include="Profiles\[O][RBTrust] 79 Mt. Gulg.xml" />
-    <Content Include="Profiles\[O][RBTrust] 80.1 Amaurot.xml" />
-    <Content Include="Profiles\[O][RBTrust] 81 The Tower of Zot.xml" />
-    <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
-    <Content Include="Profiles\[O][RBTrust] 85 Vanaspati.xml" />
-    <Content Include="Profiles\[O][RBTrust] 87 Ktisis Hyperboreia.xml" />
-    <Content Include="Profiles\[O][RBTrust] 89 The Aitiascope.xml" />
-    <Content Include="Profiles\[O][RBTrust] 89 The Mothercrystal.xml" />
-    <Content Include="Profiles\[O][RBTrust] 90.1 The Dead Ends.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 80.1 Amaurot.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 81 The Tower of Zot.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 83 The Tower of Babil.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 85 Vanaspati.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 87 Ktisis Hyperboreia.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89 The Aitiascope.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89 The Mothercrystal.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.1 The Dead Ends.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">
@@ -136,7 +136,7 @@
     <AddonType>Plugins</AddonType>
     <!-- $(TargetName) auto-populated by Project Properties > Application > Assembly Name -->
     <AddonName>$(TargetName)</AddonName>
-    <RebornDir>$(RB_DIR)</RebornDir>
+    <RebornDir>$(RebornbuddyDir)</RebornDir>
     <RootDir>$(SolutionDir)</RootDir>
     <IsInRebornDir>$(RootDir.StartsWith($(RebornDir), System.StringComparison.OrdinalIgnoreCase))</IsInRebornDir>
   </PropertyGroup>
@@ -151,8 +151,8 @@
     <Copy SourceFiles="@(SolutionItems)" DestinationFiles="@(SolutionItems->'$(OutDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
   <Target Name="DeployToRebornBuddy" AfterTargets="CopySolutionItems" Condition="'$(RebornDir)' != '' And !$(IsInRebornDir)">
-    <!-- For development convenience of pre-compiled addons, auto-copy build output to RebornBuddy if RB_DIR env var set -->
-    <Error Condition="!Exists('$(RebornDir)')" Text="RB_DIR set but directory doesn't exist! RB_DIR='$(RebornDir)'" />
+    <!-- For development convenience of pre-compiled addons, auto-copy build output to RebornBuddy if RebornbuddyDir env var set -->
+    <Error Condition="!Exists('$(RebornDir)')" Text="RebornbuddyDir set but directory doesn't exist! RebornbuddyDir='$(RebornDir)'" />
     <CreateItem Include="$(TargetDir)\**\*" Exclude="$(TargetDir)\**\*.tmp">
       <Output TaskParameter="Include" ItemName="BuildOutput" />
     </CreateItem>
