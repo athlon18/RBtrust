@@ -107,6 +107,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 80.2 The Grand Cosmos.xml" />
     <Content Include="Profiles\[O][RBTrust] 71 Holminster Switch.xml" />
     <Content Include="Profiles\[O][RBTrust] 73 Dohn Mheg.xml" />
     <Content Include="Profiles\[O][RBTrust] 75 The Qitana Ravel.xml" />

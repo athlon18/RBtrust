@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+  <!ENTITY Shortcut "2000700">
+
+<!ENTITY Boss1 "9041">
+<!ENTITY Boss2 "9044">
+<!ENTITY Boss3 "9046">
+]>
+<Profile>
+  <Name>[O][RBTrust] 80.2 The Grand Cosmos</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+
+      <If Condition="not IsOnMap(884)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="TheDeadEnds"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(884)">
+        <WaitForLoading/>
+
+        <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
+          <!-- Shortcut available -->
+          <UseTransport NpcId="&Shortcut;" XYZ="-4, 0, 367.5"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3386, 3389]">
+          <!-- The Chivalric Sphere / The Presence Chamber -->
+          <MoveTo XYZ="-107.6453, 0, 288.0032"/>
+          <MoveTo XYZ="-23.19857, 0, 291.0146"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3386, 3390]">
+          <!-- The Chivalric Sphere / The Cross of Blades -->
+          <MoveTo XYZ="-0.006103273, 0, 186.9821"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3386, 3375]">
+          <!-- The Chivalric Sphere / The Martial Court -->
+          <Grind GrindRef="Boss1" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss1;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3386, 3375, 3387]">
+          <!-- The Chivalric Sphere / The Martial Court / The Regal Sphere-->
+          <MoveTo XYZ="52.58231, -7.05, 103.0038"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="73.97729, -14.05, 34.97017"/>
+          <MoveTo XYZ="57.15619, -12, -6.035901"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="0.03179554, -14.05, -16.97828"/>
+          <MoveTo XYZ="0.02542141, -12.5, -43.09413"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3387, 3376]">
+          <!-- The Regal Sphere / The Font of Quintessence -->
+          <Grind GrindRef="Boss2" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss2;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3387, 3376, 3388, 3391]">
+          <!-- The Regal Sphere / The Font of Quintessence / The Divine Sphere / The Myrhinne Hall -->
+          <MoveTo XYZ="42.57712, 8, -196.9276"/>
+
+          <LootTreasure MaxDistance="20"/>
+          <EquipRecommended/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3388, 3392, 3393]">
+          <!-- The Divine Sphere / The Chamber of Raised Cups / The Chamber of Immortal Legacy -->
+          <MoveTo XYZ="30.77378, 8, -228.1729"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3388, 3393, 3394]">
+          <!-- The Divine Sphere / The Chamber of Immortal Legacy / The Chamber of Courtly Love-->
+          <MoveTo XYZ="0.01465541, 8, -288.042"/>
+          <MoveTo XYZ="0.007533057, 7.999999, -317.9655"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [3388, 3377]">
+          <!-- The Chamber of Celestial Song -->
+          <Grind GrindRef="Boss3" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss3;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <StopBot/>
+          <LeaveDuty/>
+        </If>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Boss1">
+      <Hotspots>
+        <Hotspot XYZ="-105.1539, 0.02963114, -187.3821" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Boss1;"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Boss2">
+      <Hotspots>
+        <Hotspot XYZ="0, -12.5, -70" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Boss2;" Weight="100"/>
+        <TargetMob Id="9045" Weight="999"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Boss3">
+      <Hotspots>
+        <Hotspot XYZ="0, 8, -349.5079" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Boss3;"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+</Profile>
