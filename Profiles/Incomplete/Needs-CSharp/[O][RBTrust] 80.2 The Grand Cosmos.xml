@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-  <!ENTITY Shortcut "2000700">
+<!-- Trust Config -->
+<!ENTITY ZoneId "884">
+<!ENTITY DungeonName "TheGrandCosmos">
+
+<!-- Important NPCs -->
+<!ENTITY Shortcut "2000700">
 
 <!ENTITY Boss1 "9041">
 <!ENTITY Boss2 "9044">
 <!ENTITY Boss3 "9046">
+
+<!-- Sub-Zones -->
+<!ENTITY TheChivalricSphere "3386">
+<!ENTITY ThePresenceChamber "3389">
+<!ENTITY TheCrossOfBlades "3390">
+<!ENTITY TheMartialCourt "3375">
+
+<!ENTITY TheRegalSphere "3387">
+<!ENTITY TheFontOfQuintessence "3376">
+
+<!ENTITY TheDivineSphere "3388">
+<!ENTITY TheMyrhinneHall "3391">
+<!ENTITY TheChamberOfRaisedCups "3392">
+<!ENTITY TheChamberOfImmortalLegacy "3393">
+<!ENTITY TheChamberOfCourtlyLove "3394">
+<!ENTITY TheChamberOfCelestialSong "3377">
 ]>
 <Profile>
   <Name>[O][RBTrust] 80.2 The Grand Cosmos</Name>
@@ -15,15 +36,15 @@
     <While Condition="True">
       <WaitForLoading/>
 
-      <If Condition="not IsOnMap(884)">
+      <If Condition="not IsOnMap(&ZoneId;)">
         <EquipRecommended/>
 
-        <QueueTrust Dungeon="TheDeadEnds"/>
+        <QueueTrust Dungeon="&DungeonName;"/>
         <CommenceDuty/>
         <WaitForLoading/>
       </If>
 
-      <If Condition="IsOnMap(884)">
+      <If Condition="IsOnMap(&ZoneId;)">
         <WaitForLoading/>
 
         <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
@@ -31,27 +52,23 @@
           <UseTransport NpcId="&Shortcut;" XYZ="-4, 0, 367.5"/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3386, 3389]">
-          <!-- The Chivalric Sphere / The Presence Chamber -->
+        <If Condition="WorldManager.SubZoneId in [&TheChivalricSphere;, &ThePresenceChamber;]">
           <MoveTo XYZ="-107.6453, 0, 288.0032"/>
           <MoveTo XYZ="-23.19857, 0, 291.0146"/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3386, 3390]">
-          <!-- The Chivalric Sphere / The Cross of Blades -->
+        <If Condition="WorldManager.SubZoneId in [&TheChivalricSphere;, &TheCrossOfBlades;]">
           <MoveTo XYZ="-0.006103273, 0, 186.9821"/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3386, 3375]">
-          <!-- The Chivalric Sphere / The Martial Court -->
+        <If Condition="WorldManager.SubZoneId in [&TheChivalricSphere;, &TheMartialCourt;]">
           <Grind GrindRef="Boss1" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss1;)"/>
 
           <LootTreasure/>
           <EquipRecommended/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3386, 3375, 3387]">
-          <!-- The Chivalric Sphere / The Martial Court / The Regal Sphere-->
+        <If Condition="WorldManager.SubZoneId in [&TheChivalricSphere;, &TheMartialCourt;, &TheRegalSphere;]">
           <MoveTo XYZ="52.58231, -7.05, 103.0038"/>
 
           <LootTreasure/>
@@ -67,45 +84,38 @@
           <MoveTo XYZ="0.02542141, -12.5, -43.09413"/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3387, 3376]">
-          <!-- The Regal Sphere / The Font of Quintessence -->
+        <If Condition="WorldManager.SubZoneId in [&TheRegalSphere;, &TheFontOfQuintessence;]">
           <Grind GrindRef="Boss2" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss2;)"/>
 
           <LootTreasure/>
           <EquipRecommended/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3387, 3376, 3388, 3391]">
-          <!-- The Regal Sphere / The Font of Quintessence / The Divine Sphere / The Myrhinne Hall -->
+        <If Condition="WorldManager.SubZoneId in [&TheRegalSphere;, &TheFontOfQuintessence;, &TheDivineSphere;, &TheMyrhinneHall;]">
           <MoveTo XYZ="42.57712, 8, -196.9276"/>
 
           <LootTreasure MaxDistance="20"/>
           <EquipRecommended/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3388, 3392, 3393]">
-          <!-- The Divine Sphere / The Chamber of Raised Cups / The Chamber of Immortal Legacy -->
+        <If Condition="WorldManager.SubZoneId in [&TheDivineSphere;, &TheChamberOfRaisedCups;, &TheChamberOfImmortalLegacy;]">
           <MoveTo XYZ="30.77378, 8, -228.1729"/>
 
           <LootTreasure/>
           <EquipRecommended/>
-
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3388, 3393, 3394]">
-          <!-- The Divine Sphere / The Chamber of Immortal Legacy / The Chamber of Courtly Love-->
+        <If Condition="WorldManager.SubZoneId in [&TheDivineSphere;, &TheChamberOfImmortalLegacy;, &TheChamberOfCourtlyLove;]">
           <MoveTo XYZ="0.01465541, 8, -288.042"/>
           <MoveTo XYZ="0.007533057, 7.999999, -317.9655"/>
         </If>
 
-        <If Condition="WorldManager.SubZoneId in [3388, 3377]">
-          <!-- The Chamber of Celestial Song -->
+        <If Condition="WorldManager.SubZoneId in [&TheDivineSphere;, &TheChamberOfCelestialSong;]">
           <Grind GrindRef="Boss3" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss3;)"/>
 
           <LootTreasure/>
           <EquipRecommended/>
-
-          <StopBot/>
+          
           <LeaveDuty/>
         </If>
       </If>
@@ -119,8 +129,6 @@
       <TargetMobs>
         <TargetMob Id="&Boss1;"/>
       </TargetMobs>
-      <MinLevel/>
-      <MaxLevel/>
     </GrindArea>
     <GrindArea Name="Boss2">
       <Hotspots>
@@ -130,8 +138,6 @@
         <TargetMob Id="&Boss2;" Weight="100"/>
         <TargetMob Id="9045" Weight="999"/>
       </TargetMobs>
-      <MinLevel/>
-      <MaxLevel/>
     </GrindArea>
     <GrindArea Name="Boss3">
       <Hotspots>
@@ -140,8 +146,6 @@
       <TargetMobs>
         <TargetMob Id="&Boss3;"/>
       </TargetMobs>
-      <MinLevel/>
-      <MaxLevel/>
     </GrindArea>
   </GrindAreas>
 </Profile>
