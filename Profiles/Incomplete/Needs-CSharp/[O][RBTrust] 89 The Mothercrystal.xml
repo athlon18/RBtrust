@@ -17,10 +17,9 @@
         <WaitForLoading/>
       </If>
 
-      <If Condition="IsOnMap(995)">  
-	  
+      <If Condition="IsOnMap(995)">
         <Grind GrindRef="Hydaelyn" PostCombatDelay="2.0" While="ObjectExistsWithId(10453) or ObjectExistsWithId(10452)"/>
-		
+
         <LeaveDuty/>
       </If>
     </While>

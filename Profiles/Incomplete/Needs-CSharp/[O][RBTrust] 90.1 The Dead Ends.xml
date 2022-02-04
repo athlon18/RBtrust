@@ -9,7 +9,7 @@
   <!ENTITY Rala "10316">
 ]>
 <Profile>
-  <Name>[O][RBTrust] 90.1 The Dead Ends by Manta</Name>
+  <Name>[O][RBTrust] 90.1 The Dead Ends</Name>
   <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>

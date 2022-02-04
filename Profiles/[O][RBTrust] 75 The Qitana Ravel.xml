@@ -121,6 +121,8 @@
 
         <LootTreasure/>
         <EquipRecommended/>
+
+        <LeaveDuty/>
       </If>
     </While>
   </Order>
