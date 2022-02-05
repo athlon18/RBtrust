@@ -10,23 +10,31 @@ using System.Threading.Tasks;
 
 namespace ff14bot.NeoProfiles.Tags
 {
+    /// <summary>
+    /// Loots nearby Treasure Coffers.
+    /// </summary>
     [XmlElement("LootTreasure")]
     public class LootTreasureTag : AbstractTaskTag
     {
+        private const float InteractRange = 1.5f;
+        private readonly string[] chestNames = { "宝箱", "Treasure Coffer" };
+
+        /// <summary>
+        /// Gets or sets max search radius for Treasure Coffers.
+        /// </summary>
         [XmlAttribute("MaxDistance")]
         public int MaxDistance { get; set; } = 50;
 
-        private readonly string[] _chestNames = { "宝箱", "Treasure Coffer" };
-
+        /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
             IOrderedEnumerable<Treasure> nearbyChests = GameObjectManager.GetObjectsOfType<Treasure>()
-                                          .Where(c => !c.IsOpen && c.Distance() < MaxDistance && _chestNames.Contains(c.Name, StringComparer.OrdinalIgnoreCase))
-                                          .OrderBy(c => c.Distance());
+              .Where(c => !c.IsOpen && c.Distance() < MaxDistance && chestNames.Contains(c.Name, StringComparer.OrdinalIgnoreCase))
+              .OrderBy(c => c.Distance());
 
-            foreach(Treasure chest in nearbyChests)
+            foreach (Treasure chest in nearbyChests)
             {
-                while (Core.Me.Distance(chest.Location) > 1f)
+                while (Core.Me.Distance(chest.Location) > InteractRange)
                 {
                     await CommonTasks.MoveTo(chest.Location);
                     await Coroutine.Yield();
@@ -34,11 +42,8 @@ namespace ff14bot.NeoProfiles.Tags
 
                 Navigator.PlayerMover.MoveStop();
 
-                while(!chest.IsOpen)
-                {
-                    chest.Interact();
-                    await Coroutine.Sleep(1000);
-                }
+                chest.Interact();
+                await Coroutine.Sleep(1000);
             }
 
             return false;

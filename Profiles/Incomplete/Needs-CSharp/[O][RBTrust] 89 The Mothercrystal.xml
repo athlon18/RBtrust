@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+]>
+<Profile>
+  <Name>[O][RBTrust] 89 The Mothercrystal</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+      <If Condition="not IsOnMap(995)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="TheMothercrystal"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(995)">
+        <Grind GrindRef="Hydaelyn" PostCombatDelay="2.0" While="ObjectExistsWithId(10453) or ObjectExistsWithId(10452)"/>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Hydaelyn">
+      <Hotspots>
+        <Hotspot XYZ="99.99231, -4.916372E-12, 90" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10453"/>
+        <TargetMob Id="10452"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+  </CodeChunks>
+</Profile>

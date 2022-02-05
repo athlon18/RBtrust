@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+<!ENTITY ForgivenDissonance "8299">
+<!ENTITY TesleenTheForgiven "8300">
+<!ENTITY Philia "8301">
+]>
+<Profile>
+  <Name>[O][RBTrust] 71 Holminster Switch by athlon, Minami16, 疾风点破, Manta</Name>
+  <KillRadius>50</KillRadius>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+
+      <If Condition="not IsOnMap(837)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="HolminsterSwitch"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(837)">
+        <WaitForLoading/>
+
+        <!-- 第一步 得到宽恕的自负 -->
+        <MoveTo XYZ="-127.256,2.538,403.434"/>
+        <WaitTimer WaitTime="3"/>
+        <!-- 第二步 得到宽恕的喧哗 -->
+        <MoveTo XYZ="-148.1962,-1.056138,339.3869"/>
+        <!-- 第三步 得到宽恕的愚行 -->
+        <MoveTo XYZ="-98.134636,-0.230948,321.217957"/>
+        <!-- 第四步 得到宽恕的自负 -->
+        <MoveTo XYZ="-66.7244,0.7372842,346.6774"/>
+        <!-- 第五步 得到宽恕的喧哗 -->
+        <MoveTo XYZ="-50.47,0.05,352.05"/>
+        <!-- 第六步 得到宽恕的无知 -->
+        <MoveTo XYZ="-12.07,0.08,292.24"/>
+        <!-- 第七步 BOSS1 得到宽恕的失调 -->
+        <MoveTo XYZ="-14.87,0, 235.55"/>
+        <Grind GrindRef="ForgivenDissonance" While="GameObjectManager.GetObjectByNPCId(&ForgivenDissonance;)"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第八步  打怪 -->
+        <MoveTo XYZ="-15.98,2.05, 127.16"/>
+        <MoveTo XYZ="-4.837286,-1.260272,106.3564"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第九步  打怪 -->
+        <MoveTo XYZ="-4.61,-4.48,68.4"/>
+        <!-- 第九步  打怪 -->
+        <MoveTo XYZ="24.02,-8.12,40.39"/>
+        <!-- 第十步  打怪 -->
+        <MoveTo XYZ="73.73,-5.25,-0.73"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
+        <MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
+        <NoCombatMoveTo XYZ="85.32442,0,-88.8187" Wait="1"/>
+        <Grind GrindRef="TesleenTheForgiven" While="GameObjectManager.GetObjectByNPCId(&TesleenTheForgiven;)"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="86.15449,0.512633,-189.4477"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十一步 打怪-->
+        <MoveTo XYZ="77.4,0,-208.51"/>
+        <!-- 第十二步 打怪-->
+        <MoveTo XYZ="89.05,3.93,-241.38"/>
+        <!-- 第十三步 打怪-->
+        <MoveTo XYZ="63.87,4.05,-251.26"/>
+        <!-- 第十四步 打怪-->
+        <MoveTo XYZ="72.46,3.45,-273.49"/>
+        <WaitTimer waitTime="3"/>
+
+        <MoveTo XYZ="71.46906,1.502112,-326.3975"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十五步 Philia-->
+        <NoCombatMoveTo XYZ="134.1453,23,-477.03" Wait="1"/>
+        <Grind GrindRef="Philia" While="GameObjectManager.GetObjectByNPCId(&Philia;)"/>
+        <WaitTimer waitTime="3"/>
+        <MoveTo XYZ="133.34,23,-455.87"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea name="ForgivenDissonance">
+      <Hotspots>
+        <Hotspot Radius="120" XYZ="-14.87,0, 235.55"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&ForgivenDissonance;"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="TesleenTheForgiven">
+      <Hotspots>
+        <Hotspot Radius="120" XYZ="77.77,0,-79.51"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&TesleenTheForgiven;"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="Philia">
+      <Hotspots>
+        <Hotspot Radius="120" XYZ="134.34,23,-455.87"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Philia;" Weight="100"/>
+        <!-- CHAINS -->
+        <TargetMob Id="8570" Weight="999"/>
+      </TargetMobs>
+    </GrindArea>
+  </GrindAreas>
+</Profile>

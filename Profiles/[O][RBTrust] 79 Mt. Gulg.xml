@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+
+]>
+<Profile>
+  <Name>[O][RBTrust] 79 Mt. Gulg by sodimm, Manta</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+
+      <If Condition="not IsOnMap(822)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="MtGulg"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(822)">
+        <WaitForLoading/>
+
+        <MoveTo XYZ="194.0202, -48, -169.6748"/>
+        <WaitTimer WaitTime="3"/>
+        <Grind GrindRef="ForgivenCruelty" PostCombatDelay="2.0" While="ObjectExistsWithId(8260)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-32.9995, -25.36692, -196.2716"/>
+        <RunCode Name="Transition"/>
+        <MoveTo XYZ="-82.59937, 172.735, -247.665"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-239.5555, 201.9996, -97.39667"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo Distance="1" XYZ="-236.4691, 210.0001, -54.79517"/>
+        <WaitTimer WaitTime="3"/>
+        <Grind GrindRef="ForgivenWhimsy" PostCombatDelay="2.0" While="ObjectExistsWithId(8261)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-288.0424, 194, 84.65469"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-252.7066, 202, 140.1571"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <MoveTo XYZ="-240, 204, 188"/>
+        <WaitTimer WaitTime="5"/>
+
+        <MoveTo XYZ="-240, 204, 188"/>
+        <WaitTimer WaitTime="12"/>
+        <Grind GrindRef="ForgivenRevelry" PostCombatDelay="2.0" While="GameObjectManager.GetObjectByNPCId(8270).IsTargetable"/>
+
+        <ClimbHill Start="-240, 204, 188" End="-240, 210, 210" Distance="2.5" />
+
+        <MoveTo Distance="1" XYZ="-239.9252, 210, 214.856"/>
+        <WaitWhile Condition="not ObjectExistsWithId(8262)"/>
+        <MoveTo XYZ="-239.9695, 210, 224.6006"/>
+        <Grind GrindRef="ForgivenObscenity" PostCombatDelay="2.0" While="ObjectExistsWithId(8262)"/>
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="ForgivenCruelty">
+      <Hotspots>
+        <Hotspot XYZ="187.9758, -48, -170.0008" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8260"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ForgivenWhimsy">
+      <Hotspots>
+        <Hotspot XYZ="-240.0414, 210.0001, -41.5084" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8261"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ForgivenRevelry">
+      <Hotspots>
+        <Hotspot XYZ="-240, 204, 188" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8270"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ForgivenObscenity">
+      <Hotspots>
+        <Hotspot XYZ="-239.8865, 210, 239.2185" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="8262"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition">
+      <![CDATA[
+        Core.Me.SetFacing(4.231756f);
+        MovementManager.MoveForwardStart();
+        while (WorldManager.SubZoneId != 3004)  {  await Coroutine.Yield();  }
+        Navigator.PlayerMover.MoveStop();
+      ]]>
+    </CodeChunk>
+  </CodeChunks>
+</Profile>

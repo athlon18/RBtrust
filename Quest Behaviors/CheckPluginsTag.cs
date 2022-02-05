@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace ff14bot.NeoProfiles.Tags
 {
+    /// <summary>
+    /// Ensures Trust plugin is present and enabled.
+    /// </summary>
     [XmlElement("CheckPlugins")]
     public class CheckPluginsTag : AbstractTaskTag
     {
+        /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
             PluginContainer trustPlugin = PluginManager.Plugins.FirstOrDefault(p => p.Plugin.Name == "Trust" || p.Plugin.Name == "亲信战友");
@@ -24,12 +28,12 @@ namespace ff14bot.NeoProfiles.Tags
                 usabilityWarning = "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物";
 #endif
 
-                Core.OverlayManager.AddToast(() => usabilityWarning,
+                Core.OverlayManager.AddToast(
+                    () => usabilityWarning,
                     TimeSpan.FromMilliseconds(5000),
                     System.Windows.Media.Color.FromRgb(29, 213, 226),
                     System.Windows.Media.Color.FromRgb(14, 106, 113),
-                    new System.Windows.Media.FontFamily("Gautami")
-                );
+                    new System.Windows.Media.FontFamily("Gautami"));
 
                 await Coroutine.Sleep(6000);
             }
@@ -40,12 +44,12 @@ namespace ff14bot.NeoProfiles.Tags
                 pluginMissingError = "你必须在Plugins文件夹里存在Trust/亲信战友的插件";
 #endif
 
-                Core.OverlayManager.AddToast(() => pluginMissingError,
+                Core.OverlayManager.AddToast(
+                    () => pluginMissingError,
                     TimeSpan.FromMilliseconds(5000),
                     System.Windows.Media.Color.FromRgb(210, 55, 65),
                     System.Windows.Media.Color.FromRgb(105, 27, 32),
-                    new System.Windows.Media.FontFamily("Gautami")
-                );
+                    new System.Windows.Media.FontFamily("Gautami"));
 
                 await Coroutine.Sleep(6000);
 

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+
+]>
+<Profile>
+  <Name>[O][RBTrust] 75 The Qitana Ravel by athlon, Minami16, 疾风点破, Manta</Name>
+  <KillRadius>50</KillRadius>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+
+      <If Condition="not IsOnMap(823)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="TheQitanaRavel"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(823)">
+        <WaitForLoading/>
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+
+        <!-- 第一步 小怪1 -->
+        <MoveTo XYZ="0.7863261,0.0004276633,637.8861"/>
+
+        <!-- 第二步 小怪2 -->
+        <MoveTo XYZ="-51.37844,7.15,571.2654"/>
+
+        <!-- 第三步 小怪3 -->
+        <MoveTo XYZ="8.185737,0.07372284,515.0303"/>
+
+        <!-- 第四步 小怪4 -->
+        <MoveTo XYZ="-0.5027559,2.000115,433.2702"/>
+
+        <!-- 第五步 BOOS1 洛查特尔 -->
+        <MoveTo XYZ="0.1039736,4.996238,376.6639"/>
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+        <NoCombatMoveTo XYZ="-2.767347,5.35,315.614"/>
+        <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8231)"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+
+        <!-- 第六步  小怪5 -->
+        <MoveTo XYZ="36.74485,-2.278083,200.4485"/>
+
+        <MoveTo XYZ="133.7429,-8.545856,186.1049"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第七步  小怪6 -->
+        <MoveTo XYZ="84.77122,-2,159.0878"/>
+
+        <!-- 第八步  小怪7 -->
+        <MoveTo XYZ="153.6684,-12.5,153.6111"/>
+
+        <!-- 第九步  小怪8 -->
+        <MoveTo XYZ="100.6198,-11.37864,93.50124"/>
+
+        <MoveTo XYZ="48.53169,-11,78.59581"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十步  小怪8 -->
+        <MoveTo XYZ="64.61283,-11,71.81774"/>
+
+        <!-- 第十一步  BOSS2 大脚野蝠 -->
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+        <MoveTo XYZ="61.96784,-21.68949,-14.0423"/>
+        <NoCombatMoveTo XYZ="64.75812,-21,-41.91465"/>
+        <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8232)"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十二步 打怪10 跳瀑布-->
+        <MoveTo XYZ="38.48219,-22.1,-155.9829"/>
+        <RunCode name="向前移动"/>
+        <MoveTo XYZ="36.32352,-40.1,-200.8937"/>
+        <RunCode name="向前移动"/>
+        <MoveTo XYZ="38.71727,-70.11002,-232.6034"/>
+
+
+        <MoveTo XYZ="42.02502,-60.00004,-301.4867"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十三步 打怪11 -->
+        <MoveTo XYZ="28.86912,-60.00003,-333.6031"/>
+
+        <!-- 第十四步 打怪12 -->
+        <MoveTo XYZ="18.21214,-60.00005,-334.5138"/>
+
+        <!-- 第十五步 打怪13 -->
+        <MoveTo XYZ="-18.97575,-57.00001,-394.8925"/>
+
+        <MoveTo XYZ="-7.775939,-57.00002,-423.3626"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <!-- 第十六步 BOSS3 艾洛斯 -->
+        <MoveTo XYZ="17.0723,-57.74398,-433.5704"/>
+        <RunCode name="向前移动"/>
+        <WaitTimer waitTime="5"/>
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+        <NoCombatMoveTo XYZ="20.98305,-77,-547.7723"/>
+        <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8233)"/>
+
+        <WaitTimer waitTime="3"/>
+        <MoveTo XYZ="20.98305,-77,-547.7723"/>
+
+        <LootTreasure/>
+        <EquipRecommended/>
+
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <CodeChunks>
+    <CodeChunk Name="向前移动">
+      <![CDATA[  await Buddy.Coroutines.Coroutine.Sleep(500);
+      ff14bot.Managers.MovementManager.MoveForwardStart();
+      await Buddy.Coroutines.Coroutine.Sleep(3000);
+      ff14bot.Managers.MovementManager.MoveForwardStop();
+      await Buddy.Coroutines.Coroutine.Sleep(500);
+      ]]>
+    </CodeChunk>
+  </CodeChunks>
+  <GrindAreas>
+    <GrindArea name="boss1">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="-2.767347,5.35,315.614"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="洛查特尔" Id="8231" Weight="1"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="boss2">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="64.75812,-21,-41.91465"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="大脚野蝠" Id="8232" Weight="1"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea name="boss3">
+      <Hotspots>
+        <Hotspot Radius="200" XYZ="20.98305,-77,-547.7723"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Name="艾洛斯" Id="8233" Weight="1"/>
+      </TargetMobs>
+    </GrindArea>
+  </GrindAreas>
+</Profile>

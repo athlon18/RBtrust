@@ -11,23 +11,26 @@ using System.Threading.Tasks;
 
 namespace ff14bot.NeoProfiles.Tags
 {
+    /// <summary>
+    /// Waits for all loading, cutscenes, and duty to commence.
+    /// </summary>
     [XmlElement("WaitForLoading")]
-    public class WaitForLoadingTag : AbstractTaskTag
+    public partial class WaitForLoadingTag : AbstractTaskTag
     {
         /// <summary>
-        /// Instanced content-specific Director.  <see langword="null"/> if not inside a relevant instance.
-        /// </summary>
-        private static InstanceContentDirector InstanceDirector => DirectorManager.ActiveDirector as InstanceContentDirector;
-
-        /// <summary>
-        /// <see langword="true"/> if in instance, regardless of stage of loading (black screen, barrier, duty commenced, etc).
+        /// Gets a value indicating whether in instance, regardless of stage of loading (black screen, barrier, duty commenced, etc).
         /// </summary>
         public static bool IsInInstance => InstanceDirector != null;
 
         /// <summary>
-        /// <see langword="true"/> if instance is fully loaded, dungeon barrier is down, and "DUTY COMMENCED" has displayed.
+        /// Gets instanced content-specific Director.  <see langword="null"/> if not inside a relevant instance.
         /// </summary>
-        public static bool IsDutyCommenced
+        private static InstanceContentDirector InstanceDirector => DirectorManager.ActiveDirector as InstanceContentDirector;
+
+        /// <summary>
+        /// Gets a value indicating whether instance is fully loaded, dungeon barrier is down, and "DUTY COMMENCED" has displayed.
+        /// </summary>
+        private static bool IsDutyCommenced
         {
             get
             {
@@ -41,6 +44,7 @@ namespace ff14bot.NeoProfiles.Tags
             }
         }
 
+        /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
             if (CommonBehaviors.IsLoading)
@@ -72,17 +76,6 @@ namespace ff14bot.NeoProfiles.Tags
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Meanings of individual bits in InstanceFlags.
-        /// </summary>
-        [Flags]
-        private enum InstanceFlags : byte
-        {
-            LOADED = 0b0000_0100,
-            BARRIER_DOWN = 0b0000_1000,
-            DUTY_COMMENCED = 0b0001_0000,
         }
     }
 }

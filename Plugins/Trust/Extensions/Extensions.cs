@@ -9,52 +9,79 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Trust.Helpers;
 
-namespace Trust
+namespace Trust.Extensions
 {
-    public static class Extensions
+    /// <summary>
+    /// Various extension methods.
+    /// </summary>
+    internal static class Extensions
     {
-        public static bool IsCasting(this HashSet<uint> spellCastIds, bool additional = false)
+        /// <summary>
+        /// Checks if any nearby <see cref="BattleCharacter"/> is casting any spell ID in this collection.
+        /// </summary>
+        /// <param name="spellCastIds">Spell IDs to check against.</param>
+        /// <returns><see langword="true"/> if any given spell is being casted.</returns>
+        public static bool IsCasting(this HashSet<uint> spellCastIds)
         {
-            if (!additional)
-            {
-                if (GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50).Count() > 0)
-                {
-                    return true;
-                }
-            }
-            else if (GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => spellCastIds.Contains(obj.CastingSpellId) && additional && obj.Distance() < 50).Count() > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                    .Any(obj => spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50);
         }
-        
+
+        /// <summary>
+        /// Follows the specified <see cref="BattleCharacter"/>.
+        /// </summary>
+        /// <param name="bc">Character to follow.</param>
+        /// <param name="followDistance">Distance to follow at.</param>
+        /// <param name="msWait">Time between movement ticks, in milliseconds.</param>
+        /// <param name="useMesh">Whether to use Nav Mesh or move blindly.</param>
+        /// <returns><see langword="true"/> if this behavior expected/handled execution.</returns>
         public static async Task<bool> Follow(this BattleCharacter bc, float followDistance = 0.3f, int msWait = 100, bool useMesh = false)
         {
             float curDistance = Core.Me.Location.Distance(bc.Location);
 
-            if (bc == null) { return true; }
+            if (bc == null)
+            {
+                return true;
+            }
 
-            if (curDistance < followDistance) { return true; }
+            if (curDistance < followDistance)
+            {
+                return true;
+            }
 
             while (!Core.Me.IsDead)
             {
                 curDistance = Core.Me.Location.Distance(bc.Location);
 
-                if (curDistance < followDistance) { break; }
+                if (curDistance < followDistance)
+                {
+                    break;
+                }
 
-                if (Core.Me.IsDead) { return false; }
+                if (Core.Me.IsDead)
+                {
+                    return false;
+                }
 
-                if (Core.Me.IsCasting) { ActionManager.StopCasting(); }
+                if (Core.Me.IsCasting)
+                {
+                    ActionManager.StopCasting();
+                }
 #if RB_CN
                 Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
 #else
                 Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance: {curDistance}]");
-#endif 
-                if (useMesh) { await CommonTasks.MoveTo(bc.Location); }
-                else { Navigator.PlayerMover.MoveTowards(bc.Location); }
+#endif
+                if (useMesh)
+                {
+                    await CommonTasks.MoveTo(bc.Location);
+                }
+                else
+                {
+                    Navigator.PlayerMover.MoveTowards(bc.Location);
+                }
 
                 await Coroutine.Sleep(msWait);
             }
@@ -62,9 +89,16 @@ namespace Trust
             return await StopMoving();
         }
 
+        /// <summary>
+        /// Stops the player's movement.
+        /// </summary>
+        /// <returns><see langword="true"/> if this behavior expected/handled execution.</returns>
         public static async Task<bool> StopMoving()
         {
-            if (!MovementManager.IsMoving) { return true; }
+            if (!MovementManager.IsMoving)
+            {
+                return true;
+            }
 
             int ticks = 0;
             while (MovementManager.IsMoving && ticks < 100)
@@ -77,34 +111,31 @@ namespace Trust
             return true;
         }
 
+        /// <summary>
+        /// Disables SideStep around certain boss-related monsters.
+        /// </summary>
+        /// <param name="bossIds">Boss monster IDs.</param>
+        /// <param name="ignoreIds">IDs to filter out of the base list.</param>
         public static void ToggleSideStep(this HashSet<uint> bossIds, uint[] ignoreIds = null)
         {
-            if (Core.Target != null)
+            if (Core.Target == null)
             {
-                HashSet<uint> npcIds = new HashSet<uint>();
-                PluginContainer p = PluginManager.Plugins.Where(r => r.Plugin.Name == "SideStep" || r.Plugin.Name == "回避").FirstOrDefault();
+                return;
+            }
 
-                if (ignoreIds != null && ignoreIds.Count() > 0)
-                {
-                    foreach (uint id in bossIds)
-                    {
-                        if (ignoreIds.Contains(id)) { continue; }
-                        npcIds.Add(id);
-                    }
-                }
+            PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
 
-                bool isBoss = ignoreIds != null ? GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => obj.Distance() < 50 &&
-                    npcIds.Contains(obj.NpcId)).Any() : GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj => obj.Distance() < 50 &&
-                        bossIds.Contains(obj.NpcId)).Any();
+            if (sidestepPlugin != null)
+            {
+                HashSet<uint> filteredIds = new HashSet<uint>(bossIds.Where(id => ignoreIds == null || !ignoreIds.Contains(id)));
 
-                if (isBoss)
-                {
-                    if (p != null) { if (p.Enabled) { p.Enabled = false; } }
-                }
-                else
-                {
-                    if (p != null) { if (!p.Enabled) { p.Enabled = true; } }
-                }
+                bool isBoss = ignoreIds != null
+                ? GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                   .Any(obj => obj.Distance() < 50 && filteredIds.Contains(obj.NpcId))
+                : GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                   .Any(obj => obj.Distance() < 50 && bossIds.Contains(obj.NpcId));
+
+                sidestepPlugin.Enabled = !isBoss;
             }
         }
     }

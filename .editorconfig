@@ -1,6 +1,18 @@
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
+[*.{xml,xsd}]
+charset = utf-8
+
+max_line_length = off
+end_of_line = crlf
+insert_final_newline = true
+
+trim_trailing_whitespace = true
+
+indent_style = space
+indent_size = 2
+
 # C# files
 [*.cs]
 
@@ -13,7 +25,9 @@ tab_width = 4
 
 # New line preferences
 end_of_line = crlf
-insert_final_newline = false
+insert_final_newline = true
+
+trim_trailing_whitespace = true
 
 #### .NET Coding Conventions ####
 
@@ -184,24 +198,24 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
 
 dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.types.required_modifiers = 
+dotnet_naming_symbols.types.required_modifiers =
 
 dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.non_field_members.required_modifiers = 
+dotnet_naming_symbols.non_field_members.required_modifiers =
 
 # Naming styles
 
-dotnet_naming_style.pascal_case.required_prefix = 
-dotnet_naming_style.pascal_case.required_suffix = 
-dotnet_naming_style.pascal_case.word_separator = 
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 
 dotnet_naming_style.begins_with_i.required_prefix = I
-dotnet_naming_style.begins_with_i.required_suffix = 
-dotnet_naming_style.begins_with_i.word_separator = 
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case

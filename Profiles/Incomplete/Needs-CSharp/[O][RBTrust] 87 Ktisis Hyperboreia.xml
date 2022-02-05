@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+]>
+<Profile>
+  <Name>[O][RBTrust] 87 Ktisis Hyperboreia</Name>
+  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+      <If Condition="not IsOnMap(974)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="KtisisHyperboreia"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(974)">
+	  
+	    <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
+		  <!-- Shortcut available -->
+		  <UseTransport NpcId="2000700" XYZ="7.094823, 516.9997, 308.1904"/>
+		</If>	  
+	  
+        <If Condition="IsOnSubMap(3760)">
+          <MoveTo XYZ="-143.9605, 495.9999, 66.25065" Distance="0.5"/>
+        </If>   
+	  
+        <If Condition="IsOnSubMap(3766)">
+          <Grind GrindRef="Lyssa" PostCombatDelay="2.0" While="ObjectExistsWithId(10396)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+		  <!-- Post Boss Movement to Next Area -->
+          <MoveTo XYZ="-139.5833, 500, 10.65856"/>
+          <While Condition="IsOnSubMap(3760)">
+            <RunCode Name="Transition1"/>
+          </While>
+        </If>  
+	  
+        <If Condition="IsOnSubMap(3761)">
+          <MoveTo XYZ="-111.9119, 624.0024, 110.1894"/>	  
+          <LootTreasure/>
+          <EquipRecommended/>	
+          <MoveTo XYZ="0.3954928, 624.0016, 127.6892"/>
+          <LootTreasure/>
+          <EquipRecommended/>	
+          <MoveTo XYZ="-0.1270234, 630.0001, 63.1016" Distance="0.5"/>	
+        </If>
+	  
+        <If Condition="IsOnSubMap(3767)">	
+          <Grind GrindRef="LadonLord" PostCombatDelay="2.0" While="ObjectExistsWithId(10398)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+		  <!-- Post Boss Movement to Next Area -->
+          <MoveTo XYZ="-0.04708901, 630.0001, -0.05946518"/>
+          <While Condition="IsOnSubMap(3761)">
+            <RunCode Name="Transition2"/>
+          </While>
+        </If>		
+	  
+        <If Condition="IsOnSubMap(3762)">
+          <MoveTo XYZ="-0.04975196, -699.7429, 0.4384257" Distance="0.5"/>	 
+		  <WaitWhile Condition="not IsOnSubMap(3764)"/>
+        </If>
+	  
+        <If Condition="IsOnSubMap(3764)">
+          <MoveTo XYZ="20.119, -600, -45.0291"/>	
+          <LootTreasure/>
+          <EquipRecommended/>	
+          <MoveTo XYZ="29.57607, -599.7429, -71.85575" Distance="0.5"/>	
+		  <WaitWhile Condition="not IsOnSubMap(3765)"/>
+        </If>
+	  
+        <If Condition="IsOnSubMap(3765)">
+          <MoveTo XYZ="-29.98282, -140, 20.09882"/>	
+          <LootTreasure/>
+          <EquipRecommended/>	
+          <MoveTo XYZ="-33.25174, -140, 1.282965" Distance="0.5"/>	
+          <While Condition="IsOnSubMap(3765)">
+            <RunCode Name="Transition3"/>
+          </While>	
+		  <WaitWhile Condition="not IsOnSubMap(3768)"/>  
+          <MoveTo XYZ="0.08620146, 1.192093E-07, -34.03904" Distance="0.5"/>
+        </If>
+	  
+        <If Condition="IsOnSubMap(3768)">
+          <Grind GrindRef="Hermes" PostCombatDelay="2.0" While="ObjectExistsWithId(10399)"/>
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+		
+        <LeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Lyssa">
+      <Hotspots>
+        <Hotspot XYZ="-144.0204, 496, 42.26397" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10396"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="LadonLord">
+      <Hotspots>
+        <Hotspot XYZ="0.3116317, 630.0001, 41.52773" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10398"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Hermes">
+      <Hotspots>
+        <Hotspot XYZ="0, 2.087062E-07, -60" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10399"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition1">
+      <![CDATA[
+            Core.Me.SetFacing(2.604102f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(2000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+    <CodeChunk Name="Transition2">
+      <![CDATA[
+            Core.Me.SetFacing(3.155864f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(2000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+    <CodeChunk Name="Transition3">
+      <![CDATA[
+            Core.Me.SetFacing(3.305412f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(2000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+  </CodeChunks>
+</Profile>
