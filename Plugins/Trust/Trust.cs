@@ -5,7 +5,6 @@ using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
-using RBTrust.Plugins.Trust.Helpers;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -121,7 +120,7 @@ namespace Trust
 
         private bool CanTrust()
         {
-            return InstanceHelpers.IsInInstance;
+            return LoadingHelpers.IsInInstance;
         }
 
         private async Task<bool> RunTrust()

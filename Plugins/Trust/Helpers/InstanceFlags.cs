@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ff14bot.NeoProfiles.Tags
+namespace Trust.Helpers
 {
     /// <summary>
     /// Meanings of individual bits in InstanceFlags.

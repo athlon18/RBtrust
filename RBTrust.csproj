@@ -75,7 +75,7 @@
     <Compile Include="Plugins\Trust\Dungeons\Vanaspati.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
     <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
-    <Compile Include="Plugins\Trust\Helpers\InstanceHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\LoadingHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\MovementHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\PluginHelpers.cs" />
@@ -91,8 +91,9 @@
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
+    <Compile Include="Quest Behaviors\CrossZoneLineTag.cs" />
     <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
-    <Compile Include="Quest Behaviors\InstanceFlags.cs" />
+    <Compile Include="Plugins\Trust\Helpers\InstanceFlags.cs" />
     <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
     <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
     <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
@@ -108,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 80.2 The Grand Cosmos.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 80.3 Anamnesis Anyder.xml" />
     <Content Include="Profiles\[O][RBTrust] 71 Holminster Switch.xml" />
     <Content Include="Profiles\[O][RBTrust] 73 Dohn Mheg.xml" />
     <Content Include="Profiles\[O][RBTrust] 75 The Qitana Ravel.xml" />
@@ -118,8 +120,8 @@
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 83 The Tower of Babil.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 85 Vanaspati.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 87 Ktisis Hyperboreia.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89 The Aitiascope.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89 The Mothercrystal.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.1 The Aitiascope.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.2 The Mothercrystal.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.1 The Dead Ends.xml" />
   </ItemGroup>
   <ItemGroup>
