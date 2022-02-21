@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+<!-- Trust Config -->
+<!ENTITY ZoneId "898">
+<!ENTITY DungeonName "AnamnesisAnyder">
+
+<!-- Important NPCs -->
+<!ENTITY Shortcut "2000700">
+
+<!ENTITY Boss1a "9260">
+<!ENTITY Boss1b "9261">
+<!ENTITY Boss2 "9263">
+<!ENTITY Boss3 "9264">
+
+<!-- Sub-Zones -->
+<!ENTITY BismarcksBrow "3459">
+<!ENTITY TheGardenOfRecollection "3460">
+<!ENTITY Katharsis "3462">
+
+<!ENTITY Anamnesis "3461">
+<!ENTITY Doxa "3463">
+
+<!ENTITY TheArchiveEternal "3464">
+<!ENTITY Noesis "3465">
+]>
+<Profile>
+  <Name>[O][RBTrust] 80.3 Anamnesis Anyder</Name>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+
+      <If Condition="not IsOnMap(&ZoneId;)">
+        <EquipRecommended/>
+
+        <QueueTrust Dungeon="&DungeonName;"/>
+        <CommenceDuty/>
+        <WaitForLoading/>
+      </If>
+
+      <If Condition="IsOnMap(&ZoneId;)">
+        <WaitForLoading/>
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+
+        <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
+          <!-- Shortcut available -->
+          <UseTransport NpcId="&Shortcut;" XYZ="-105.4514, 103.5905, 381.7909"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&BismarcksBrow;]">
+          <MoveTo XYZ="-99.66338, 102.449, 352.5695"/>
+          <Grind GrindRef="Bismarck's Brow" PostCombatDelay="2.0" While="not ObjectExistsWithId(&Boss1a;) or not ObjectExistsWithId(&Boss1b;)"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&BismarcksBrow;, &TheGardenOfRecollection;]">
+          <MoveTo XYZ="-40.18234, 94.99999, 303.8327"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&TheGardenOfRecollection;, &Katharsis;]">
+          <Grind GrindRef="Boss1" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss1a;) or ObjectExistsWithId(&Boss1b;)"/>
+          <!-- Sinister Bubble NpcID: 9262 -->
+
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&TheGardenOfRecollection;, &Katharsis;]">
+          <MoveTo XYZ="19.97517, 100, 145.2332"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="33.91603, 105, 15.84781"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="19.96226, 110, -60.07328"/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&TheGardenOfRecollection;, &Anamnesis;, &Doxa;]">
+          <Grind GrindRef="Boss2" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss2;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&Anamnesis;, &Doxa;, &TheArchiveEternal;]">
+          <MoveTo XYZ="71.77529, 92, -230.4634"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="-4.257263, 91.99998, -221.3627"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <MoveTo XYZ="20.16837, 92.00001, -299.9221"/>
+          <!--<CrossZoneLine Start="20.16837, 92.00001, -299.9221" End="20.00874, 90.57153, -325.8144" Distance="0.1"/> -->
+        </If>
+
+        <If Condition="WorldManager.SubZoneId in [&Noesis;]">
+          <MoveTo XYZ="-0.0108419, -200, -433.1205"/>
+          <WaitTimer WaitTime="3"/>
+          <Grind GrindRef="Boss3" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss3;)"/>
+
+          <LootTreasure/>
+          <EquipRecommended/>
+
+          <LeaveDuty/>
+        </If>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Bismarck's Brow">
+      <Hotspots>
+        <Hotspot XYZ="-99.66338, 102.449, 352.5695" Radius="120"/>
+      </Hotspots>
+    </GrindArea>
+    <GrindArea Name="Boss1">
+      <Hotspots>
+        <Hotspot XYZ="-40.24238, 95, 290.1834" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <!-- Focus on the first one to spawn -->
+        <TargetMob Id="&Boss1a;" Weight="100"/>
+        <TargetMob Id="&Boss1b;" Weight="50"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea Name="Boss2">
+      <Hotspots>
+        <Hotspot XYZ="20, 110, -85" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Boss2;"/>
+      </TargetMobs>
+    </GrindArea>
+    <GrindArea Name="Boss3">
+      <Hotspots>
+        <Hotspot XYZ="-0.03659993, -200, -460.0256" Radius="120"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="&Boss3;" Weight="100"/>
+        <TargetMob Id="9266" Weight="999"/>
+        <!-- Depth Grip NpcID: 9265 IsVisible: False D: 14.19348 Loc:  <3.649315, -200, -468.295> -->
+      </TargetMobs>
+    </GrindArea>
+  </GrindAreas>
+</Profile>
