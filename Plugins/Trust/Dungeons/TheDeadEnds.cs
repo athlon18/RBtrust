@@ -1,6 +1,7 @@
 ﻿using Clio.Utilities;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Objects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -17,6 +18,10 @@ namespace Trust.Dungeons
         /// Gets zone ID for this dungeon.
         /// </summary>
         public new const ZoneId ZoneId = Data.ZoneId.TheDeadEnds;
+
+        private const int CausticGrebuloff = 10313;
+        private const int Peacekeeper = 10315;
+        private const int Rala = 10316;
 
         /// <summary>
         /// Collection of Pestilent Sands environmental traps.
@@ -78,6 +83,7 @@ namespace Trust.Dungeons
                 case SubZoneId.JudgmentDay:
                     break;
                 case SubZoneId.DeterrenceGrounds:
+                    HandlePeacekeeperMechanics();
                     break;
 
                 // Ostrakon Deka-hepta
@@ -96,9 +102,9 @@ namespace Trust.Dungeons
         {
             SubZoneId currentSubZoneId = (SubZoneId)WorldManager.SubZoneId;
 
-            if (lastSubZoneId != currentSubZoneId && currentSubZoneId == SubZoneId.PestilentSands)
+            if (lastSubZoneId != currentSubZoneId)
             {
-                Logging.Write(Colors.Aquamarine, $"Adding avoids for sub-zone: {SubZoneId.PestilentSands} Pestilent Sands");
+                Logging.Write(Colors.Aquamarine, $"Adding avoids for sub-zone: {SubZoneId.PestilentSands} Pestilent Sands.");
 
                 foreach (var (radius, location) in pestilentSandsTraps)
                 {
@@ -107,6 +113,26 @@ namespace Trust.Dungeons
                         radius: radius,
                         () => location,
                         ignoreIfBlocking: true);
+                }
+            }
+        }
+
+        private void HandlePeacekeeperMechanics()
+        {
+            SubZoneId currentSubZoneId = (SubZoneId)WorldManager.SubZoneId;
+
+            if (lastSubZoneId != currentSubZoneId)
+            {
+                var boss = GameObjectManager.GetObjectByNPCId<BattleCharacter>(Peacekeeper);
+
+                if (boss != null)
+                {
+                    Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
+
+                    AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                        () => boss.IsValid && !boss.IsDead,
+                        radius: 9.5f,
+                        boss.ObjectId);
                 }
             }
         }
