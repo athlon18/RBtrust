@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-
 ]>
 <Profile>
   <Name>[O][RBTrust] 75 The Qitana Ravel by athlon, Minami16, 疾风点破, Manta</Name>
-  <KillRadius>50</KillRadius>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 

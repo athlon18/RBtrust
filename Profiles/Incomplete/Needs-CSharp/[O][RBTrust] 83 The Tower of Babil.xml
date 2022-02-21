@@ -3,7 +3,6 @@
 ]>
 <Profile>
   <Name>[O][RBTrust] 83 The Tower of Babil by y2krazy</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 
@@ -18,55 +17,55 @@
       </If>
 
       <If Condition="IsOnMap(969)">
-	  
-	    <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
-		  <!-- Shortcut available -->
-		  <UseTransport NpcId="2000700" XYZ="-264.4764, -199.5, 374.1396"/>
-		</If>	  
-	  
+
+        <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
+          <!-- Shortcut available -->
+          <UseTransport NpcId="2000700" XYZ="-264.4764, -199.5, 374.1396"/>
+        </If>
+
         <If Condition="IsOnSubMap(4127)">
           <MoveTo XYZ="-266.1688, -180.5, 280.5665" Distance="0.5"/>
           <MoveTo XYZ="-267.6622, -200, 258.0513" Distance="0.5" UseMesh="False"/>
           <MoveTo XYZ="-300.0438, -175, 89.84753" Distance="0.5"/>
-        </If>   
-	  
+        </If>
+
         <If Condition="IsOnSubMap(4124)">
           <Grind GrindRef="Barnabas" PostCombatDelay="2.0" While="ObjectExistsWithId(10279)"/>
           <LootTreasure/>
           <EquipRecommended/>
-		  <!-- Post Boss Movement to Next Area -->
+          <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-299.8641, -174.98, 25.57108"/>
           <While Condition="IsOnSubMap(4128)">
             <RunCode Name="Transition1"/>
           </While>
-        </If>  
+        </If>
 
         <If Condition="IsOnSubMap(4129)">
           <If Condition="GameObjectManager.GetObjectByNPCId(2011745).IsVisible">
             <UseObject NpcId="2011745" XYZ="400, 0.1000001, -177.5" Radius="10" UseTimes="1" />
             <!--Control Terminal-->
           </If>
-		  <!-- Post Object Movement to Next Area -->
+          <!-- Post Object Movement to Next Area -->
           <MoveTo XYZ="400.1074, 0, -155.7414"/>
           <While Condition="IsOnSubMap(4129)">
             <RunCode Name="Transition2"/>
           </While>
         </If>
-	  
+
         <If Condition="IsOnSubMap(4130)">
           <LootTreasure/>
-          <EquipRecommended/>	
+          <EquipRecommended/>
           <MoveTo XYZ="220.7072, -7.510185E-06, 372.184"/>
           <LootTreasure/>
-          <EquipRecommended/>	
-          <MoveTo XYZ="220.7229, 0.9999998, 322.8848" Distance="0.5"/>		  
+          <EquipRecommended/>
+          <MoveTo XYZ="220.7229, 0.9999998, 322.8848" Distance="0.5"/>
         </If>
-	  
-        <If Condition="IsOnSubMap(4125)">	 
+
+        <If Condition="IsOnSubMap(4125)">
           <Grind GrindRef="Lugae" PostCombatDelay="2.0" While="ObjectExistsWithId(10282)"/>
           <LootTreasure/>
           <EquipRecommended/>
-		  <!-- Post Boss Movement to Next Area -->
+          <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="149.9771, 1.597404E-05, 201.5869"/>
           <While Condition="IsOnSubMap(4131)">
             <RunCode Name="Transition3"/>
@@ -80,17 +79,17 @@
           </If>
           <MoveTo XYZ="-0.002707131, 493, -61.90952"/>
         </If>
-	  
+
         <If Condition="IsOnSubMap(4133)">
           <LootTreasure/>
-          <EquipRecommended/>	
+          <EquipRecommended/>
           <MoveTo XYZ="-31.84029, 484.0968, -108.0753"/>
           <LootTreasure/>
-          <EquipRecommended/>	
-          <MoveTo XYZ="-0.08154679, 480, -184.8952" Distance="0.5"/>		  
+          <EquipRecommended/>
+          <MoveTo XYZ="-0.08154679, 480, -184.8952" Distance="0.5"/>
         </If>
-	  
-        <If Condition="IsOnSubMap(4126)">	  
+
+        <If Condition="IsOnSubMap(4126)">
           <Grind GrindRef="Anima" PostCombatDelay="2.0" While="ObjectExistsWithId(10285) or ObjectExistsWithId(10288)"/>
           <LootTreasure/>
           <EquipRecommended/>

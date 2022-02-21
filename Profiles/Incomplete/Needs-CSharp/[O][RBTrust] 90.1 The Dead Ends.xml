@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Profile [
-  <!ENTITY Shortcut "2000700">
-  <!ENTITY ShellMoundPortal "2011767">
-  <!ENTITY DeterrenceGroundsPortal "2011768">
+<!ENTITY Shortcut "2000700">
+<!ENTITY ShellMoundPortal "2011767">
+<!ENTITY DeterrenceGroundsPortal "2011768">
 
-  <!ENTITY CausticGrebuloff "10313">
-  <!ENTITY Peacekeeper "10315">
-  <!ENTITY Rala "10316">
+<!ENTITY CausticGrebuloff "10313">
+<!ENTITY Peacekeeper "10315">
+<!ENTITY Rala "10316">
 ]>
 <Profile>
   <Name>[O][RBTrust] 90.1 The Dead Ends</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 
@@ -105,6 +104,7 @@
 
         <If Condition="WorldManager.SubZoneId in [4110, 4106]">
           <!-- The World Tree -->
+          <WaitTimer WaitTime="3"/>
           <Grind GrindRef="Rala" PostCombatDelay="2.0" While="ObjectExistsWithId(&Rala;)"/>
 
           <LootTreasure/>

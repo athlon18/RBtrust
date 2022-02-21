@@ -3,7 +3,6 @@
 ]>
 <Profile>
   <Name>[O][RBTrust] 81 The Tower of Zot</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 
@@ -18,59 +17,59 @@
       </If>
 
       <If Condition="IsOnMap(952)">
-	  
-	    <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
-		  <!-- Shortcut available -->
-		  <UseTransport NpcId="2000700" XYZ="-5, -466.4818, 245"/>
-		</If>	  
-	  
+
+        <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
+          <!-- Shortcut available -->
+          <UseTransport NpcId="2000700" XYZ="-5, -466.4818, 245"/>
+        </If>
+
         <If Condition="IsOnSubMap(3730)">
           <MoveTo XYZ="67.44556, -442.9678, -107.7545" Distance="0.5"/>
-        </If>   
-	  
+        </If>
+
         <If Condition="IsOnSubMap(3733)">
           <Grind GrindRef="Minduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10256)"/>
           <LootTreasure/>
           <EquipRecommended/>
-		  <!-- Post Boss Movement to Next Area -->
+          <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="63.24457, -443.4718, -177.2011"/>
           <While Condition="IsOnSubMap(3730)">
             <RunCode Name="Transition1"/>
           </While>
-        </If>  
-	  
+        </If>
+
         <If Condition="IsOnSubMap(3731)">
           <MoveTo XYZ="-333.4352, -180.9977, 88.76975"/>
           <LootTreasure/>
-          <EquipRecommended/>	
+          <EquipRecommended/>
           <MoveTo XYZ="-240.6393, -172.0018, 68.73035"/>
           <LootTreasure/>
-          <EquipRecommended/>	
-          <MoveTo XYZ="-257.6166, -169, -8.267162" Distance="0.5"/>		  
+          <EquipRecommended/>
+          <MoveTo XYZ="-257.6166, -169, -8.267162" Distance="0.5"/>
         </If>
-	  
-        <If Condition="IsOnSubMap(3734)">	  
+
+        <If Condition="IsOnSubMap(3734)">
           <Grind GrindRef="Sanduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10257)"/>
           <LootTreasure/>
           <EquipRecommended/>
-		  <!-- Post Boss Movement to Next Area -->
+          <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-262.2831, -167.9562, -86.32867"/>
           <While Condition="IsOnSubMap(3731)">
             <RunCode Name="Transition2"/>
           </While>
         </If>
-	  
+
         <If Condition="IsOnSubMap(3732)">
           <MoveTo XYZ="23.56817, 534.9012, -21.68986"/>
           <LootTreasure/>
-          <EquipRecommended/>	
+          <EquipRecommended/>
           <MoveTo XYZ="38.93001, 538.2892, -84.50268"/>
           <LootTreasure/>
-          <EquipRecommended/>	
-          <MoveTo XYZ="-38.83713, 546.104, -38.20349" Distance="0.5"/>		  
+          <EquipRecommended/>
+          <MoveTo XYZ="-38.83713, 546.104, -38.20349" Distance="0.5"/>
         </If>
-	  
-        <If Condition="IsOnSubMap(3735)">	  
+
+        <If Condition="IsOnSubMap(3735)">
           <Grind GrindRef="Cinduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10259) or ObjectExistsWithId(10257) or ObjectExistsWithId(10256)"/>
           <LootTreasure/>
           <EquipRecommended/>
