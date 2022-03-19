@@ -36,7 +36,7 @@
         <!-- 第五步 BOOS1 洛查特尔 -->
         <MoveTo XYZ="0.1039736,4.996238,376.6639"/>
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
-        <NoCombatMoveTo XYZ="-2.767347,5.35,315.614"/>
+        <MoveTo XYZ="-2.767347,5.35,315.614"/>
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8231)"/>
 
         <LootTreasure/>
@@ -72,11 +72,13 @@
         <!-- 第十一步  BOSS2 大脚野蝠 -->
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
         <MoveTo XYZ="61.96784,-21.68949,-14.0423"/>
-        <NoCombatMoveTo XYZ="64.75812,-21,-41.91465"/>
+        <MoveTo XYZ="64.75812,-21,-41.91465"/>
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8232)"/>
 
         <LootTreasure/>
         <EquipRecommended/>
+
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <!-- 第十二步 打怪10 跳瀑布-->
         <MoveTo XYZ="38.48219,-22.1,-155.9829"/>
@@ -108,9 +110,9 @@
         <!-- 第十六步 BOSS3 艾洛斯 -->
         <MoveTo XYZ="17.0723,-57.74398,-433.5704"/>
         <RunCode name="向前移动"/>
-        <WaitTimer waitTime="5"/>
+        <WaitTimer waitTime="1"/>
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
-        <NoCombatMoveTo XYZ="20.98305,-77,-547.7723"/>
+        <MoveTo XYZ="20.98305,-77,-547.7723"/>
         <Grind GrindRef="boss3" While="GameObjectManager.GetObjectByNPCId(8233)"/>
 
         <WaitTimer waitTime="3"/>
