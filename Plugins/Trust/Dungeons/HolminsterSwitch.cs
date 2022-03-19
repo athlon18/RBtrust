@@ -39,6 +39,7 @@ namespace Trust.Dungeons
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
 
+        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
@@ -98,10 +99,11 @@ namespace Trust.Dungeons
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                await Coroutine.Sleep(5000);
-
+                //await Coroutine.Sleep(5000);
+                
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "Exorcise Avoid");
                 while (sw.ElapsedMilliseconds < 5000)
                 {
                     await MovementHelpers.GetClosestAlly.Follow(7f);
@@ -126,17 +128,19 @@ namespace Trust.Dungeons
 
                 while (Core.Me.Distance(location) > 1f)
                 {
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "Exorcise Avoid");
                     await CommonTasks.MoveTo(location);
                     await Coroutine.Yield();
                 }
 
                 await CommonTasks.StopMoving();
-                await Coroutine.Sleep(3000);
+                await Coroutine.Sleep(100);
             }
 
             // Default (缺省)
             if (spells.IsCasting())
             {
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Spells Avoid");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 

@@ -27,17 +27,54 @@ namespace Trust.Dungeons
         public override DungeonId DungeonId => DungeonId.TheQitanaRavel;
 
         /// <inheritdoc/>
+        ///
+        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
+
         public override async Task<bool> RunAsync()
         {
             HashSet<uint> spellCastIds = new HashSet<uint>()
             {
-                15918, 15916, 15917, 17223, 15498, 15499,
-                15500, 15725, 15501, 15502, 15503, 15504,
-                15509, 15510, 15511, 15512, 15926, 17213,
-                15570, 16263, 14730, 16260, 15514, 15516,
-                15517, 15518, 15519, 15520, 16923, 15524,
-                15523, 15527, 15522, 15526, 15521, 15525,
+                15918, 15916, 15917, 17223, 15498, 
+                15500, 15725, 15501, 15503, 15504,
+                15509, 15510, 15511, 15512, 17213, 
+                15570, 16263, 14730, 15514, 15516,
+                15517, 15518, 15519, 15520, 16923, 
+                15523, 15527, 15522, 15526, 15525,
+                15524
             };
+
+            // removed trash mob / no stack boss spells
+            //          15926 Forgiven Violence - SinSpitter
+            //          16260 Echo of Qitana - Self-destruct
+            //          15502 Lozatl - Heat Up
+            //          15499 Lozatl - Lozatl's Scorn
+
+            //          not sure if can detect these two as separate spells?
+            //          15524 Eros - Confession of Faith (Stack)
+            //          15521 Eros - Confession of Faith (Spread)
+
+            
+
+            if (Core.Target != null)
+            {
+                PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
+
+                IEnumerable<BattleCharacter> isBoss = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(r => r.Distance() < 50 &&
+                    (r.NpcId == 8231 || r.NpcId == 8232 || r.NpcId == 8233));
+
+                if (isBoss.Any())
+                {
+                    if (sidestepPlugin != null)
+                    {
+                        if (sidestepPlugin.Enabled)
+                        {
+                            sidestepPlugin.Enabled = false;
+                        }
+                    }
+                }
+                else if (sidestepPlugin != null)
+                    sidestepPlugin.Enabled = true;
+            }
 
             bool spellCast = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
                 spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50).Count() > 0;
@@ -67,6 +104,7 @@ namespace Trust.Dungeons
 #endif
                     while (Core.Me.Distance(closest.Location) >= 0.3)
                     {
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
                         Navigator.PlayerMover.MoveTowards(closest.Location);
                         await Coroutine.Sleep(100);
                     }
@@ -78,24 +116,7 @@ namespace Trust.Dungeons
                 }
             }
 
-            if (Core.Target != null)
-            {
-                PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
-
-                IEnumerable<BattleCharacter> isBoss = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(r => r.Distance() < 50 &&
-                    (r.NpcId == 8231 || r.NpcId == 8232 || r.NpcId == 8233));
-
-                if (isBoss.Any())
-                {
-                    if (sidestepPlugin != null)
-                    {
-                        if (sidestepPlugin.Enabled)
-                        {
-                            sidestepPlugin.Enabled = false;
-                        }
-                    }
-                }
-            }
+            
 
             return false;
         }
