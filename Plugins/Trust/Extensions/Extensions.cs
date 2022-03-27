@@ -96,7 +96,7 @@ namespace Trust.Extensions
             return await StopMoving();
         }
 
-        public static async Task<bool> Follow2(this BattleCharacter bc, Stopwatch sw, double TimeToFollow = 3000, float followDistance = 0.3f, int msWait = 0, bool useMesh = false)
+        public static async Task<bool> Follow2(this BattleCharacter bc, Stopwatch sw, double TimeToFollow = 3000, float followDistance = 0.3f, int msWait = 0, bool useMesh = true)
         {
 
             float curDistance = Core.Me.Location.Distance(bc.Location);
