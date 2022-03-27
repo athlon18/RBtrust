@@ -157,8 +157,9 @@ namespace Trust.Helpers
                         () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
                         radius: spreadDistance,
                         npc.ObjectId);
+                    await Coroutine.Yield();
                 }
-
+               
             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
                                 MovementManager.MoveStop();
