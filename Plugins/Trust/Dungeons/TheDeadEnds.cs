@@ -170,6 +170,92 @@ namespace Trust.Dungeons
             (5f, new Vector3(-124.7f, 0.1995f, -213.5f)),
         };
 
+         // Misc Spells
+            //  Peacekeeper     25936   Decimation (AoE)
+            //                  28360   Electromagnetic Repellant (danger zones on boss and edges)
+            //                  28351   Order to Fire (Lasers AoE)
+            //                  25925   No Future (targeting circles AoE)
+            //                  25933   Peacefire (Clockwise AoE)
+            //                  25931   Eclipsing Exhaust
+            //                  25935   Elimination (Tankbuster)
+            //                  25940,    Ra-La              Lifesbreath
+            //                  25945,  //  Ra-La              Benevolence
+            //                  25943,  //  Ra-La               Loving Embrace
+            //    25944,  //  Ra-La               Loving Embrace 
+
+
+            // GENERIC MECHANICS
+
+            private HashSet<uint> spread = new HashSet<uint>()
+            {
+                25923,//    Caustic Grebuloff   Befoulment (Spread Mechanic)
+                25947,//    Ra-La               Still Embrace
+            };
+
+            private HashSet<uint> stack = new HashSet<uint>()
+            { 
+                28347, //  Caustic Grebuloff   Wave of Nausea
+                25921, //  Caustic Grebuloff   Blighted Water
+                //28360,
+                25931,
+                //25940,    Ra-La              Lifesbreath
+                25945,  //  Ra-La              Benevolence
+                25943,  //  Ra-La               Loving Embrace
+                25944,  //  Ra-La               Loving Embrace
+                27717,  //  Xenoflora           Creeping Hush
+            };
+
+            private HashSet<uint> TBavoid = new HashSet<uint>()
+            { 
+                25935, // Peacekeeper      Elimination (Tankbuster)
+            };
+
+            // CAUSTIC GREBULOFF SPELLS (B1)
+
+            private HashSet<uint> miasmata = new HashSet<uint>()
+            {
+                25916, // Caustic Grebuloff -   Miasmata 
+            };
+
+            private HashSet<uint> coughup = new HashSet<uint>()
+            {
+                25917, //                       Cough Up
+            };
+
+            // PEACEKEEPER SPELLS (B2)
+
+            private HashSet<uint> peacefire = new HashSet<uint>()
+            {
+             25933,
+            };           
+
+            private HashSet<uint> nofuture = new HashSet<uint>()
+            {
+             25925,
+            };
+
+            private HashSet<uint> electrorep = new HashSet<uint>()
+            {
+             28360,
+            };                         
+
+            private HashSet<uint> ordertofire = new HashSet<uint>()
+            {
+                28351,
+            };
+
+            // RA-LA SPELLS (B3)
+
+            private HashSet<uint> lifesbreath = new HashSet<uint>()
+            {
+                25940, //  Ra-La               Lifesbreath
+            };
+
+
+            private HashSet<uint> prance = new HashSet<uint>()
+            { 
+                25937, //  Ra-La               Prance
+            };
 
         // the point of these functions is to take your location and a 2nd location, then calculate a point a distance
         // behind the 2nd location, allowing you to guess the location of a trust member avoiding mechanics who is too
@@ -217,11 +303,12 @@ namespace Trust.Dungeons
         private Stopwatch spreadsw = new Stopwatch();
         private Stopwatch LBsw = new Stopwatch();
         private Stopwatch PRsw = new Stopwatch();
+        private CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
+        private PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
 
         public override async Task<bool> RunAsync()
         {
-            CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
-            PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
+            await Coroutine.Yield();   
 
             if (!Core.Me.InCombat)
                 { 
@@ -238,27 +325,7 @@ namespace Trust.Dungeons
                     PRsw.Reset();
                 }
 
-            // Misc Spells
-            //  Peacekeeper     25936   Decimation (AoE)
-            //                  28360   Electromagnetic Repellant (danger zones on boss and edges)
-            //                  28351   Order to Fire (Lasers AoE)
-            //                  25925   No Future (targeting circles AoE)
-            //                  25933   Peacefire (Clockwise AoE)
-            //                  25931   Eclipsing Exhaust
-            //                  25935   Elimination (Tankbuster)
-            //                  25940,    Ra-La              Lifesbreath
-            //                  25945,  //  Ra-La              Benevolence
-            //                  25943,  //  Ra-La               Loving Embrace
-            //    25944,  //  Ra-La               Loving Embrace 
-
-
             // GENERIC MECHANICS
-
-            HashSet<uint> spread = new HashSet<uint>()
-            {
-                25923,//    Caustic Grebuloff   Befoulment (Spread Mechanic)
-                25947,//    Ra-La               Still Embrace
-            };
 
             if (spread.IsCasting() || spreadsw.IsRunning)
             {
@@ -276,33 +343,13 @@ namespace Trust.Dungeons
                 if (spreadsw.ElapsedMilliseconds >= 5000)
                     spreadsw.Reset();
             }
-
-            HashSet<uint> stack = new HashSet<uint>()
-            { 
-                28347, //  Caustic Grebuloff   Wave of Nausea
-                25921, //  Caustic Grebuloff   Blighted Water
-                //28360,
-                25931,
-                //25940,    Ra-La              Lifesbreath
-                25945,  //  Ra-La              Benevolence
-                25943,  //  Ra-La               Loving Embrace
-                25944,  //  Ra-La               Loving Embrace
-                27717,  //  Xenoflora           Creeping Hush
-            };
-
-            
-
+           
             if (stack.IsCasting())
             {
                 CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Follow/Stack Mechanic In Progress");
                 //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 2500, "Follow/Stack Mechanic In Progress");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
-
-            HashSet<uint> TBavoid = new HashSet<uint>()
-            { 
-                25935, // Peacekeeper      Elimination (Tankbuster)
-            };
 
             if (TBavoid.IsCasting())
             {
@@ -321,11 +368,7 @@ namespace Trust.Dungeons
             }
 
 
-            // CAUSTIC GREBULOFF (B1)
-            HashSet<uint> miasmata = new HashSet<uint>()
-            {
-                25916, // Caustic Grebuloff -   Miasmata 
-            };
+            // CAUSTIC GREBULOFF (B1)           
 
             if (miasmata.IsCasting() || (miassw.IsRunning && miassw.ElapsedMilliseconds < 19000))
             {
@@ -338,11 +381,8 @@ namespace Trust.Dungeons
                 else await MovementHelpers.GetClosestAlly.Follow2(miassw, 19000);
                //sw.Reset();
             }
+                       
 
-            HashSet<uint> coughup = new HashSet<uint>()
-            {
-                25917, //                       Cough Up
-            };
             if (coughup.IsCasting() || COsw.IsRunning)
             {
 
@@ -378,29 +418,6 @@ namespace Trust.Dungeons
           
 
             // PEACEKEEPER (B2)
-
-            
-            HashSet<uint> peacefire = new HashSet<uint>()
-            {
-             25933,
-            };           
-
-            HashSet<uint> nofuture = new HashSet<uint>()
-            {
-             25925,
-            };
-
-             HashSet<uint> electrorep = new HashSet<uint>()
-            {
-             28360,
-            };                         
-
-            HashSet<uint> ordertofire = new HashSet<uint>()
-            {
-                28351,
-            };
-
-           
 
             if (electrorep.IsCasting())
             {
@@ -492,10 +509,16 @@ namespace Trust.Dungeons
                                 {
                                     MovementManager.MoveStop();
                                 }
-
+                                sidestepPlugin.Enabled = true;
                                 await MovementHelpers.Spread(3000);                        
                 }
-                
+                                
+                if (NFsw.ElapsedMilliseconds >= 104000 && NFsw.ElapsedMilliseconds < 106000)
+                {
+
+                     sidestepPlugin.Enabled = false;
+
+                }
             }
 
              if (peacefire.IsCasting() || (PFsw.IsRunning && PFsw.ElapsedMilliseconds < 28000))
@@ -518,16 +541,6 @@ namespace Trust.Dungeons
             
 
             // RA-LA (B3)
-            HashSet<uint> lifesbreath = new HashSet<uint>()
-            {
-                25940, //  Ra-La               Lifesbreath
-            };
-
-
-            HashSet<uint> prance = new HashSet<uint>()
-            { 
-                25937, //  Ra-La               Prance
-            };
 
             if(lifesbreath.IsCasting() || LBsw.IsRunning)
             {
@@ -577,14 +590,21 @@ namespace Trust.Dungeons
                     Navigator.Stop();
                 }
                                 
-                if (PRsw.ElapsedMilliseconds >= 15250)
+                while (PRsw.ElapsedMilliseconds >= 15250 && PRsw.ElapsedMilliseconds < 16000)
                 {
                     
                     Navigator.PlayerMover.MoveTowards(calculateLine(Core.Me.Location, MovementHelpers.GetFurthestAlly.Location, 10f));
-                    Task.Delay(100);
-                    await Coroutine.Sleep(2500);
-                    PRsw.Reset();
+                    //Navigator.PlayerMover.MoveTowards(CalculatePointBehind(MovementHelpers.GetFurthestAlly.Location, 10f);
+                    await Coroutine.Yield();
                 }
+
+                if (PRsw.ElapsedMilliseconds >= 16000)
+                {
+                        await Coroutine.Sleep(2000);
+                        PRsw.Reset();
+                }
+                
+
 
                 
             }          
@@ -656,7 +676,7 @@ namespace Trust.Dungeons
                     Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
 
                      AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                        () => (ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000),
+                        () => ((ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000) || (NFsw.ElapsedMilliseconds >= 101000 && NFsw.ElapsedMilliseconds < 104000)),
                         radius: 9f,
                         boss.ObjectId);
 
