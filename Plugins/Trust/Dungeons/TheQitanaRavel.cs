@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Trust.Data;
 using Trust.Helpers;
+using Trust.Extensions;
 
 namespace Trust.Dungeons
 {
@@ -28,11 +29,7 @@ namespace Trust.Dungeons
 
         /// <inheritdoc/>
         ///
-        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
-
-        public override async Task<bool> RunAsync()
-        {
-            HashSet<uint> spellCastIds = new HashSet<uint>()
+        private HashSet<uint> spellCastIds = new HashSet<uint>()
             {
                 15918, 15916, 15917, 17223, 15498, 
                 15500, 15725, 15501, 15503, 15504,
@@ -53,71 +50,16 @@ namespace Trust.Dungeons
             //          15524 Eros - Confession of Faith (Stack)
             //          15521 Eros - Confession of Faith (Spread)
 
-            
-
-            if (Core.Target != null)
+        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
+        public override async Task<bool> RunAsync()
+        {      
+             
+            if (spellCastIds.IsCasting())
             {
-                PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
-
-                IEnumerable<BattleCharacter> isBoss = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(r => r.Distance() < 50 &&
-                    (r.NpcId == 8231 || r.NpcId == 8232 || r.NpcId == 8233));
-
-                if (isBoss.Any())
-                {
-                    if (sidestepPlugin != null)
-                    {
-                        if (sidestepPlugin.Enabled)
-                        {
-                            sidestepPlugin.Enabled = false;
-                        }
-                    }
-                }
-                else if (sidestepPlugin != null)
-                    sidestepPlugin.Enabled = true;
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Follow/Stack Mechanic In Progress");
+                //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 2500, "Follow/Stack Mechanic In Progress");
+                await MovementHelpers.GetClosestAlly.Follow();
             }
-
-            bool spellCast = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
-                spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50).Count() > 0;
-
-            if (spellCast)
-            {
-                HashSet<string> partyMemberNames = new HashSet<string>() { /*"桑克瑞德",*/ "雅·修特拉", "于里昂热", "阿尔菲诺", "阿莉塞", "雅·修特拉", /*"水晶公",*/ "琳", "敏菲利亚", "莱楠" };
-                HashSet<uint> partyMemberIds = new HashSet<uint>() { /*713,*/ 729, 1492, 4130, 5239, 8378, /*8650,*/ 8889, 8917, 8919, 11264, 11265, 11268, 11269, 11270 };
-#if RB_CN
-				var closest = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
-                partyMemberNames.Contains(obj.Name) && !obj.IsDead).OrderBy(r => r.Distance()).FirstOrDefault();
-#else
-                BattleCharacter closest = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).Where(obj =>
-                partyMemberIds.Contains(obj.NpcId) && !obj.IsDead).OrderBy(r => r.Distance()).FirstOrDefault();
-#endif
-
-                if (Core.Me.Distance(closest.Location) >= 0.3)
-                {
-                    if (Core.Me.IsCasting)
-                    {
-                        ActionManager.StopCasting();
-                    }
-#if RB_CN
-                    Logging.Write(Colors.Aquamarine, $"跟随 队友 {closest.Name} [距离: {Core.Me.Distance(closest.Location)}]");
-#else
-                    Logging.Write(Colors.Aquamarine, $"Following {closest.Name} [Distance: {Core.Me.Distance(closest.Location)}]");
-#endif
-                    while (Core.Me.Distance(closest.Location) >= 0.3)
-                    {
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
-                        Navigator.PlayerMover.MoveTowards(closest.Location);
-                        await Coroutine.Sleep(100);
-                    }
-
-                    Navigator.PlayerMover.MoveStop();
-                    await Coroutine.Sleep(100);
-
-                    return true;
-                }
-            }
-
-            
-
             return false;
         }
     }
