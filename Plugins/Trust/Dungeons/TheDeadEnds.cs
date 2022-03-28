@@ -60,7 +60,6 @@ namespace Trust.Dungeons
             (4f, new Vector3(400.2813f, 499.5386f, 78.03534f)),
             (4f, new Vector3(403.9248f, 500.1888f, 91.52982f)),
             (4f, new Vector3(411.6979f, 500.2933f, 122.0323f)),
-            //
             (4f, new Vector3(414.9597f, 499.6505f, 89.00001f)),
             (4f, new Vector3(409.712f, 500.2364f, 129.654f)),
             (4f, new Vector3(419.4437f, 499.6318f, 131.0557f)),
@@ -75,7 +74,16 @@ namespace Trust.Dungeons
             (3f, new Vector3(372.0362f, 499.2906f, 169.7142f)),
             (3f, new Vector3(364.4807f, 499.2977f, 186.0001f)),
             (2f, new Vector3(349.9047f, 499.3683f, 188.2401f)),
+            // 2nd area
+            (5f, new Vector3(276.1789f, 500.5079f, -100.7027f)),
+            (5f, new Vector3(292.7461f, 500.5103f, -111.7281f)),
+            (5f, new Vector3(299.21f, 500.5f, -81.65562f)),
+            (5f, new Vector3(314.4836f, 502.5079f, -41.21803f)),
+            (5f, new Vector3(296.3872f, 502.5f, -25.8502f)),
+            (5f, new Vector3(351.1416f, 500.6152f, 22.12455f)),
+            (5f, new Vector3(351.6766f, 500.5081f, 5.411625f)),
         };
+
         private readonly List<(float Radius, Vector3 Location)> PeacekeeperRing = new List<(float Radius, Vector3 Location)>()
         {
          
@@ -653,7 +661,7 @@ namespace Trust.Dungeons
                 foreach (var (radius, location) in pestilentSandsTraps)
                 {
                     AvoidanceManager.AddAvoidLocation(
-                        () => (SubZoneId)WorldManager.SubZoneId == SubZoneId.PestilentSands,  // Call WorldManager directly
+                        () => (SubZoneId)WorldManager.SubZoneId == SubZoneId.PestilentSands && Core.Me.InCombat,  // Call WorldManager directly
                         radius: radius,
                         () => location,
                         ignoreIfBlocking: true);
