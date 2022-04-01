@@ -54,6 +54,8 @@ namespace Trust.Extensions
 
             if (curDistance < followDistance)
             {
+                //await StopMoving();
+                Navigator.Stop();
                 return true;
             }
 
@@ -63,7 +65,7 @@ namespace Trust.Extensions
 
                 if (curDistance < followDistance)
                 {
-                    break;
+                   break;
                 }
 
                 if (Core.Me.IsDead)
@@ -71,10 +73,10 @@ namespace Trust.Extensions
                     return false;
                 }
 
-                //if (Core.Me.IsCasting)
-                //{
-                //    ActionManager.StopCasting();
-                //}
+                if (Core.Me.IsCasting)
+                {
+                    ActionManager.StopCasting();
+                }
 #if RB_CN
                 Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
 #else
@@ -116,9 +118,16 @@ namespace Trust.Extensions
                             
                 if (curDistance < followDistance)
                 {
+                   //await StopMoving();
                    Navigator.Stop();
+                   return true;
                 }
-                 
+
+                if (Core.Me.IsCasting)
+                {
+                    ActionManager.StopCasting();
+                }
+
                 else if (useMesh)
                 {
                     await CommonTasks.MoveTo(bc.Location);
@@ -139,7 +148,7 @@ namespace Trust.Extensions
 #endif
                 
             }
-            return true;
+            return false;
         }
         /// <summary>
         /// Stops the player's movement.
