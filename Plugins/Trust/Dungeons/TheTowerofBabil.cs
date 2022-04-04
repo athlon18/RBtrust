@@ -191,7 +191,7 @@ namespace Trust.Dungeons
                     sidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i=> i.CanRun);
                     CapabilityManager.Clear();
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 28000, "Shapeshift Mechanic In Progress");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 30000, "Shapeshift Mechanic In Progress");
                     toadSW.Restart();
 
                 }
@@ -208,12 +208,12 @@ namespace Trust.Dungeons
                     else Navigator.PlayerMover.MoveTowards(location);
                 }
 
-                if (toadSW.ElapsedMilliseconds >= 12000 && toadSW.ElapsedMilliseconds < 28000 )
+                if (toadSW.ElapsedMilliseconds >= 12000 && toadSW.ElapsedMilliseconds < 30000 )
                 {
                     await MovementHelpers.GetClosestAlly.Follow();
                 }
 
-                if (toadSW.ElapsedMilliseconds >= 28000)
+                if (toadSW.ElapsedMilliseconds >= 30000)
                 {
 
                     sidestepPlugin.Enabled = true;
