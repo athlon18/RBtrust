@@ -202,7 +202,6 @@ namespace Trust.Dungeons
 
             private HashSet<uint> stack = new HashSet<uint>()
             { 
-                28347, //  Caustic Grebuloff   Wave of Nausea
                 25921, //  Caustic Grebuloff   Blighted Water
                 //28360,
                 25931,
@@ -223,6 +222,11 @@ namespace Trust.Dungeons
             private HashSet<uint> miasmata = new HashSet<uint>()
             {
                 25916, // Caustic Grebuloff -   Miasmata 
+            };
+
+            private HashSet<uint> nausea = new HashSet<uint>()
+            {
+                28347, //  Caustic Grebuloff   Wave of Nausea
             };
 
             private HashSet<uint> coughup = new HashSet<uint>()
@@ -359,6 +363,13 @@ namespace Trust.Dungeons
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 
+            if (nausea.IsCasting() && !miassw.IsRunning)
+            {
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Wave of Nausea In Progress");
+                //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 2500, "Wave of Nausea In Progress");
+                await MovementHelpers.GetClosestAlly.Follow();
+            }
+
             if (TBavoid.IsCasting())
             {
                 BattleCharacter TankExists = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
@@ -378,16 +389,24 @@ namespace Trust.Dungeons
 
             // CAUSTIC GREBULOFF (B1)           
 
-            if (miasmata.IsCasting() || (miassw.IsRunning && miassw.ElapsedMilliseconds < 19000))
+            if (miasmata.IsCasting() || (miassw.IsRunning))
             {
-                if (!miassw.IsRunning || miassw.ElapsedMilliseconds > 19000)
+                if (!miassw.IsRunning)
                 {
                     CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 19000, "Miasmata Avoid");
                     //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 19000, "Miasmata Avoid");
                     miassw.Restart();
                 }
-                else await MovementHelpers.GetClosestAlly.Follow2(miassw, 19000);
-               //sw.Reset();
+
+                if (miassw.ElapsedMilliseconds < 19000)
+                { 
+                    await MovementHelpers.GetClosestAlly.Follow2(miassw, 19000);
+                }
+
+                if (miassw.ElapsedMilliseconds >= 000)
+                { 
+                    miassw.Reset();
+                }
             }
                        
 
