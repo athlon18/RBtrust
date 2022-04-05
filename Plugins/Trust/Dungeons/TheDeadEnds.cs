@@ -403,7 +403,7 @@ namespace Trust.Dungeons
                     await MovementHelpers.GetClosestAlly.Follow2(miassw, 19000);
                 }
 
-                if (miassw.ElapsedMilliseconds >= 000)
+                if (miassw.ElapsedMilliseconds >= 19000)
                 { 
                     miassw.Reset();
                 }
