@@ -324,7 +324,7 @@ namespace Trust.Dungeons
 
             if (!Core.Me.InCombat)
                 { 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 0, "End Combat");
+                    CapabilityManager.Clear();
                     //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 0, "End Combat");
                     sw.Reset();
                     spreadsw.Reset();
@@ -372,11 +372,29 @@ namespace Trust.Dungeons
 
             if (TBavoid.IsCasting())
             {
-                BattleCharacter TankExists = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                        .Where(obj => !obj.IsDead && MovementHelpers.AllPartyTankIds.Contains(obj.NpcId))
-                                        .FirstOrDefault();
-                //Logging.Write(Colors.Aquamarine, $"TankExists: {TankExists.Name}");
-                if (TankExists != null)
+                List<ClassJobType> Tanks = new List<ClassJobType>()
+                {
+                    ClassJobType.Gladiator,
+                    ClassJobType.Paladin,
+                    ClassJobType.Marauder,
+                    ClassJobType.Warrior,
+                    ClassJobType.DarkKnight,
+                    ClassJobType.Gunbreaker,
+                };
+
+                if (Tanks.Contains(Core.Me.CurrentJob))
+                { 
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Tankbuster Spread In Progress");
+                    Vector3 location = new Vector3("-105.0078, 0.1995358, -218.126");
+
+                    if (Core.Me.Distance(location) < 1f)
+                    {  
+                        MovementManager.MoveStop();    
+                    }
+                    else Navigator.PlayerMover.MoveTowards(location);
+
+                }
+                else
                 {
 
                     CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Tankbuster Spread In Progress");
@@ -453,7 +471,7 @@ namespace Trust.Dungeons
                     ERsw.Restart();
             }
 
-            if ((ordertofire.IsCasting() || OTFsw.IsRunning) && !NFsw.IsRunning)
+            if ((ordertofire.IsCasting() || OTFsw.IsRunning) && !PFsw.IsRunning)
             {
                 if (!OTFsw.IsRunning)
                     {
@@ -559,7 +577,8 @@ namespace Trust.Dungeons
 
                 if (PFsw.ElapsedMilliseconds < 28000)
                 {
-                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 28000);
+
+                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 28000, useMesh: true);
  
                 }
                              
