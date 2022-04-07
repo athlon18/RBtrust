@@ -122,20 +122,26 @@ namespace Trust.Extensions
                    Navigator.Stop();
                    return true;
                 }
-
-                if (Core.Me.IsCasting)
-                {
-                    ActionManager.StopCasting();
-                }
-
+                               
                 else if (useMesh)
                 {
+                    if (Core.Me.IsCasting)
+                    {
+                        ActionManager.StopCasting();
+                    }
+
                     await CommonTasks.MoveTo(bc.Location);
                 }
                 else
                 {
+                    if (Core.Me.IsCasting)
+                    {
+                        ActionManager.StopCasting();
+                    }
+
                     Navigator.PlayerMover.MoveTowards(bc.Location);
                 }                              
+
                 await Coroutine.Sleep(msWait);
 
 #if RB_CN
