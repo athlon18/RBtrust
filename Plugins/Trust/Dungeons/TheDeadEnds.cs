@@ -320,8 +320,7 @@ namespace Trust.Dungeons
 
         public override async Task<bool> RunAsync()
         {
-            await Coroutine.Yield();   
-
+              
             if (!Core.Me.InCombat)
                 { 
                     CapabilityManager.Clear();
