@@ -536,19 +536,19 @@ namespace Trust.Dungeons
                 
                 if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 85000)
                 {
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 20000, "No Future 2 Avoid");
-                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 20000, "No Future 2 Avoid");
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 21000, "No Future 2 Avoid");
+                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 21000, "No Future 2 Avoid");
                 }
 
-                if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 101000)
+                if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 100500)
                 {
                                  
-                        await MovementHelpers.GetClosestAlly.Follow2(NFsw, 101000);
+                        await MovementHelpers.GetClosestAlly.Follow2(NFsw, 100500);
                 }
 
 
 
-                if (NFsw.ElapsedMilliseconds >= 101000 && NFsw.ElapsedMilliseconds < 104000)
+                if (NFsw.ElapsedMilliseconds >= 100500 && NFsw.ElapsedMilliseconds < 103500)
                 {
                                 if (!AvoidanceManager.IsRunningOutOfAvoid)
                                 {
@@ -558,7 +558,7 @@ namespace Trust.Dungeons
                                 await MovementHelpers.Spread(3000);                        
                 }
                                 
-                if (NFsw.ElapsedMilliseconds >= 104000 && NFsw.ElapsedMilliseconds < 106000)
+                if (NFsw.ElapsedMilliseconds >= 103500 && NFsw.ElapsedMilliseconds < 104500)
                 {
 
                      sidestepPlugin.Enabled = false;
@@ -566,19 +566,20 @@ namespace Trust.Dungeons
                 }
             }
 
-             if (peacefire.IsCasting() || (PFsw.IsRunning && PFsw.ElapsedMilliseconds < 28000))
+             if (peacefire.IsCasting() || (PFsw.IsRunning && PFsw.ElapsedMilliseconds < 30000))
              {
-                if (!PFsw.IsRunning || PFsw.ElapsedMilliseconds >= 28000)
+                if (!PFsw.IsRunning || PFsw.ElapsedMilliseconds >= 30000)
                 {
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 28000, "Peacefire Avoid");
-                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 28000, "Peacefire Avoid");
+                    ReinitPeacekeeperMechanics();
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 30000, "Peacefire Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 30000, "Peacefire Avoid");
                     PFsw.Restart();
                 }
 
-                if (PFsw.ElapsedMilliseconds < 28000)
+                if (PFsw.ElapsedMilliseconds < 30000)
                 {
 
-                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 28000, useMesh: true);
+                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 30000, useMesh: true);
  
                 }
                              
@@ -624,8 +625,23 @@ namespace Trust.Dungeons
                 {
                     if (PRsw.ElapsedMilliseconds > 13000 && ActionManager.IsSprintReady)
                     {
-                        ActionManager.Sprint();
-                        //await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
+                        
+
+                        if (ActionManager.IsSprintReady)
+                        {
+
+                            if (Core.Me.IsCasting)
+                            {
+
+                                ActionManager.StopCasting();
+
+                            }
+
+                            await Coroutine.Sleep(100);
+                            ActionManager.Sprint();
+
+                        }
+                        
                     }
 
                     await MovementHelpers.GetClosestAlly.Follow2(PRsw, 14000);
@@ -722,7 +738,7 @@ namespace Trust.Dungeons
                     Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
 
                      AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                        () => ((ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000) || (NFsw.ElapsedMilliseconds >= 101000 && NFsw.ElapsedMilliseconds < 104000)),
+                        () => (ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000),
                         radius: 9f,
                         boss.ObjectId);
 
@@ -739,6 +755,36 @@ namespace Trust.Dungeons
                             ignoreIfBlocking: false);
                  }
             }            
+        }
+
+        private void ReinitPeacekeeperMechanics()
+        {
+            AvoidanceManager.RemoveAllAvoids(i=> i.CanRun);
+            var boss = GameObjectManager.GetObjectByNPCId<BattleCharacter>(Peacekeeper);              
+               
+            if (boss != null)
+            {
+                var bosslocation = boss.Location;
+                Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
+
+                AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                    () => (ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000),
+                    radius: 9f,
+                    boss.ObjectId);
+
+            }
+                 
+                
+
+            foreach (var (radius, location) in PeacekeeperRing)
+            {
+                     AvoidanceManager.AddAvoidLocation(
+                        () => (ERsw.IsRunning),
+                        radius: radius,
+                        () => location,
+                        ignoreIfBlocking: false);
+            }
+                     
         } 
     }
 }
