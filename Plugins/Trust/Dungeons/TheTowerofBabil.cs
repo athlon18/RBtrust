@@ -162,7 +162,7 @@ namespace Trust.Dungeons
                 if (magnetSW.ElapsedMilliseconds < 12000)
                 {
 
-                    Vector3 location = new Vector3("-314.4527, -176, 70.98297");
+                    Vector3 location = new Vector3("-314.4527, -175, 70.98297");
 
                     if (Core.Me.Distance(location) > 1f)
                     {
