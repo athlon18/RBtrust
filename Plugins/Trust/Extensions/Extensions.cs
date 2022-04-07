@@ -135,10 +135,7 @@ namespace Trust.Extensions
                 else
                 {
                     Navigator.PlayerMover.MoveTowards(bc.Location);
-                }
-                               
-
-                await Coroutine.Yield();
+                }                              
                 await Coroutine.Sleep(msWait);
 
 #if RB_CN
@@ -148,6 +145,7 @@ namespace Trust.Extensions
 #endif
                 
             }
+
             return false;
         }
         /// <summary>
