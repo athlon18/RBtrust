@@ -116,14 +116,10 @@ namespace Trust.Dungeons
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
-            await Coroutine.Yield();   
-
+            
             if (!Core.Me.InCombat)
             { 
-                CapabilityManager.Update(TrustHandle1, CapabilityFlags.Movement, 0, "End Combat");
-                CapabilityManager.Update(TrustHandle2, CapabilityFlags.Facing, 0, "End Combat");
-                CapabilityManager.Update(TrustHandle3, CapabilityFlags.Movement, 0, "End Combat");
-                CapabilityManager.Update(TrustHandle4, CapabilityFlags.Facing, 0, "End Combat");
+                CapabilityManager.Clear();
                 DAsw.Reset();
                 TMsw.Reset();
                 STsw.Reset();
