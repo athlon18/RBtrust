@@ -19,13 +19,11 @@
       <If Condition="not IsOnMap(973)">
 
         <JoinSupportDuty DutyId="792"/>
-        <CommenceDuty/>
-        <WaitForLoading/>
+       
       </If>
 
       <If Condition="IsOnMap(973)">
-        <WaitForLoading/>
-
+        
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
   
