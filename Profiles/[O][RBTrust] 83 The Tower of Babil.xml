@@ -9,11 +9,10 @@
     <While Condition="True">
       <WaitForLoading/>
       <If Condition="not IsOnMap(969)">
-        <EquipRecommended/>
 
-        <QueueTrust Dungeon="TheTowerofBabil"/>
-        <CommenceDuty/>
-        <WaitForLoading/>
+        <EquipRecommended/>
+        <JoinSupportDuty DutyId="785"/>
+        
       </If>
 
       <If Condition="IsOnMap(969)">

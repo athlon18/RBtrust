@@ -32,11 +32,10 @@
       <WaitForLoading/>
 
       <If Condition="not IsOnMap(&ZoneId;)">
-        <EquipRecommended/>
 
-        <QueueTrust Dungeon="&DungeonName;"/>
-        <CommenceDuty/>
-        <WaitForLoading/>
+        <EquipRecommended/>
+        <JoinSupportDuty DutyId="714"/>
+      
       </If>
 
       <If Condition="IsOnMap(&ZoneId;)">

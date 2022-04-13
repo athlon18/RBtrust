@@ -10,11 +10,10 @@
       <WaitForLoading/>
 
       <If Condition="not IsOnMap(836)">
-        <EquipRecommended/>
 
-        <QueueTrust Dungeon="MalikahsWell"/>
-        <CommenceDuty/>
-        <WaitForLoading/>
+        <EquipRecommended/>
+        <JoinSupportDuty DutyId="656"/>
+        
       </If>
 
       <If Condition="IsOnMap(836)">
