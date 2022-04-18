@@ -27,6 +27,9 @@ namespace Trust.Dungeons
         public override DungeonId DungeonId => DungeonId.MalikahsWell;
 
         /// <inheritdoc/>
+        ///
+        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
+
         public override async Task<bool> RunAsync()
         {
             PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
@@ -99,6 +102,8 @@ namespace Trust.Dungeons
 
                     while (obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                     {
+
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
                         Navigator.PlayerMover.MoveTowards(obj.Location);
                         await Coroutine.Sleep(50);
                     }
@@ -167,6 +172,7 @@ namespace Trust.Dungeons
 
                             while (obj1.Location.Distance2D(Core.Me.Location) >= 0.2)
                             {
+                                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
                                 Navigator.PlayerMover.MoveTowards(obj1.Location);
                                 await Coroutine.Sleep(50);
                             }

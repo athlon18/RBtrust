@@ -29,7 +29,6 @@
 ]>
 <Profile>
   <Name>[O][RBTrust] 80.2 The Grand Cosmos</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 
@@ -115,7 +114,7 @@
 
           <LootTreasure/>
           <EquipRecommended/>
-          
+
           <LeaveDuty/>
         </If>
       </If>

@@ -6,8 +6,6 @@
 ]>
 <Profile>
   <Name>[O][RBTrust] 71 Holminster Switch by athlon, Minami16, 疾风点破, Manta</Name>
-  <KillRadius>50</KillRadius>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
   <Order>
     <CheckPlugins/>
 

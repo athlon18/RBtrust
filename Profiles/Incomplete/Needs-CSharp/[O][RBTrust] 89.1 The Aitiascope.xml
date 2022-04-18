@@ -2,8 +2,7 @@
 <!DOCTYPE Profile [
 ]>
 <Profile>
-  <Name>[O][RBTrust] 89 The Aitiascope</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Name>[O][RBTrust] 89.1 The Aitiascope</Name>
   <Order>
     <CheckPlugins/>
 
@@ -18,7 +17,6 @@
       </If>
 
       <If Condition="IsOnMap(978)">
-
         <If Condition="IsOnSubMap(3995)">
           <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
             <!-- Shortcut available -->

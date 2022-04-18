@@ -2,8 +2,7 @@
 <!DOCTYPE Profile [
 ]>
 <Profile>
-  <Name>[O][RBTrust] 89 The Mothercrystal</Name>
-  <BehaviorDirectory>..\Quest Behaviors</BehaviorDirectory>
+  <Name>[O][RBTrust] 89.2 The Mothercrystal</Name>
   <Order>
     <CheckPlugins/>
 
