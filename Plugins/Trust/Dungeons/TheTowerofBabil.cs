@@ -1,4 +1,4 @@
-using Clio.Utilities;
+ï»¿using Clio.Utilities;
 using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.AClasses;
@@ -143,7 +143,7 @@ namespace Trust.Dungeons
             {
                 if (!starCombatrun)
                 {
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "¿ª³¡ÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "å¼€åœºç§»åŠ¨åˆ°æŒ‡å®šä½ç½®");
 
                     Vector3 location = new Vector3("-300.007, -175, 78.25982");
 
@@ -188,7 +188,7 @@ namespace Trust.Dungeons
                     AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
                     CapabilityManager.Clear();
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "ÖØÁ¦ÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "é‡åŠ›ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®");
 
                     await MovementHelpers.GetClosestAlly.Follow();
                 }
@@ -202,7 +202,7 @@ namespace Trust.Dungeons
 
                     CapabilityManager.Clear();
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "ÖØÁ¦ÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "é‡åŠ›ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®");
 
                     Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");
 
@@ -219,7 +219,7 @@ namespace Trust.Dungeons
                     MagnetxMoved = false;
                 }
 
-                ReceiveMessageHelpers.SkillsdeterminationOverStr =  new HashSet<string>() { "×æ¹úÖ®¸¸" };
+                ReceiveMessageHelpers.SkillsdeterminationOverStr =  new HashSet<string>() { "ç¥–å›½ä¹‹çˆ¶" };
                 if (ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                 {
                     Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");
@@ -260,11 +260,11 @@ namespace Trust.Dungeons
 
                 CapabilityManager.Clear();
 
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "Ñ£ÔÎÎŞ·¨ĞĞ¶¯");
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "çœ©æ™•æ— æ³•è¡ŒåŠ¨");
 
                 if (AvoidanceManager.IsRunningOutOfAvoid)
                 {
-                    Logging.Write(Colors.Yellow, $@"  {AvoidanceManager.IsRunningOutOfAvoid} Èç¹ûÊÇture,rbÅĞ¶Ï³ö´íÎŞ·¨ĞĞ¶¯");
+                    Logging.Write(Colors.Yellow, $@"  {AvoidanceManager.IsRunningOutOfAvoid} å¦‚æœæ˜¯ture,rbåˆ¤æ–­å‡ºé”™æ— æ³•è¡ŒåŠ¨");
                 }
 
                 await MovementHelpers.GetClosestAlly.Follow();

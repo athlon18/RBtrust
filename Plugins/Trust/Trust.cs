@@ -135,16 +135,9 @@ namespace Trust
                 await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
             }
 
-            if (!Core.Me.InCombat) {
-                if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
-                {
-                    await FoodHelpers.EatFood();
-                }
-
-                if (!Core.Player.HasAura(DrugHelpers.DrugBuff))
-                {
-                    await DrugHelpers.EatDrug();
-                }
+            if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
+            {
+                await FoodHelpers.EatFood();
             }
 
             if (await PlayerCheck())

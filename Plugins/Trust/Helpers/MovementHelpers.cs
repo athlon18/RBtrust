@@ -259,11 +259,18 @@ namespace Trust.Helpers
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
                                 .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => Core.Player.Distance(obj)))
             {
+                var sdtc = spreadDistance;
+
+                if (nobj.ObjectId != npc.ObjectId)
+                {
+                    sdtc = spreadDistance - 3f;
+                }
+
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
                     () => new Vector3(PlayerLoc.X - ls, PlayerLoc.Y, PlayerLoc.Z),
                     leashRadius: 40,
-                    radius: spreadDistance,
+                    radius: sdtc,
                     npc.ObjectId);
 
                 await Coroutine.Yield();
