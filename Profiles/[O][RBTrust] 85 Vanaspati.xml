@@ -10,6 +10,7 @@
       <WaitForLoading/>
       <If Condition="not IsOnMap(970)">
         <!--<EquipRecommended/>-->
+        <Extract/>
 
         <QueueTrust Dungeon="Vanaspati"/>
         <CommenceDuty/>
@@ -17,7 +18,7 @@
       </If>
 
       <If Condition="IsOnMap(970)">
-
+        <Extract/>
         <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
           <!-- Shortcut available -->
           <UseTransport NpcId="2000700" XYZ="-186.2605, 1.365554, 373.3409"/>
