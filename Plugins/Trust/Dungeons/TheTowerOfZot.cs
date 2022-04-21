@@ -58,7 +58,12 @@ namespace Trust.Dungeons
                25233, 25234,  25235 ,25236,  25242, 25699
             };
 
-            ReceiveMessageHelpers.SkillsdeterminationOverStr = "物创灭";
+            HashSet<string> overStr = new HashSet<string>()
+            {
+               "物创灭"
+            };
+
+            ReceiveMessageHelpers.SkillsdeterminationOverStr = overStr ;
 
             ReceiveMessageHelpers.VcNPCAcmtsstr = "燃烧吧！";
 

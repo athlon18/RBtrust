@@ -219,7 +219,7 @@ namespace Trust.Dungeons
                     MagnetxMoved = false;
                 }
 
-                ReceiveMessageHelpers.SkillsdeterminationOverStr = "祖国之父";
+                ReceiveMessageHelpers.SkillsdeterminationOverStr =  new HashSet<string>() { "祖国之父" };
                 if (ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                 {
                     Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");

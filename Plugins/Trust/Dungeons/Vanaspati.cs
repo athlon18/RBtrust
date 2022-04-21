@@ -71,6 +71,11 @@ namespace Trust.Dungeons
             25169,
         };
 
+        private HashSet<string> overStr = new HashSet<string>()
+        {
+           "地脉失控" , "污秽的"
+        };
+
 
         private static AvoidInfo AvoidNull = AvoidanceManager.AddAvoidLocation(() => false, 0, () => new Vector3("0,0,1"));
 
@@ -273,9 +278,21 @@ namespace Trust.Dungeons
                 }
                 else
                 {
-                    if (follow1SW.ElapsedMilliseconds > 2000)
+                    if (follow1SW.ElapsedMilliseconds < 2000)
                     {
-                        await MovementHelpers.GetClosestLocal(new Vector3("-294.9383, 41.5, -354.0579")).Follow();
+                        Vector3 location = new Vector3("-294.9383, 41.5, -354.0579");
+
+                        if (Core.Me.Distance2D(location) > 1f)
+                        {
+                            Navigator.PlayerMover.MoveTowards(location);
+                        }
+
+                        else MovementManager.MoveStop();
+
+                    }
+                    else
+                    {
+                        await MovementHelpers.GetClosestLocal(new Vector3("-294.9383, 41.5, -354.0579")).Follow(3f);
                     }
                 }
             }
@@ -447,7 +464,7 @@ namespace Trust.Dungeons
                     {
                         var usets = (Vector3)GameObjectManager.GetObjectsOfType<BattleCharacter>()?.Where(obj => obj.NpcId == 1383).OrderBy(obj => Core.Player.Distance2D(obj)).FirstOrDefault().Location;
 
-                        if (Core.Me.Distance2D(usets) > 1f)
+                        if (Core.Me.Distance2D(usets) > 0.5f)
                         {
                             Navigator.PlayerMover.MoveTowards(usets);
                         }
@@ -458,6 +475,10 @@ namespace Trust.Dungeons
                 }
 
             }
+
+
+
+            ReceiveMessageHelpers.SkillsdeterminationOverStr = overStr;
 
             if (magnet3.IsCastingtwo() || magnet3SW.IsRunning)
             {
@@ -475,7 +496,6 @@ namespace Trust.Dungeons
                     CapabilityManager.Clear();
                     magnet3.Add(25160);
 
-
                     CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "正在移动");
 
                     magnet3SW.Restart();
@@ -483,13 +503,9 @@ namespace Trust.Dungeons
                     ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
                 }
 
-                ReceiveMessageHelpers.SkillsdeterminationOverStr = "地脉失控";
-
-
-
                 if (magnet3SWhaifrun && WorldManager.SubZoneId == 4014)
                 {
-                    if (magnet3SW.ElapsedMilliseconds < 7000 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
+                    if (magnet3SW.ElapsedMilliseconds < 6500 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                     {
                         await MovementHelpers.GetClosestLocal(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
                     }
@@ -528,7 +544,7 @@ namespace Trust.Dungeons
 
                     if (WorldManager.SubZoneId == 4012)
                     {
-                        if (magnet3SW.ElapsedMilliseconds < 3000)
+                        if (magnet3SW.ElapsedMilliseconds < 2500 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                         {
                             await MovementHelpers.GetClosestAlly.Follow();
                         }
@@ -536,7 +552,7 @@ namespace Trust.Dungeons
                         {
                             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
-                                await MovementHelpers.Spread(3000, 6.5f, false);
+                                await MovementHelpers.Spread(3000, 10f, false , 10717);
                             }
                         }
                     }

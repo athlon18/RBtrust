@@ -73,7 +73,7 @@ namespace Trust.Helpers
             }
         }
 
-        public static HashSet<string> Skillsdetstr { get; set; }
+        public static HashSet<string> Skillsdetstr { get; set; } = new HashSet<string>();
 
         public static void SkillsdetstrGet(HashSet<uint> goldChaser)
         {
@@ -105,7 +105,7 @@ namespace Trust.Helpers
                 }
                 catch
                 {
-                    Logging.Write(Colors.OrangeRed, $@"没有技能");
+                    Logging.Write(Colors.OrangeRed, $@"亲信没有添加 判断技能");
                 }
 
             }
@@ -121,7 +121,7 @@ namespace Trust.Helpers
             }
         }
 
-        public static string SkillsdeterminationOverStr;
+        public static HashSet<string> SkillsdeterminationOverStr = new HashSet<string>();
 
         public static bool SkillsdeterminationOverStatus;
 
@@ -130,15 +130,24 @@ namespace Trust.Helpers
             if (sderstr.Contains("发动了") ||
                     sderstr.Contains("咏唱了"))
             {
-                if (SkillsdeterminationOverStr != null)
+
+                try
                 {
-                    if (sderstr.Contains(SkillsdeterminationOverStr))
-                        SkillsdeterminationOverStatus = true;
+                    if ((bool)SkillsdeterminationOverStr?.Any())
+                    {
+                        if (SkillsdeterminationOverStr.Any(str => sderstr.Contains(str)))
+                            SkillsdeterminationOverStatus = true;
+                    }
                 }
+                catch
+                {
+                    Logging.Write(Colors.OrangeRed, $@"亲信没有添加 判断技能");
+                }
+
             }
         }
 
-        public static HashSet<string> MagnetOverStr;
+        public static HashSet<string> MagnetOverStr = new HashSet<string>();
 
         public static void MagnetOverStrGet(HashSet<uint> magnet)
         {
@@ -170,7 +179,7 @@ namespace Trust.Helpers
                 }
                 catch
                 {
-                    Logging.Write(Colors.OrangeRed, $@"没有技能");
+                    Logging.Write(Colors.OrangeRed, $@"亲信没有添加 判断技能");
                 }
             }
         }
