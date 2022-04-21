@@ -32,12 +32,12 @@ namespace Trust.Dungeons
         /// <summary>
         /// Gets zone ID for this dungeon.
         /// </summary>
-        
+
         public new const ZoneId ZoneId = Data.ZoneId.TheDeadEnds;
 
-         private static readonly HashSet<uint> BossIds = new HashSet<uint>
+        private static readonly HashSet<uint> BossIds = new HashSet<uint>
         {
-            10313, 10315, 10316 
+            10313, 10315, 10316
         };
 
         private const int CausticGrebuloff = 10313;
@@ -86,7 +86,7 @@ namespace Trust.Dungeons
 
         private readonly List<(float Radius, Vector3 Location)> PeacekeeperRing = new List<(float Radius, Vector3 Location)>()
         {
-         
+
             (5f, new Vector3(-93.2f, 0.1995f, -193.8f)),
             (5f, new Vector3(-94.4f, 0.1995f, -193.0f)),
             (5f, new Vector3(-95.6f, 0.1995f, -192.3f)),
@@ -178,30 +178,30 @@ namespace Trust.Dungeons
             (5f, new Vector3(-124.7f, 0.1995f, -213.5f)),
         };
 
-         // Misc Spells
-            //  Peacekeeper     25936   Decimation (AoE)
-            //                  28360   Electromagnetic Repellant (danger zones on boss and edges)
-            //                  28351   Order to Fire (Lasers AoE)
-            //                  25925   No Future (targeting circles AoE)
-            //                  25933   Peacefire (Clockwise AoE)
-            //                  25931   Eclipsing Exhaust
-            //                  25935   Elimination (Tankbuster)
-            //                  25940,    Ra-La              Lifesbreath
-            //                  25945,  //  Ra-La              Benevolence
-            //                  25943,  //  Ra-La               Loving Embrace
-            //    25944,  //  Ra-La               Loving Embrace 
+        // Misc Spells
+        //  Peacekeeper     25936   Decimation (AoE)
+        //                  28360   Electromagnetic Repellant (danger zones on boss and edges)
+        //                  28351   Order to Fire (Lasers AoE)
+        //                  25925   No Future (targeting circles AoE)
+        //                  25933   Peacefire (Clockwise AoE)
+        //                  25931   Eclipsing Exhaust
+        //                  25935   Elimination (Tankbuster)
+        //                  25940,    Ra-La              Lifesbreath
+        //                  25945,  //  Ra-La              Benevolence
+        //                  25943,  //  Ra-La               Loving Embrace
+        //    25944,  //  Ra-La               Loving Embrace 
 
 
-            // GENERIC MECHANICS
+        // GENERIC MECHANICS
 
-            private HashSet<uint> spread = new HashSet<uint>()
+        private HashSet<uint> spread = new HashSet<uint>()
             {
                 25923,//    Caustic Grebuloff   Befoulment (Spread Mechanic)
                 25947,//    Ra-La               Still Embrace
             };
 
-            private HashSet<uint> stack = new HashSet<uint>()
-            { 
+        private HashSet<uint> stack = new HashSet<uint>()
+            {
                 25921, //  Caustic Grebuloff   Blighted Water
                 //28360,
                 25931,
@@ -212,60 +212,60 @@ namespace Trust.Dungeons
                 27717,  //  Xenoflora           Creeping Hush
             };
 
-            private HashSet<uint> TBavoid = new HashSet<uint>()
-            { 
+        private HashSet<uint> TBavoid = new HashSet<uint>()
+            {
                 25935, // Peacekeeper      Elimination (Tankbuster)
             };
 
-            // CAUSTIC GREBULOFF SPELLS (B1)
+        // CAUSTIC GREBULOFF SPELLS (B1)
 
-            private HashSet<uint> miasmata = new HashSet<uint>()
+        private HashSet<uint> miasmata = new HashSet<uint>()
             {
                 25916, // Caustic Grebuloff -   Miasmata 
             };
 
-            private HashSet<uint> nausea = new HashSet<uint>()
+        private HashSet<uint> nausea = new HashSet<uint>()
             {
                 28347, //  Caustic Grebuloff   Wave of Nausea
             };
 
-            private HashSet<uint> coughup = new HashSet<uint>()
+        private HashSet<uint> coughup = new HashSet<uint>()
             {
                 25917, //                       Cough Up
             };
 
-            // PEACEKEEPER SPELLS (B2)
+        // PEACEKEEPER SPELLS (B2)
 
-            private HashSet<uint> peacefire = new HashSet<uint>()
+        private HashSet<uint> peacefire = new HashSet<uint>()
             {
              25933,
-            };           
+            };
 
-            private HashSet<uint> nofuture = new HashSet<uint>()
+        private HashSet<uint> nofuture = new HashSet<uint>()
             {
              25925,
             };
 
-            private HashSet<uint> electrorep = new HashSet<uint>()
+        private HashSet<uint> electrorep = new HashSet<uint>()
             {
              28360,
-            };                         
+            };
 
-            private HashSet<uint> ordertofire = new HashSet<uint>()
+        private HashSet<uint> ordertofire = new HashSet<uint>()
             {
                 28351,
             };
 
-            // RA-LA SPELLS (B3)
+        // RA-LA SPELLS (B3)
 
-            private HashSet<uint> lifesbreath = new HashSet<uint>()
+        private HashSet<uint> lifesbreath = new HashSet<uint>()
             {
                 25940, //  Ra-La               Lifesbreath
             };
 
 
-            private HashSet<uint> prance = new HashSet<uint>()
-            { 
+        private HashSet<uint> prance = new HashSet<uint>()
+            {
                 25937, //  Ra-La               Prance
             };
 
@@ -320,41 +320,42 @@ namespace Trust.Dungeons
 
         public override async Task<bool> RunAsync()
         {
-              
+            await Coroutine.Yield();
+
             if (!Core.Me.InCombat)
-                { 
-                    CapabilityManager.Clear();
-                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 0, "End Combat");
-                    sw.Reset();
-                    spreadsw.Reset();
-                    NFsw.Reset();
-                    ERsw.Reset();
-                    miassw.Reset();
-                    PFsw.Reset();
-                    COsw.Reset();
-                    LBsw.Reset();
-                    PRsw.Reset();
-                }
+            {
+                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 0, "End Combat");
+                //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 0, "End Combat");
+                sw.Reset();
+                spreadsw.Reset();
+                NFsw.Reset();
+                ERsw.Reset();
+                miassw.Reset();
+                PFsw.Reset();
+                COsw.Reset();
+                LBsw.Reset();
+                PRsw.Reset();
+            }
 
             // GENERIC MECHANICS
 
             if (spread.IsCasting() || spreadsw.IsRunning)
             {
                 if (!spreadsw.IsRunning)
-                { 
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "Spread");
-                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 5000, "Spread");
-                        spreadsw.Start();
+                {
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "Spread");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 5000, "Spread");
+                    spreadsw.Start();
                 }
                 if (spreadsw.ElapsedMilliseconds < 5000)
-                    { 
+                {
                     await MovementHelpers.Spread(5000);
-                    }
+                }
 
                 if (spreadsw.ElapsedMilliseconds >= 5000)
                     spreadsw.Reset();
             }
-           
+
             if (stack.IsCasting())
             {
                 CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Follow/Stack Mechanic In Progress");
@@ -371,29 +372,11 @@ namespace Trust.Dungeons
 
             if (TBavoid.IsCasting())
             {
-                List<ClassJobType> Tanks = new List<ClassJobType>()
-                {
-                    ClassJobType.Gladiator,
-                    ClassJobType.Paladin,
-                    ClassJobType.Marauder,
-                    ClassJobType.Warrior,
-                    ClassJobType.DarkKnight,
-                    ClassJobType.Gunbreaker,
-                };
-
-                if (Tanks.Contains(Core.Me.CurrentJob))
-                { 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Tankbuster Spread In Progress");
-                    Vector3 location = new Vector3("-105.0078, 0.1995358, -218.126");
-
-                    if (Core.Me.Distance(location) < 1f)
-                    {  
-                        MovementManager.MoveStop();    
-                    }
-                    else Navigator.PlayerMover.MoveTowards(location);
-
-                }
-                else
+                BattleCharacter TankExists = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                        .Where(obj => !obj.IsDead && MovementHelpers.AllPartyTankIds.Contains(obj.NpcId))
+                                        .FirstOrDefault();
+                //Logging.Write(Colors.Aquamarine, $"TankExists: {TankExists.Name}");
+                if (TankExists != null)
                 {
 
                     CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2500, "Tankbuster Spread In Progress");
@@ -416,50 +399,50 @@ namespace Trust.Dungeons
                 }
 
                 if (miassw.ElapsedMilliseconds < 19000)
-                { 
+                {
                     await MovementHelpers.GetClosestAlly.Follow2(miassw, 19000);
                 }
 
                 if (miassw.ElapsedMilliseconds >= 19000)
-                { 
+                {
                     miassw.Reset();
                 }
             }
-                       
+
 
             if (coughup.IsCasting() || COsw.IsRunning)
             {
 
                 if (!COsw.IsRunning)
-                { 
+                {
                     COsw.Start();
                     CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "Cough Up Avoid");
                     //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 15000, "Cough Up Avoid");
                 }
 
-                 
-                    if (COsw.ElapsedMilliseconds < 12000)
-                    {
-                        if (!AvoidanceManager.IsRunningOutOfAvoid)
-                            {
-                                MovementManager.MoveStop();
-                                                            }
 
-                        sidestepPlugin.Enabled = true;
+                if (COsw.ElapsedMilliseconds < 12000)
+                {
+                    if (!AvoidanceManager.IsRunningOutOfAvoid)
+                    {
+                        MovementManager.MoveStop();
                     }
 
-                    if (COsw.ElapsedMilliseconds >= 12000 && COsw.ElapsedMilliseconds < 15000)
-                    {
-                        
-                        sidestepPlugin.Enabled = false;
-                        await MovementHelpers.GetClosestAlly.Follow2(COsw, 15000);
-                    }
-                    if (COsw.ElapsedMilliseconds > 15000)
-                    { 
-                       COsw.Reset();
-                    }
+                    sidestepPlugin.Enabled = true;
+                }
+
+                if (COsw.ElapsedMilliseconds >= 12000 && COsw.ElapsedMilliseconds < 15000)
+                {
+
+                    sidestepPlugin.Enabled = false;
+                    await MovementHelpers.GetClosestAlly.Follow2(COsw, 15000);
+                }
+                if (COsw.ElapsedMilliseconds > 15000)
+                {
+                    COsw.Reset();
+                }
             }
-          
+
 
             // PEACEKEEPER (B2)
 
@@ -470,125 +453,123 @@ namespace Trust.Dungeons
                     ERsw.Restart();
             }
 
-            if ((ordertofire.IsCasting() || OTFsw.IsRunning) && !PFsw.IsRunning)
+            if ((ordertofire.IsCasting() || OTFsw.IsRunning) && !NFsw.IsRunning)
             {
                 if (!OTFsw.IsRunning)
-                    {
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 8000, "Order To Fire Avoid");
-                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 8000, "Order To Fire Avoid");
-                        OTFsw.Restart();
-                    }
+                {
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 8000, "Order To Fire Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 8000, "Order To Fire Avoid");
+                    OTFsw.Restart();
+                }
 
                 if (OTFsw.ElapsedMilliseconds < 4500)
-                    {
-                        await MovementHelpers.GetClosestDps.Follow2(OTFsw, 4500);
-                        
-                    }
-                                
-                if (OTFsw.ElapsedMilliseconds > 4500 && OTFsw.ElapsedMilliseconds < 8000)
-                    {
-                    
-                        if (!AvoidanceManager.IsRunningOutOfAvoid)
-                        {
-                            MovementManager.MoveStop();
-                        }
+                {
+                    await MovementHelpers.GetClosestDps.Follow2(OTFsw, 4500);
 
-                        
-                        await MovementHelpers.Spread(3500);
-                                            }
-                if (OTFsw.ElapsedMilliseconds >= 8000)                
+                }
+
+                if (OTFsw.ElapsedMilliseconds > 4500 && OTFsw.ElapsedMilliseconds < 8000)
+                {
+
+                    if (!AvoidanceManager.IsRunningOutOfAvoid)
+                    {
+                        MovementManager.MoveStop();
+                    }
+
+
+                    await MovementHelpers.Spread(3500);
+                }
+                if (OTFsw.ElapsedMilliseconds >= 8000)
                     OTFsw.Reset();
-                    
+
             }
-                        
+
             if (nofuture.IsCasting() || NFsw.IsRunning)
-                
+
             {
                 // Logging.Write(Colors.Aquamarine, $"NFsw Stopwatch:{NFsw.ElapsedMilliseconds}");                           
-                
+
                 if (!NFsw.IsRunning)
-                    { 
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 19000, "No Future 1 Avoid");
-                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 19000, "No Future 1 Avoid");
-                        NFsw.Start();
-                    }
-                              
-                                
+                {
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 19000, "No Future 1 Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 19000, "No Future 1 Avoid");
+                    NFsw.Start();
+                }
+
+
                 if (NFsw.ElapsedMilliseconds < 16000)
                 {
-                     await MovementHelpers.GetClosestAlly.Follow2(NFsw, 16000);                                          
+                    await MovementHelpers.GetClosestAlly.Follow2(NFsw, 16000);
                 }
-                                
+
                 if (NFsw.ElapsedMilliseconds >= 16000 && NFsw.ElapsedMilliseconds < 19000)
                 {
-                     await MovementHelpers.Spread(3000);
+                    await MovementHelpers.Spread(3000);
 
-                        if (!AvoidanceManager.IsRunningOutOfAvoid)
-                            {
-                                MovementManager.MoveStop();
-                            }
+                    if (!AvoidanceManager.IsRunningOutOfAvoid)
+                    {
+                        MovementManager.MoveStop();
+                    }
 
-                    
-                    
+
+
                 }
 
-                
+
                 if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 85000)
                 {
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 21000, "No Future 2 Avoid");
-                        //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 21000, "No Future 2 Avoid");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 20000, "No Future 2 Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 20000, "No Future 2 Avoid");
                 }
 
-                if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 100500)
+                if (NFsw.ElapsedMilliseconds >= 84000 && NFsw.ElapsedMilliseconds < 101000)
                 {
-                                 
-                        await MovementHelpers.GetClosestAlly.Follow2(NFsw, 100500);
+
+                    await MovementHelpers.GetClosestAlly.Follow2(NFsw, 101000);
                 }
 
 
 
-                if (NFsw.ElapsedMilliseconds >= 100500 && NFsw.ElapsedMilliseconds < 103500)
+                if (NFsw.ElapsedMilliseconds >= 101000 && NFsw.ElapsedMilliseconds < 104000)
                 {
-                                if (!AvoidanceManager.IsRunningOutOfAvoid)
-                                {
-                                    MovementManager.MoveStop();
-                                }
-                                sidestepPlugin.Enabled = true;
-                                await MovementHelpers.Spread(3000);                        
+                    if (!AvoidanceManager.IsRunningOutOfAvoid)
+                    {
+                        MovementManager.MoveStop();
+                    }
+                    sidestepPlugin.Enabled = true;
+                    await MovementHelpers.Spread(3000);
                 }
-                                
-                if (NFsw.ElapsedMilliseconds >= 103500 && NFsw.ElapsedMilliseconds < 104500)
+
+                if (NFsw.ElapsedMilliseconds >= 104000 && NFsw.ElapsedMilliseconds < 106000)
                 {
 
-                     sidestepPlugin.Enabled = false;
+                    sidestepPlugin.Enabled = false;
 
                 }
             }
 
-             if (peacefire.IsCasting() || (PFsw.IsRunning && PFsw.ElapsedMilliseconds < 30000))
-             {
-                if (!PFsw.IsRunning || PFsw.ElapsedMilliseconds >= 30000)
+            if (peacefire.IsCasting() || (PFsw.IsRunning && PFsw.ElapsedMilliseconds < 28000))
+            {
+                if (!PFsw.IsRunning || PFsw.ElapsedMilliseconds >= 28000)
                 {
-                    ReinitPeacekeeperMechanics();
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 30000, "Peacefire Avoid");
-                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 30000, "Peacefire Avoid");
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 28000, "Peacefire Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 28000, "Peacefire Avoid");
                     PFsw.Restart();
                 }
 
-                if (PFsw.ElapsedMilliseconds < 30000)
+                if (PFsw.ElapsedMilliseconds < 28000)
                 {
+                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 28000);
 
-                    await MovementHelpers.GetClosestAlly.Follow2(PFsw, 30000, useMesh: true);
- 
                 }
-                             
-             }            
 
-            
+            }
+
+
 
             // RA-LA (B3)
 
-            if(lifesbreath.IsCasting() || LBsw.IsRunning)
+            if (lifesbreath.IsCasting() || LBsw.IsRunning)
             {
                 if (!LBsw.IsRunning)
                 {
@@ -614,33 +595,18 @@ namespace Trust.Dungeons
             if (prance.IsCasting() || PRsw.IsRunning)
             {
                 if (!PRsw.IsRunning)
-                { 
-                PRsw.Restart();
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 18000, "Prance Avoid");
-                //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 18000, "Prance Avoid");
+                {
+                    PRsw.Restart();
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 18000, "Prance Avoid");
+                    //CapabilityManager.Update(TrustHandle, CapabilityFlags.Facing, 18000, "Prance Avoid");
                 }
 
                 if (PRsw.ElapsedMilliseconds < 14000)
                 {
                     if (PRsw.ElapsedMilliseconds > 13000 && ActionManager.IsSprintReady)
                     {
-                        
-
-                        if (ActionManager.IsSprintReady)
-                        {
-
-                            if (Core.Me.IsCasting)
-                            {
-
-                                ActionManager.StopCasting();
-
-                            }
-
-                            await Coroutine.Sleep(100);
-                            ActionManager.Sprint();
-
-                        }
-                        
+                        ActionManager.Sprint();
+                        //await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
                     }
 
                     await MovementHelpers.GetClosestAlly.Follow2(PRsw, 14000);
@@ -650,10 +616,10 @@ namespace Trust.Dungeons
                 {
                     Navigator.Stop();
                 }
-                                
+
                 while (PRsw.ElapsedMilliseconds >= 15250 && PRsw.ElapsedMilliseconds < 16000)
                 {
-                    
+
                     Navigator.PlayerMover.MoveTowards(calculateLine(Core.Me.Location, MovementHelpers.GetFurthestAlly.Location, 10f));
                     //Navigator.PlayerMover.MoveTowards(CalculatePointBehind(MovementHelpers.GetFurthestAlly.Location, 10f);
                     await Coroutine.Yield();
@@ -661,15 +627,15 @@ namespace Trust.Dungeons
 
                 if (PRsw.ElapsedMilliseconds >= 16000)
                 {
-                        await Coroutine.Sleep(2000);
-                        PRsw.Reset();
+                    await Coroutine.Sleep(2000);
+                    PRsw.Reset();
                 }
-                
 
 
-                
-            }          
-        
+
+
+            }
+
             SubZoneId currentSubZoneId = (SubZoneId)WorldManager.SubZoneId;
 
             switch (currentSubZoneId)
@@ -701,14 +667,14 @@ namespace Trust.Dungeons
 
             return false;
         }
-        
-        
+
+
         private void AvoidPestilentSandsTraps()
         {
             SubZoneId currentSubZoneId = (SubZoneId)WorldManager.SubZoneId;
 
             if (lastSubZoneId != currentSubZoneId)
-            { 
+            {
                 Logging.Write(Colors.Aquamarine, $"Adding avoids for sub-zone: {SubZoneId.PestilentSands} Pestilent Sands.");
 
                 foreach (var (radius, location) in pestilentSandsTraps)
@@ -721,69 +687,39 @@ namespace Trust.Dungeons
                 }
             }
         }
-        
+
         private void HandlePeacekeeperMechanics()
         {
             SubZoneId currentSubZoneId = (SubZoneId)WorldManager.SubZoneId;
 
             if (lastSubZoneId != currentSubZoneId)
-            { 
-                var boss = GameObjectManager.GetObjectByNPCId<BattleCharacter>(Peacekeeper);              
-                
+            {
+                var boss = GameObjectManager.GetObjectByNPCId<BattleCharacter>(Peacekeeper);
+
 
                 if (boss != null)
                 {
                     var bosslocation = boss.Location;
                     Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
 
-                     AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                        () => (ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000),
-                        radius: 9f,
-                        boss.ObjectId);
+                    AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                       () => ((ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000) || (NFsw.ElapsedMilliseconds >= 101000 && NFsw.ElapsedMilliseconds < 104000)),
+                       radius: 9f,
+                       boss.ObjectId);
 
                 }
-                 
-                
+
+
 
                 foreach (var (radius, location) in PeacekeeperRing)
                 {
-                         AvoidanceManager.AddAvoidLocation(
-                            () => (ERsw.IsRunning),
-                            radius: radius,
-                            () => location,
-                            ignoreIfBlocking: false);
-                 }
-            }            
+                    AvoidanceManager.AddAvoidLocation(
+                       () => (ERsw.IsRunning),
+                       radius: radius,
+                       () => location,
+                       ignoreIfBlocking: false);
+                }
+            }
         }
-
-        private void ReinitPeacekeeperMechanics()
-        {
-            AvoidanceManager.RemoveAllAvoids(i=> i.CanRun);
-            var boss = GameObjectManager.GetObjectByNPCId<BattleCharacter>(Peacekeeper);              
-               
-            if (boss != null)
-            {
-                var bosslocation = boss.Location;
-                Logging.Write(Colors.Aquamarine, $"Adding avoid for {boss.Name} (NpcId:{boss.NpcId}, ObjectId:{boss.ObjectId}).");
-
-                AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                    () => (ERsw.IsRunning && ERsw.ElapsedMilliseconds < 25000),
-                    radius: 9f,
-                    boss.ObjectId);
-
-            }
-                 
-                
-
-            foreach (var (radius, location) in PeacekeeperRing)
-            {
-                     AvoidanceManager.AddAvoidLocation(
-                        () => (ERsw.IsRunning),
-                        radius: radius,
-                        () => location,
-                        ignoreIfBlocking: false);
-            }
-                     
-        } 
     }
 }

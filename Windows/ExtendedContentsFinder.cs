@@ -22,7 +22,7 @@ namespace ff14bot.NeoProfiles.Tags
         {
             while (!IsOpen)
             {
-                ChatManager.SendChat("/dutyfinder");
+                //ChatManager.SendChat("/dutyfinder");
                 await Coroutine.Wait(3000, () => IsOpen);
             }
 

@@ -8,13 +8,14 @@
   <Name>[O][RBTrust] 71 Holminster Switch by athlon, Minami16, 疾风点破, Manta</Name>
   <Order>
     <CheckPlugins/>
+    <Extract/>
 
     <While Condition="True">
       <WaitForLoading/>
 
       <If Condition="not IsOnMap(837)">
         <EquipRecommended/>
-
+        <Extract/>
         <QueueTrust Dungeon="HolminsterSwitch"/>
         <CommenceDuty/>
         <WaitForLoading/>

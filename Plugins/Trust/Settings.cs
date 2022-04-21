@@ -29,5 +29,6 @@ namespace Trust
         /// </summary>
         [Setting]
         public uint FoodId { get; set; }
+        public uint DrugId { get; set; }
     }
 }

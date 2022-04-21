@@ -5,13 +5,12 @@
   <Name>[O][RBTrust] 83 The Tower of Babil by y2krazy</Name>
   <Order>
     <CheckPlugins/>
-    <Extract/>
-    
+
     <While Condition="True">
       <WaitForLoading/>
       <If Condition="not IsOnMap(969)">
         <EquipRecommended/>
-        <Extract/>
+
         <QueueTrust Dungeon="TheTowerofBabil"/>
         <CommenceDuty/>
         <WaitForLoading/>
@@ -84,14 +83,13 @@
         <If Condition="IsOnSubMap(4133)">
           <LootTreasure/>
           <EquipRecommended/>
-          <MoveTo XYZ="-42.88587, 484, -115.8765" Distance="0.5"/>
+          <MoveTo XYZ="-31.84029, 484.0968, -108.0753"/>
           <LootTreasure/>
           <EquipRecommended/>
           <MoveTo XYZ="-0.08154679, 480, -184.8952" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(4126)">
-          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Anima" PostCombatDelay="2.0" While="ObjectExistsWithId(10285) or ObjectExistsWithId(10288)"/>
           <LootTreasure/>
           <EquipRecommended/>

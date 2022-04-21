@@ -162,9 +162,9 @@ namespace Trust.Dungeons
                 if (magnetSW.ElapsedMilliseconds < 12000)
                 {
 
-                    Vector3 location = new Vector3("-314.4527, -175, 70.98297");
+                    Vector3 location = new Vector3("-314.4527, -176, 70.98297");
 
-                    if (Core.Me.Distance(location) > 1f)
+                    if (Core.Me.Distance2D(location) > 1f)
                     {
                         Navigator.PlayerMover.MoveTowards(location);
                     }
@@ -200,7 +200,7 @@ namespace Trust.Dungeons
                 {
                      Vector3 location = new Vector3("214.2467, 0.9999993, 306.0189");
 
-                     if (Core.Me.Distance(location) < 1f)
+                     if (Core.Me.Distance2D(location) < 1f)
                     {  
                         MovementManager.MoveStop();    
                     }
@@ -241,7 +241,7 @@ namespace Trust.Dungeons
                 {
                      Vector3 location = new Vector3("227.0484, 1.00001, 305.9774");
 
-                    if (Core.Me.Distance(location) < 1f)
+                    if (Core.Me.Distance2D(location) < 1f)
                     {  
                         MovementManager.MoveStop();    
                     }
@@ -253,7 +253,7 @@ namespace Trust.Dungeons
                 {
                      Vector3 location = new Vector3("220.9772, 1, 305.9483");
 
-                    if (Core.Me.Distance(location) < 1f)
+                    if (Core.Me.Distance2D(location) < 1f)
                     {  
                         MovementManager.MoveStop();    
                     }
@@ -292,7 +292,7 @@ namespace Trust.Dungeons
 
                     Vector3 location = new Vector3("16.74083, 120, -406.9069");
 
-                    if (Core.Me.Distance(location) < 1f)
+                    if (Core.Me.Distance2D(location) < 1f)
                     {  
                         MovementManager.MoveStop();    
                     }
@@ -306,7 +306,7 @@ namespace Trust.Dungeons
 
                     Vector3 location = new Vector3("-15.15774, 120, -408.2812");
 
-                    if (Core.Me.Distance(location) < 1f)
+                    if (Core.Me.Distance2D(location) < 1f)
                     {  
                         MovementManager.MoveStop();    
                     }
@@ -343,7 +343,7 @@ namespace Trust.Dungeons
 
                     Vector3 location = new Vector3("11.11008, 479.9997, -199.1336");
                     
-                    if (Core.Me.Distance(location) < 1f)
+                    if (Core.Me.Distance2D(location) < 1f)
                     {  
                         Navigator.Stop();    
                     }

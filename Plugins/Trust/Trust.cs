@@ -11,6 +11,13 @@ using System.Windows.Media;
 using TreeSharp;
 using Trust.Dungeons;
 using Trust.Helpers;
+using LlamaLibrary.Extensions;
+using LlamaLibrary.Helpers;
+using LlamaLibrary.Logging;
+using LlamaLibrary.Memory;
+using LlamaLibrary.RemoteAgents;
+using LlamaLibrary.RemoteWindows;
+using LlamaLibrary.Utilities;
 
 namespace Trust
 {
@@ -105,11 +112,13 @@ namespace Trust
 
         private void OnBotStop(BotBase bot)
         {
+            GamelogManager.MessageRecevied -= new EventHandler<ChatEventArgs>(ReceiveMessageHelpers.ReceiveMessage);
             RemoveHooks();
         }
 
         private void OnBotStart(BotBase bot)
         {
+            GamelogManager.MessageRecevied += new EventHandler<ChatEventArgs>(ReceiveMessageHelpers.ReceiveMessage);
             AddHooks();
         }
 
@@ -134,6 +143,11 @@ namespace Trust
             if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
             {
                 await FoodHelpers.EatFood();
+            }
+
+            if (!Core.Player.HasAura(DrugHelpers.DrugBuff))
+            {
+                await DrugHelpers.EatDrug();
             }
 
             if (await PlayerCheck())

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Trust.Helpers;
+using ff14bot.Pathing;
 
 namespace Trust.Extensions
 {
@@ -33,6 +34,12 @@ namespace Trust.Extensions
                     .Any(obj => spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50);
         }
 
+        public static bool IsFw(this HashSet<uint> bossid)
+        {
+            return (bool)GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)?
+                    .Any(obj => bossid.Contains(obj.NpcId) && obj.CurrentHealthPercent < 1 && obj.Distance() < 50);
+        }
+
         /// <summary>
         /// Follows the specified <see cref="BattleCharacter"/>.
         /// </summary>
@@ -50,22 +57,20 @@ namespace Trust.Extensions
                 return true;
             }
 
-            float curDistance = Core.Me.Location.Distance(bc.Location);
+            float curDistance = Core.Me.Distance2D(bc);
 
             if (curDistance < followDistance)
             {
-                //await StopMoving();
-                Navigator.Stop();
                 return true;
             }
 
             while (!Core.Me.IsDead && Core.Me.InCombat)
             {
-                curDistance = Core.Me.Location.Distance(bc.Location);
+                curDistance = Core.Me.Distance2D(bc);
 
                 if (curDistance < followDistance)
                 {
-                   break;
+                    break;
                 }
 
                 if (Core.Me.IsDead)
@@ -73,14 +78,14 @@ namespace Trust.Extensions
                     return false;
                 }
 
-                if (Core.Me.IsCasting)
-                {
-                    ActionManager.StopCasting();
-                }
+                //if (Core.Me.IsCasting)
+                //{
+                //    ActionManager.StopCasting();
+                //}
 #if RB_CN
-                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
+                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance2D(bc.Location)}]");
 #else
-                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance: {curDistance}]");
+                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance2D: {curDistance}]");
 #endif
                 if (useMesh)
                 {
@@ -91,17 +96,33 @@ namespace Trust.Extensions
                     Navigator.PlayerMover.MoveTowards(bc.Location);
                 }
 
+                curDistance = Core.Me.Distance2D(bc);
+
+                if (curDistance < 1f)
+                {
+                    if (await Coroutine.Wait(100, () => Core.Me.Distance2D(bc) < 0.2f || Core.Me.Distance2D(bc) > 1))
+                    {
+                        if (Core.Me.Distance2D(bc) < followDistance)
+                        {
+                            Navigator.PlayerMover.MoveStop();
+                        }                       
+                    }
+                }
+                
+
                 await Coroutine.Yield();
                 await Coroutine.Sleep(msWait);
             }
 
-            return await StopMoving();
+            //return await StopMoving();
+
+            return true;
         }
 
         public static async Task<bool> Follow2(this BattleCharacter bc, Stopwatch sw, double TimeToFollow = 3000, float followDistance = 0.3f, int msWait = 0, bool useMesh = false)
         {
 
-            float curDistance = Core.Me.Location.Distance(bc.Location);
+            float curDistance = Core.Me.Location.Distance2D(bc.Location);
 
             if (bc == null)
             {
@@ -118,41 +139,41 @@ namespace Trust.Extensions
                             
                 if (curDistance < followDistance)
                 {
-                   //await StopMoving();
                    Navigator.Stop();
-                   return true;
                 }
-                               
+                 
                 else if (useMesh)
                 {
-                    if (Core.Me.IsCasting)
-                    {
-                        ActionManager.StopCasting();
-                    }
-
                     await CommonTasks.MoveTo(bc.Location);
                 }
                 else
                 {
-                    if (Core.Me.IsCasting)
-                    {
-                        ActionManager.StopCasting();
-                    }
-
                     Navigator.PlayerMover.MoveTowards(bc.Location);
-                }                              
+                }
+                curDistance = Core.Me.Distance2D(bc);
 
+                if (curDistance < 1f)
+                {
+                    if (await Coroutine.Wait(100, () => Core.Me.Distance2D(bc) < 0.2f || Core.Me.Distance2D(bc) > 1f))
+                    {
+                        if (Core.Me.Distance2D(bc) < followDistance)
+                        {
+                            Navigator.PlayerMover.MoveStop();
+                        }
+                    }
+                }
+
+                await Coroutine.Yield();
                 await Coroutine.Sleep(msWait);
 
 #if RB_CN
-                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
+                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance2D(bc.Location)}]");
 #else
-                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance: {curDistance}]");
+                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance2D: {curDistance}]");
 #endif
                 
             }
-
-            return false;
+            return true;
         }
         /// <summary>
         /// Stops the player's movement.

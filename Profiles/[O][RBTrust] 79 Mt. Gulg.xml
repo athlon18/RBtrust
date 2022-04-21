@@ -5,13 +5,13 @@
   <Name>[O][RBTrust] 79 Mt. Gulg by sodimm, Manta</Name>
   <Order>
     <CheckPlugins/>
-
+    <Extract/>
     <While Condition="True">
       <WaitForLoading/>
 
       <If Condition="not IsOnMap(822)">
         <EquipRecommended/>
-
+        <Extract/>
         <QueueTrust Dungeon="MtGulg"/>
         <CommenceDuty/>
         <WaitForLoading/>
@@ -25,30 +25,35 @@
         <Grind GrindRef="ForgivenCruelty" PostCombatDelay="2.0" While="ObjectExistsWithId(8260)"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <MoveTo XYZ="-32.9995, -25.36692, -196.2716"/>
         <RunCode Name="Transition"/>
         <MoveTo XYZ="-82.59937, 172.735, -247.665"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <MoveTo XYZ="-239.5555, 201.9996, -97.39667"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <MoveTo Distance="1" XYZ="-236.4691, 210.0001, -54.79517"/>
         <WaitTimer WaitTime="3"/>
         <Grind GrindRef="ForgivenWhimsy" PostCombatDelay="2.0" While="ObjectExistsWithId(8261)"/>
         <LootTreasure/>
         <EquipRecommended/>
-
+        <Extract/>
         <MoveTo XYZ="-288.0424, 194, 84.65469"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <MoveTo XYZ="-252.7066, 202, 140.1571"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <MoveTo XYZ="-240, 204, 188"/>
         <WaitTimer WaitTime="5"/>
@@ -65,6 +70,7 @@
         <Grind GrindRef="ForgivenObscenity" PostCombatDelay="2.0" While="ObjectExistsWithId(8262)"/>
         <LootTreasure/>
         <EquipRecommended/>
+        <Extract/>
 
         <LeaveDuty/>
       </If>

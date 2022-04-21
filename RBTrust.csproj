@@ -26,17 +26,22 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreyMagic, Version=1.0.60.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\GreyMagic.dll</HintPath>
+    <Reference Include="GreyMagic">
+      <HintPath>D:\Rebornbuddy\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.477.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy">
+      <HintPath>D:\Rebornbuddy\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -91,7 +96,6 @@
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
-    <Compile Include="Quest Behaviors\CrossZoneLineTag.cs" />
     <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
     <Compile Include="Plugins\Trust\Helpers\InstanceFlags.cs" />
     <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Quest Behaviors\LootTreasureTag.cs" />
     <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
     <Compile Include="Quest Behaviors\SetPluginsTag.cs" />
+    <Compile Include="Quest Behaviors\ExtractTag.cs" />
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
     <Compile Include="Windows\ExtendedContentsFinder.cs" />
   </ItemGroup>
@@ -123,6 +128,9 @@
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.1 The Aitiascope.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.2 The Mothercrystal.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.1 The Dead Ends.xml" />
+    <Content Include="Profiles\[O][RBTrust] 81 The Tower of Zot.xml" />
+    <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
+    <Content Include="Profiles\[O][RBTrust] 90.1 The Dead Ends.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">

@@ -13,18 +13,29 @@ namespace Trust
     {
         private readonly Dictionary<uint, string> foodDict;
 
+        private readonly Dictionary<uint, string> drugDict;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TrustSettings"/> class.
         /// </summary>
         public TrustSettings()
         {
             foodDict = new Dictionary<uint, string>();
+            drugDict = new Dictionary<uint, string>();
             InitializeComponent();
             UpdateFood();
+            UpdateDrug();
 
             if (InventoryManager.FilledSlots.ContainsFoodItem(Settings.Instance.FoodId))
             {
                 foodDropBox.SelectedValue = Settings.Instance.FoodId;
+            }
+
+           
+
+            if (InventoryManager.FilledSlots.ContainsDrugItem(Settings.Instance.DrugId))
+            {
+                drugDropBox.SelectedValue = Settings.Instance.DrugId;
             }
         }
 
@@ -51,6 +62,31 @@ namespace Trust
             foodDropBox.DataSource = new BindingSource(foodDict, null);
             foodDropBox.DisplayMember = "Value";
             foodDropBox.ValueMember = "Key";
+        }
+
+        private void DrugDropBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.DrugId = (uint)foodDropBox.SelectedValue;
+            Settings.Instance.Save();
+        }
+
+        private void DrugDropBox_Click(object sender, EventArgs e)
+        {
+            UpdateDrug();
+        }
+
+        private void UpdateDrug()
+        {
+            drugDict.Clear();
+
+            foreach (var item in InventoryManager.FilledSlots.GetDrugItems())
+            {
+                drugDict[item.TrueItemId] = "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : string.Empty);
+            }
+
+            drugDropBox.DataSource = new BindingSource(drugDict, null);
+            drugDropBox.DisplayMember = "Value";
+            drugDropBox.ValueMember = "Key";
         }
     }
 }

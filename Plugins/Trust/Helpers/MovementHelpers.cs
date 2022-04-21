@@ -1,6 +1,7 @@
 ﻿using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Behavior;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -30,6 +31,7 @@ namespace Trust.Helpers
             8889, // Ryne           :: 琳
             8917, // Minfilia       :: 敏菲利亚
             8919, // Lyna           :: 莱楠
+            10013, // Estinien :: 埃斯蒂尼安
             11264, // Alphinaud's avatar
             11265, // Alisaie's avatar
             11267, // Urianger's avatar
@@ -47,7 +49,7 @@ namespace Trust.Helpers
             // 11271, // G'raha Tia's avatar
         };
 
-         public static readonly HashSet<uint> AllPartyDpsIds = new HashSet<uint>()
+        public static readonly HashSet<uint> AllPartyDpsIds = new HashSet<uint>()
         {
             729,  // Y'shtola       :: 雅·修特拉
             //1492, // Urianger       :: 于里昂热
@@ -57,6 +59,7 @@ namespace Trust.Helpers
             8889, // Ryne           :: 琳
             8917, // Minfilia       :: 敏菲利亚
             8919, // Lyna           :: 莱楠
+            10013, //Estinien :: 埃斯蒂尼安
             //11264, // Alphinaud's avatar
             11265, // Alisaie's avatar
             //11267, // Urianger's avatar
@@ -92,6 +95,8 @@ namespace Trust.Helpers
             8889, // Ryne           :: 琳
             8917, // Minfilia       :: 敏菲利亚
             8919, // Lyna           :: 莱楠
+
+            10013, // Estinien :: 埃斯蒂尼安
             11264, // Alphinaud's avatar
             11265, // Alisaie's avatar
             11267, // Urianger's avatar
@@ -133,7 +138,34 @@ namespace Trust.Helpers
         public static BattleCharacter GetFurthestAlly => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
             .Where(obj => !obj.IsDead && PartyMemberIds.Contains(obj.NpcId))
             .OrderByDescending(r => r.Distance())
-            .FirstOrDefault();     
+            .FirstOrDefault();
+
+
+        public static bool IsMelee(this GameObject tar)
+        {
+            var gameObject = tar as Character;
+
+            return gameObject != null && (bool)Melee?.Contains(gameObject.CurrentJob);
+        }
+
+        private static readonly List<ClassJobType> Melee = new List<ClassJobType>
+        {
+            ClassJobType.Lancer,
+            ClassJobType.Dragoon,
+            ClassJobType.Pugilist,
+            ClassJobType.Monk,
+            ClassJobType.Rogue,
+            ClassJobType.Ninja,
+            ClassJobType.Samurai,
+            ClassJobType.Reaper,
+            ClassJobType.DarkKnight,
+            ClassJobType.Gladiator,
+            ClassJobType.Marauder,
+            ClassJobType.Paladin,
+            ClassJobType.Warrior,
+            ClassJobType.Gunbreaker
+        };
+
 
         public static async Task<bool> Spread(double TimeToSpread, float spreadDistance = 6.5f, bool IsSpreading = false)
         {
@@ -149,21 +181,20 @@ namespace Trust.Helpers
             //    { 
             //        sidestepPlugin.Enabled = true;
             //    }
-                        
+
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
                                 .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)))
-                {
-                    AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                        () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
-                        radius: spreadDistance,
-                        npc.ObjectId);
-                    await Coroutine.Yield();
-                }
-               
+            {
+                AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                    () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
+                    radius: spreadDistance,
+                    npc.ObjectId);
+            }
+
             if (!AvoidanceManager.IsRunningOutOfAvoid)
-                            {
-                                MovementManager.MoveStop();
-                            }
+            {
+                MovementManager.MoveStop();
+            }
 
             return true;
         }
@@ -171,5 +202,5 @@ namespace Trust.Helpers
 
     }
 
-   
+
 }

@@ -5,20 +5,18 @@
   <Name>[O][RBTrust] 81 The Tower of Zot</Name>
   <Order>
     <CheckPlugins/>
-    <Extract/>
 
     <While Condition="True">
       <WaitForLoading/>
       <If Condition="not IsOnMap(952)">
-        <EquipRecommended/>
-        <Extract/>
+        <!--<EquipRecommended/>-->
+
         <QueueTrust Dungeon="TheTowerofZot"/>
         <CommenceDuty/>
         <WaitForLoading/>
       </If>
 
       <If Condition="IsOnMap(952)">
-        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
         <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
           <!-- Shortcut available -->
@@ -30,11 +28,9 @@
         </If>
 
         <If Condition="IsOnSubMap(3733)">
-          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Minduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10256)"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="63.24457, -443.4718, -177.2011"/>
           <While Condition="IsOnSubMap(3730)">
@@ -43,23 +39,19 @@
         </If>
 
         <If Condition="IsOnSubMap(3731)">
-          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <MoveTo XYZ="-333.4352, -180.9977, 88.76975"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <MoveTo XYZ="-240.6393, -172.0018, 68.73035"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <MoveTo XYZ="-257.6166, -169, -8.267162" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(3734)">
-          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Sanduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10257)"/>
-          <LootTreasure/>
-          <EquipRecommended/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-262.2831, -167.9562, -86.32867"/>
           <While Condition="IsOnSubMap(3731)">
@@ -69,22 +61,18 @@
 
         <If Condition="IsOnSubMap(3732)">
           <MoveTo XYZ="23.56817, 534.9012, -21.68986"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <MoveTo XYZ="38.93001, 538.2892, -84.50268"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
           <MoveTo XYZ="-38.83713, 546.104, -38.20349" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(3735)">
-          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Cinduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10259) or ObjectExistsWithId(10257) or ObjectExistsWithId(10256)"/>
-          <LootTreasure/>
-          <EquipRecommended/>
-          <Extract/>
+          <!--<LootTreasure/>-->
+          <!--<EquipRecommended/>-->
         </If>
 
         <LeaveDuty/>

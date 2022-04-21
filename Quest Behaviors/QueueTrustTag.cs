@@ -40,8 +40,9 @@ namespace ff14bot.NeoProfiles.Tags
                 window = RaptureAtkUnitManager.GetWindowByName(windowName);
             }
 
-            if (window != null)
+            if (window != null && window.IsVisible)
             {
+                await Coroutine.Sleep(3000);
                 // Choose Dungeon
                 window.SendAction(2, 3, 15, 4, (ulong)Dungeon - 1);
                 await Coroutine.Sleep(250);

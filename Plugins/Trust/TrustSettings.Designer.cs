@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrustSettings));
             this.foodDropBox = new System.Windows.Forms.ComboBox();
             this.foodLabel = new System.Windows.Forms.Label();
+            this.drugDropBox = new System.Windows.Forms.ComboBox();
+            this.drugLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // foodDropBox
@@ -45,6 +47,21 @@
             // 
             resources.ApplyResources(this.foodLabel, "foodLabel");
             this.foodLabel.Name = "foodLabel";
+
+            // // 
+            // // drugDropBox
+            // // 
+            // this.drugDropBox.FormattingEnabled = true;
+            // resources.ApplyResources(this.drugDropBox, "drugDropBox");
+            // this.drugDropBox.Name = "drugDropBox";
+            // this.drugDropBox.SelectedIndexChanged += new System.EventHandler(this.DrugDropBox_SelectedIndexChanged);
+            // this.drugDropBox.Click += new System.EventHandler(this.DrugDropBox_Click);
+            // // 
+            // // drugLabel
+            // // 
+            // resources.ApplyResources(this.drugLabel, "drugLabel");
+            // this.drugLabel.Name = "drugLabel";
+
             // 
             // TrustSettings
             // 
@@ -52,9 +69,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.foodLabel);
             this.Controls.Add(this.foodDropBox);
+            // this.Controls.Add(this.drugLabel);
+            // this.Controls.Add(this.drugDropBox);
             this.Name = "TrustSettings";
             this.ResumeLayout(false);
             this.PerformLayout();
+
+            
+           
 
         }
 
@@ -62,5 +84,8 @@
 
         private System.Windows.Forms.ComboBox foodDropBox;
         private System.Windows.Forms.Label foodLabel;
+
+        private System.Windows.Forms.ComboBox drugDropBox;
+        private System.Windows.Forms.Label drugLabel;
     }
 }
