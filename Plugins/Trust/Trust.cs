@@ -11,13 +11,6 @@ using System.Windows.Media;
 using TreeSharp;
 using Trust.Dungeons;
 using Trust.Helpers;
-using LlamaLibrary.Extensions;
-using LlamaLibrary.Helpers;
-using LlamaLibrary.Logging;
-using LlamaLibrary.Memory;
-using LlamaLibrary.RemoteAgents;
-using LlamaLibrary.RemoteWindows;
-using LlamaLibrary.Utilities;
 
 namespace Trust
 {
@@ -76,6 +69,7 @@ namespace Trust
         /// <inheritdoc/>
         public override void OnDisabled()
         {
+            GamelogManager.MessageRecevied -= ReceiveMessageHelpers.ReceiveMessage;
             TreeRoot.OnStart -= OnBotStart;
             TreeRoot.OnStop -= OnBotStop;
             RemoveHooks();
@@ -84,6 +78,7 @@ namespace Trust
         /// <inheritdoc/>
         public override void OnShutdown()
         {
+            GamelogManager.MessageRecevied -= ReceiveMessageHelpers.ReceiveMessage;
             OnDisabled();
         }
 
@@ -112,7 +107,7 @@ namespace Trust
 
         private void OnBotStop(BotBase bot)
         {
-            GamelogManager.MessageRecevied -= new EventHandler<ChatEventArgs>(ReceiveMessageHelpers.ReceiveMessage);
+            GamelogManager.MessageRecevied -= ReceiveMessageHelpers.ReceiveMessage;
             RemoveHooks();
         }
 
@@ -140,14 +135,16 @@ namespace Trust
                 await Coroutine.Wait(1000, () => !ActionManager.IsSprintReady);
             }
 
-            if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
-            {
-                await FoodHelpers.EatFood();
-            }
+            if (!Core.Me.InCombat) {
+                if (!Core.Player.HasAura(FoodHelpers.FoodBuff))
+                {
+                    await FoodHelpers.EatFood();
+                }
 
-            if (!Core.Player.HasAura(DrugHelpers.DrugBuff))
-            {
-                await DrugHelpers.EatDrug();
+                if (!Core.Player.HasAura(DrugHelpers.DrugBuff))
+                {
+                    await DrugHelpers.EatDrug();
+                }
             }
 
             if (await PlayerCheck())

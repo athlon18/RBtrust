@@ -1,4 +1,5 @@
 ﻿using Buddy.Coroutines;
+using Clio.Utilities;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
@@ -122,6 +123,18 @@ namespace Trust.Helpers
             .OrderBy(r => r.Distance())
             .FirstOrDefault();
 
+        public static Vector3 Vec = new Vector3("0,0,1");
+        public static BattleCharacter GetClosestLocal(Vector3 vector)
+        {
+            if (vector == null) return null;
+
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+
+            .Where(obj => !obj.IsDead && PartyMemberIds.Contains(obj.NpcId))
+            .OrderBy(r => r.Distance(vector))
+            .FirstOrDefault();
+        } 
+
         public static BattleCharacter GetClosestDps => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
             .Where(obj => !obj.IsDead && AllPartyDpsIds.Contains(obj.NpcId))
             .OrderBy(r => r.Distance())
@@ -165,9 +178,9 @@ namespace Trust.Helpers
             ClassJobType.Warrior,
             ClassJobType.Gunbreaker
         };
+        private static Vector3 PlayerLoc => Core.Player.Location;
 
-
-        public static async Task<bool> Spread(double TimeToSpread, float spreadDistance = 6.5f, bool IsSpreading = false)
+        public static async Task<bool> Spread(double TimeToSpread, float spreadDistance = 6.5f, bool IsSpreading = false , uint spbc = 0)
         {
             if (IsSpreading)
             {
@@ -177,18 +190,24 @@ namespace Trust.Helpers
             double CurrentMS = DateTime.Now.TimeOfDay.TotalMilliseconds;
             double EndMS = CurrentMS + (TimeToSpread);
 
+            if (spbc != 0)
+            {
+                AllPartyMemberIds.Add(spbc);
+            }
+
             //if (sidestepPlugin != null)
             //    { 
             //        sidestepPlugin.Enabled = true;
             //    }
 
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)))
+                                .Where(obj =>  AllPartyMemberIds.Contains(obj.NpcId)))
             {
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
                     radius: spreadDistance,
                     npc.ObjectId);
+                await Coroutine.Yield();
             }
 
             if (!AvoidanceManager.IsRunningOutOfAvoid)
@@ -199,7 +218,114 @@ namespace Trust.Helpers
             return true;
         }
 
+        public static async Task<bool> SpreadSp(double TimeToSpread, Vector3 vector, float spreadDistance = 6.5f, bool IsSpreading = false,  uint spbc = 0)
+        {
+            if (IsSpreading)
+            {
+                return true;
+            }
 
+            double CurrentMS = DateTime.Now.TimeOfDay.TotalMilliseconds;
+            double EndMS = CurrentMS + (TimeToSpread);
+
+            if (spbc != 0)
+            {
+                AllPartyMemberIds.Add(spbc);
+            }
+
+            //if (sidestepPlugin != null)
+            //    { 
+            //        sidestepPlugin.Enabled = true;
+            //    }
+
+            var nobj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => obj.Distance(Core.Player)).FirstOrDefault();
+
+            float ls = 0; 
+            if (vector != null)
+            {
+                if (PlayerLoc.X > vector.X)
+                {
+                    ls = -20;
+                }
+                else
+                {
+                    ls = 20;
+                }
+            }
+
+            
+
+            foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(r => Core.Player.Distance()))
+            {
+                AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                    () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
+                    () => new Vector3(PlayerLoc.X - ls, PlayerLoc.Y, PlayerLoc.Z),
+                    leashRadius: 40,
+                    radius: spreadDistance,
+                    npc.ObjectId);
+
+                await Coroutine.Yield();
+            }
+
+            if (!AvoidanceManager.IsRunningOutOfAvoid)
+            {
+                MovementManager.MoveStop();
+            }
+
+            return true;
+        }
+
+        public static async Task<bool> SpreadSpLoc(double TimeToSpread, Vector3 vector, float spreadDistance = 6.5f, bool IsSpreading = false, uint spbc = 0)
+        {
+            if (IsSpreading)
+            {
+                return true;
+            }
+
+            double CurrentMS = DateTime.Now.TimeOfDay.TotalMilliseconds;
+            double EndMS = CurrentMS + (TimeToSpread);
+
+            if (spbc != 0)
+            {
+                AllPartyMemberIds.Add(spbc);
+            }
+
+            //if (sidestepPlugin != null)
+            //    { 
+            //        sidestepPlugin.Enabled = true;
+            //    }
+
+
+            if (vector == null)
+            {
+                vector = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => obj.Distance(Core.Player)).FirstOrDefault().Location;
+            }
+
+
+
+            foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(r => Core.Player.Distance()))
+            {
+                AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                    () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
+                    () => vector,
+                    leashRadius: 40,
+                    radius: spreadDistance,
+                    npc.ObjectId);
+
+                await Coroutine.Yield();
+            }
+
+            if (!AvoidanceManager.IsRunningOutOfAvoid)
+            {
+                MovementManager.MoveStop();
+            }
+
+            return true;
+        }
     }
 
 

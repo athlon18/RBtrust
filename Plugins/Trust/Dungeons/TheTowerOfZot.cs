@@ -1,5 +1,6 @@
 ﻿using Buddy.Coroutines;
 using ff14bot;
+using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Trust.Data;
 using Trust.Extensions;
 using Trust.Helpers;
@@ -45,11 +47,22 @@ namespace Trust.Dungeons
 
             HashSet<uint> goldChaser = new HashSet<uint>() { 25242, 25371, 25372, 25249, 25253, 25259 };
 
-            HashSet<uint> nfwChaser = new HashSet<uint>() { 25251 , 25248 , 25244 };
+            HashSet<uint> nfwChaser = new HashSet<uint>() { 25251 , 25248 , 25244 , 25278 };
 
             HashSet<uint> stopsidestep = new HashSet<uint>() { 25259 };
 
-            ReceiveMessageHelpers.SkillsdetstrGet(nfwChaser);
+            HashSet<uint> startsidestep = new HashSet<uint>() { 25257 , 25273 };
+
+            HashSet<uint> spells = new HashSet<uint>()
+            {
+               25233, 25234,  25235 ,25236,  25242, 25699
+            };
+
+            ReceiveMessageHelpers.SkillsdeterminationOverStr = "物创灭";
+
+            ReceiveMessageHelpers.VcNPCAcmtsstr = "燃烧吧！";
+
+            ReceiveMessageHelpers.SkillsdetstrGet(goldChaser);
 
             if (WorldManager.SubZoneId != 3733 && WorldManager.SubZoneId != 3734 && WorldManager.SubZoneId != 3735)
             {
@@ -65,19 +78,34 @@ namespace Trust.Dungeons
                     }                    
                 }
             }
-
-
-            if (stopsidestep.IsCasting())
+            if (WorldManager.SubZoneId != 3733)
             {
-                if (sidestepPlugin != null)
+                if (startsidestep.IsCasting() || nfwChaser.IsCasting() || ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                 {
+                    if (sidestepPlugin != null && !sidestepPlugin.Enabled)
+                    {
+                        Logging.Write(Colors.Yellow, $@" 自动躲闪开启 {Timer.ElapsedMilliseconds} >>>>>> >**>");
+                        sidestepPlugin.Enabled = true;
+                        ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
+                    }
+                }
+            }
+
+
+
+            if (stopsidestep.IsCasting() || goldChaser.IsCasting() || spells.IsCasting())
+            {
+                if (sidestepPlugin != null && sidestepPlugin.Enabled)
+                {
+                    Logging.Write(Colors.Yellow, $@" 自动躲闪关闭 {Timer.ElapsedMilliseconds} >>>>>> >**>");
                     sidestepPlugin.Enabled = false;
                 }
             }
 
-            if (goldChaser.IsCasting())
+            if (ReceiveMessageHelpers.SkillsdetStatus)
             {
                 Timer.Restart();
+                ReceiveMessageHelpers.SkillsdetStatus = false;
             }
 
 
@@ -86,13 +114,6 @@ namespace Trust.Dungeons
             {
 
                 CapabilityManager.Clear();
-            
-
-                if (sidestepPlugin != null)
-                {
-                    sidestepPlugin.Enabled = true;
-                }
-
 
                 Timer.Reset();
             }
@@ -103,32 +124,31 @@ namespace Trust.Dungeons
                 CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 0, "运动会结束，启用近战战斗插件自动走位");
             }
 
-            ReceiveMessageHelpers.SkillsdeterminationOverStr = "三角攻击";
+            
 
-            ReceiveMessageHelpers.VcNPCAcmtsstr = "燃烧吧！";
+            
 
             if (ReceiveMessageHelpers.VcNPCAcmtsstrStatus)
             {
-                if (Timer.ElapsedMilliseconds >= 18000)
+                if (Timer.ElapsedMilliseconds >= 21000)
                 {
                     Timer.Reset();
                     ReceiveMessageHelpers.VcNPCAcmtsstrStatus = false;
                     CapabilityManager.Clear();
+                    Logging.Write(Colors.Yellow, $@" 分散 {Timer.ElapsedMilliseconds} >>>>>> >**>");
+                    await MovementHelpers.Spread(3500);
                 }
             }
 
 
-            if (Timer.IsRunning && Timer.ElapsedMilliseconds < 20000)
+            if (Timer.IsRunning && Timer.ElapsedMilliseconds < 25000)
             {
-                await MovementHelpers.GetClosestAlly.Follow();
-
-                var mvax = (int)(20000 - Timer.ElapsedMilliseconds > 0 ? 20000 - Timer.ElapsedMilliseconds : 0);
-
+                var mvax = (int)(25000 - Timer.ElapsedMilliseconds > 0 ? 25000 - Timer.ElapsedMilliseconds : 0);
 
                 CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, mvax, "运动会近战禁用战斗插件自动走位");
 
-
-                goto nextdo;
+                await MovementHelpers.GetClosestAlly.Follow();
+                
             }
             else
             {
@@ -137,14 +157,15 @@ namespace Trust.Dungeons
 
 
 
-            HashSet<uint> spells = new HashSet<uint>()
-            {
-               25233, 25234,  25235 ,25236,  25242, 25699, 25235, 25242, 25371 ,25372
-            };
+    
 
             if (spells.IsCasting())
             {
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 2000, "敌人施法进行中");
+                if (!RoutineManager.IsAnyDisallowed(CapabilityFlags.Movement))
+                {
+                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 4000, "敌人施法进行中");
+                }
+                
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 
@@ -152,19 +173,23 @@ namespace Trust.Dungeons
 
             if (WorldManager.SubZoneId == 3733)
             {
-                if (sidestepPlugin != null)
+                if (sidestepPlugin != null && sidestepPlugin.Enabled)
                 {
                     sidestepPlugin.Enabled = false;
                 }
             }
             else
             {
-                if (sidestepPlugin != null)
+                if (WorldManager.SubZoneId != 3733 && WorldManager.SubZoneId != 3734 && WorldManager.SubZoneId != 3735)
                 {
-                    sidestepPlugin.Enabled = true;
+                    if (sidestepPlugin != null && !sidestepPlugin.Enabled)
+                    {
+                        sidestepPlugin.Enabled = true;
+                    }
                 }
+  
             }
-        nextdo:
+        
             return false;
         }
     }

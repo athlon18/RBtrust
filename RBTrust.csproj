@@ -37,11 +37,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GreyMagic">
-      <HintPath>D:\Rebornbuddy\GreyMagic.dll</HintPath>
+      <HintPath>..\..\RebornbuddyCN 1.0.469.0\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RebornBuddy">
-      <HintPath>D:\Rebornbuddy\RebornBuddy.exe</HintPath>
+      <HintPath>..\..\RebornbuddyCN 1.0.469.0\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,6 +80,7 @@
     <Compile Include="Plugins\Trust\Dungeons\Vanaspati.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
     <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\DrugHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LoadingHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\MovementHelpers.cs" />

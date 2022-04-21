@@ -1,7 +1,9 @@
-﻿using ff14bot.Managers;
+﻿using ff14bot.Helpers;
+using ff14bot.Managers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 
 namespace Trust.Helpers
 {
@@ -26,20 +28,21 @@ namespace Trust.Helpers
         {
             Regex retr = new Regex("的(.*?)状态效果消失了", RegexOptions.None);
 
-            var npcac = args.ChatLogEntry.MessageType != ff14bot.Enums.MessageType.NPCAnnouncements;
+            NPCAcmts(args);
 
-            if (npcac && ((int)args.ChatLogEntry.MessageType <= 8774 ||
+            WFNPCAcmts(args);
+
+            if ((int)args.ChatLogEntry.MessageType <= 8774 ||
 
                     retr.IsMatch(args.ChatLogEntry.FullLine) ||
 
-                    args.ChatLogEntry.FullLine.Contains("⇒"))) return;
+                    args.ChatLogEntry.FullLine.Contains("⇒")) return;
 
             SkillsdeterminationStart(args.ChatLogEntry.FullLine);
 
             SkillsdeterminationOver(args.ChatLogEntry.FullLine);
 
-            NPCAcmts(args);
-
+            MagnetOver(args.ChatLogEntry.FullLine);
         }
         public static string VcNPCAcmtsstr;
 
@@ -50,48 +53,71 @@ namespace Trust.Helpers
             {
                 if (VcNPCAcmtsstr != null)
                 {
-                    VcNPCAcmtsstrStatus = npcatstr.ChatLogEntry.FullLine.Contains(VcNPCAcmtsstr);                  
+                    VcNPCAcmtsstrStatus = npcatstr.ChatLogEntry.FullLine.Contains(VcNPCAcmtsstr);
                 }
-            }            
+            }
         }
 
-        public static HashSet<string>  Skillsdetstr;
 
-        public static void SkillsdetstrGet(HashSet<uint> nfwChaser)
+        public static string WFNPCAcmtsstr;
+
+        public static bool WFNPCAcmtsstrStatus;
+        public static void WFNPCAcmts(ChatEventArgs npcatstr)
         {
-            var skstr = nfwChaser?.Select(r => DataManager.GetSpellData(r).LocalizedName);
+            if (npcatstr.ChatLogEntry.MessageType == ff14bot.Enums.MessageType.NPCAnnouncements)
+            {
+                if (!string.IsNullOrEmpty(WFNPCAcmtsstr))
+                {
+                    WFNPCAcmtsstrStatus = npcatstr.ChatLogEntry.FullLine.Contains(WFNPCAcmtsstr);
+                }
+            }
+        }
+
+        public static HashSet<string> Skillsdetstr { get; set; }
+
+        public static void SkillsdetstrGet(HashSet<uint> goldChaser)
+        {
+            var skstr = goldChaser?.Select(r => DataManager.GetSpellData(r).LocalizedName);
 
             Skillsdetstr = new HashSet<string>(skstr);
+
+            //foreach (var x in Skillsdetstr)
+            //{
+            //    Logging.Write(Colors.Yellow, $@" 技能名字 {x} >>>>>> >**>");
+            //}
         }
 
         public static bool SkillsdetStatus;
         public static void SkillsdeterminationStart(string sderstr)
-        {            
+        {
+
             if (sderstr.Contains("正在发动") ||
                     sderstr.Contains("正在咏唱"))
             {
                 try
                 {
+                    //Logging.Write(Colors.Yellow, $@" 技能名字  {sderstr}");
+
                     if (Skillsdetstr != null)
                     {
                         SkillsdetStatus = (bool)Skillsdetstr?.Any(r => sderstr.Contains(r));
-                    }                    
+                    }
                 }
                 catch
                 {
-
+                    Logging.Write(Colors.OrangeRed, $@"没有技能");
                 }
-                
+
             }
 
             if (sderstr.Contains("发动了") ||
                     sderstr.Contains("咏唱了"))
             {
-               if (Skillsdetstr != null)
+                if (Skillsdetstr != null)
                 {
                     if ((bool)Skillsdetstr?.Any(r => sderstr.Contains(r)))
                         SkillsdetStatus = false;
-                }               
+                }
             }
         }
 
@@ -108,8 +134,46 @@ namespace Trust.Helpers
                 {
                     if (sderstr.Contains(SkillsdeterminationOverStr))
                         SkillsdeterminationOverStatus = true;
-                }                
+                }
             }
         }
+
+        public static HashSet<string> MagnetOverStr;
+
+        public static void MagnetOverStrGet(HashSet<uint> magnet)
+        {
+            var str = magnet?.Select(r => DataManager.GetSpellData(r).LocalizedName);
+
+            MagnetOverStr = new HashSet<string>(str);
+
+            //foreach (var x in Skillsdetstr)
+            //{
+            //    Logging.Write(Colors.Yellow, $@" 技能名字 {x} >>>>>> >**>");
+            //}
+        }
+
+        public static bool MagnetOverStatus;
+
+        public static void MagnetOver(string sderstr)
+        {
+            if (sderstr.Contains("发动了") ||
+                    sderstr.Contains("咏唱了"))
+            {
+                try
+                {
+                    //Logging.Write(Colors.Yellow, $@" 技能名字  {sderstr}");
+
+                    if ((bool)MagnetOverStr?.Any())
+                    {
+                        MagnetOverStatus = (bool)MagnetOverStr?.Any(r => sderstr.Contains(r));
+                    }
+                }
+                catch
+                {
+                    Logging.Write(Colors.OrangeRed, $@"没有技能");
+                }
+            }
+        }
+
     }
 }

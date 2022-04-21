@@ -34,6 +34,24 @@ namespace Trust.Extensions
                     .Any(obj => spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50);
         }
 
+        public static bool IsCastingtwo(this HashSet<uint> spellCastIds)
+        {
+            var actids = GameObjectManager.GetObjectsOfType<BattleCharacter>()
+               ?.Where(obj => obj.IsCasting &&  !(bool)PartyManager.AllMembers?.Any(p => p.ObjectId == obj.ObjectId));
+
+            if ((bool)actids?.Any())
+            {
+                foreach (var actid in actids)
+                {
+                    Logging.Write(Colors.Yellow, $@" IsCastingtwo 判断显示在使用的 actid ： {actid.CastingSpellId} {actid.SpellCastInfo.IsCasting} {actid.SpellCastInfo.SpellData.LocalizedName} {spellCastIds.Contains(actid.CastingSpellId)}");
+
+                    return spellCastIds.Contains(actid.CastingSpellId) && actid.SpellCastInfo.IsCasting;
+                }
+            }
+
+            return false;
+        }
+
         public static bool IsFw(this HashSet<uint> bossid)
         {
             return (bool)GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)?
@@ -70,6 +88,11 @@ namespace Trust.Extensions
 
                 if (curDistance < followDistance)
                 {
+#if RB_CN
+                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance2D(bc.Location)}]");
+#else
+                    Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance2D: {curDistance}]");
+#endif
                     break;
                 }
 
@@ -82,11 +105,7 @@ namespace Trust.Extensions
                 //{
                 //    ActionManager.StopCasting();
                 //}
-#if RB_CN
-                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance2D(bc.Location)}]");
-#else
-                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance2D: {curDistance}]");
-#endif
+
                 if (useMesh)
                 {
                     await CommonTasks.MoveTo(bc.Location);
@@ -100,7 +119,7 @@ namespace Trust.Extensions
 
                 if (curDistance < 1f)
                 {
-                    if (await Coroutine.Wait(100, () => Core.Me.Distance2D(bc) < 0.2f || Core.Me.Distance2D(bc) > 1))
+                    if (await Coroutine.Wait(200, () => Core.Me.Distance2D(bc) < followDistance || Core.Me.Distance2D(bc) > 1))
                     {
                         if (Core.Me.Distance2D(bc) < followDistance)
                         {
@@ -154,7 +173,7 @@ namespace Trust.Extensions
 
                 if (curDistance < 1f)
                 {
-                    if (await Coroutine.Wait(100, () => Core.Me.Distance2D(bc) < 0.2f || Core.Me.Distance2D(bc) > 1f))
+                    if (await Coroutine.Wait(200, () => Core.Me.Distance2D(bc) < followDistance || Core.Me.Distance2D(bc) > 1f))
                     {
                         if (Core.Me.Distance2D(bc) < followDistance)
                         {
