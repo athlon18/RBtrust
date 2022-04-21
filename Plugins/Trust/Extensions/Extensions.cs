@@ -113,23 +113,25 @@ namespace Trust.Extensions
                 else
                 {
                     Navigator.PlayerMover.MoveTowards(bc.Location);
+                    await Coroutine.Yield();
                 }
 
                 curDistance = Core.Me.Distance2D(bc);
 
                 if (curDistance < 1f)
                 {
-                    if (await Coroutine.Wait(200, () => Core.Me.Distance2D(bc) < followDistance || Core.Me.Distance2D(bc) > 1))
+                    if (await Coroutine.Wait(100, () => Core.Me.Distance2D(bc) < followDistance || Core.Me.Distance2D(bc) > 1))
                     {
                         if (Core.Me.Distance2D(bc) < followDistance)
                         {
                             Navigator.PlayerMover.MoveStop();
+                            
                         }                       
                     }
                 }
                 
 
-                await Coroutine.Yield();
+                
                 await Coroutine.Sleep(msWait);
             }
 

@@ -201,7 +201,7 @@ namespace Trust.Helpers
             //    }
 
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj =>  AllPartyMemberIds.Contains(obj.NpcId)))
+                                .Where(obj =>  AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(obj => Core.Player.Distance(obj)))
             {
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
@@ -257,7 +257,7 @@ namespace Trust.Helpers
             
 
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(r => Core.Player.Distance()))
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => Core.Player.Distance(obj)))
             {
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
@@ -307,7 +307,7 @@ namespace Trust.Helpers
 
 
             foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(r => Core.Player.Distance()))
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => Core.Player.Distance(obj)))
             {
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,

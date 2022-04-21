@@ -38,7 +38,7 @@ namespace Trust.Dungeons
 
         private HashSet<uint> follow1 = new HashSet<uint>()
         {
-            25151,
+            25151,25153
         };
 
         private HashSet<uint> follow2 = new HashSet<uint>()
@@ -119,6 +119,9 @@ namespace Trust.Dungeons
         private Stopwatch hastargetxSW = new Stopwatch();
 
         private static DateTime resetTime = DateTime.Now;
+
+        private static bool hastarget => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).
+                    Where(r => r.CanAttack && r.IsTargetable).Any();
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
@@ -169,8 +172,6 @@ namespace Trust.Dungeons
             }
 
 
-            var hastarget = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).
-                    Where(r => r.CanAttack && r.IsTargetable && r.IsValid && r.IsVisible).Any();
 
             if (WorldManager.SubZoneId == 4014 && Core.Player.InCombat)
             {
@@ -178,9 +179,10 @@ namespace Trust.Dungeons
                 {
                     hastargetxSW.Restart();
                 }
-                if (hastarget)
+
+                if (hastarget && hastargetxSW.ElapsedMilliseconds < 3000 && hastargetxSW.IsRunning)
                 {
-                    hastargetxSW.Restart();
+                    hastargetxSW.Reset();
                 }
 
                 if (!hastarget && hastargetxSW.ElapsedMilliseconds > 3000 || hastargetSW.IsRunning)
@@ -292,7 +294,7 @@ namespace Trust.Dungeons
                     }
                     else
                     {
-                        await MovementHelpers.GetClosestLocal(new Vector3("-294.9383, 41.5, -354.0579")).Follow(3f);
+                        await MovementHelpers.GetClosestLocal(new Vector3("-294.9383, 41.5, -354.0579")).Follow(2f);
                     }
                 }
             }
@@ -421,7 +423,7 @@ namespace Trust.Dungeons
 
                 }
 
-                await MovementHelpers.Spread(3000, 4, false, 1383);
+                await MovementHelpers.Spread(3000, 8, false, 1383);
             }
 
             if (magnet2.IsCasting() || magnet2SW.IsRunning)
@@ -505,21 +507,21 @@ namespace Trust.Dungeons
 
                 if (magnet3SWhaifrun && WorldManager.SubZoneId == 4014)
                 {
-                    if (magnet3SW.ElapsedMilliseconds < 6500 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
+                    if (magnet3SW.ElapsedMilliseconds < 7000 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                     {
                         await MovementHelpers.GetClosestLocal(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
                     }
                     else
                     {
-
-                        if (MovementHelpers.GetClosestAlly.Distance(new Vector3("300.0752, 55.00583, -156.6629")) - 2f < Core.Player.Distance(new Vector3("300.0752, 55.00583, -156.6629")))
+                        if (!AvoidanceManager.IsRunningOutOfAvoid)
                         {
-                            Navigator.PlayerMover.MoveTowards(new Vector3("300.0752, 55.00583, -156.6629"));
-                        }
-                        else
-                        {
-                            if (!AvoidanceManager.IsRunningOutOfAvoid)
+                            if (MovementHelpers.GetClosestAlly.Distance(new Vector3("300.0752, 55.00583, -156.6629")) - 2f < Core.Player.Distance(new Vector3("300.0752, 55.00583, -156.6629")))
                             {
+                                Navigator.PlayerMover.MoveTowards(new Vector3("300.0752, 55.00583, -156.6629"));
+                            }
+                            else
+                            {
+
                                 await MovementHelpers.SpreadSpLoc(3000, new Vector3("300.0752, 55.00583, -156.6629"), 6.5f, false);
                             }
                         }
@@ -537,7 +539,7 @@ namespace Trust.Dungeons
                         {
                             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
-                                await MovementHelpers.SpreadSp(3000, new Vector3("300.0752, 55.00583, -156.6629"), 6.5f, false);
+                                await MovementHelpers.SpreadSp(3000, new Vector3("300.0752, 55.00583, -156.6629"), 6f, false);
                             }
                         }
                     }
@@ -552,7 +554,7 @@ namespace Trust.Dungeons
                         {
                             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
-                                await MovementHelpers.Spread(3000, 10f, false , 10717);
+                                await MovementHelpers.Spread(3000, 10f, false, 10717);
                             }
                         }
                     }
