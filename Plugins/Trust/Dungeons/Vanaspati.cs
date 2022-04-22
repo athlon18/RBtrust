@@ -120,6 +120,8 @@ namespace Trust.Dungeons
 
         private static DateTime resetTime = DateTime.Now;
 
+        private bool Pmbuff;
+
         private static bool hastarget => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).
                     Where(r => r.CanAttack && r.IsTargetable).Any();
         /// <inheritdoc/>
@@ -154,10 +156,19 @@ namespace Trust.Dungeons
                 magnet3SW.Reset();
             }
 
-            if (Core.Player.HasAura("Temporary Misdirection"))
+            if (Core.Player.HasAura("Temporary Misdirection") || Pmbuff)
             {
-                sidestepPlugin.Enabled = true;
-                CapabilityManager.Clear();
+                if (!Pmbuff) Pmbuff = true;
+
+                sidestepPlugin.Enabled = false;
+
+                if (!Core.Player.HasAura("Temporary Misdirection") && Pmbuff)
+                {
+                    sidestepPlugin.Enabled = true;
+                    CapabilityManager.Clear();
+                    Pmbuff = false;
+                }
+               
             }
 
 
@@ -180,12 +191,19 @@ namespace Trust.Dungeons
                     hastargetxSW.Restart();
                 }
 
-                if (hastarget && hastargetxSW.ElapsedMilliseconds < 1000 && hastargetxSW.IsRunning)
+                if (!hastarget && !hastargetSW.IsRunning)
+                {
+                    followxSW.Reset();
+                    follow2SW.Reset();
+                    Navigator.PlayerMover.MoveStop();
+                }
+
+                if (hastarget && hastargetxSW.ElapsedMilliseconds < 3000 && hastargetxSW.IsRunning)
                 {
                     hastargetxSW.Reset();
                 }
 
-                if (!hastarget && hastargetxSW.ElapsedMilliseconds > 1000 || hastargetSW.IsRunning)
+                if (!hastarget && hastargetxSW.ElapsedMilliseconds > 3000 || hastargetSW.IsRunning)
                 {
                     if (!hastargetSW.IsRunning)
                     {
@@ -200,7 +218,7 @@ namespace Trust.Dungeons
                         follow2SW.Reset();
                     }
 
-                    if (hastargetSW.ElapsedMilliseconds > 25000)
+                    if (hastargetSW.ElapsedMilliseconds > 15000)
                     {
                         ActionManager.Sprint();
                     }
@@ -218,7 +236,7 @@ namespace Trust.Dungeons
                     }
                     else
                     {
-                        await MovementHelpers.GetClosestTank.Follow();
+                        await MovementHelpers.GetClosestAlly.Follow();
                     }
                 }
 
@@ -523,7 +541,7 @@ namespace Trust.Dungeons
                         {
                             magnet3fW.Start();
                         }
-                        if (magnet3fW.ElapsedMilliseconds < 800)
+                        if (magnet3fW.ElapsedMilliseconds < 600)
                         {
                             if (MovementHelpers.GetClosestAlly.Distance(new Vector3("300.0752, 55.00583, -156.6629")) - 3f < Core.Player.Distance(new Vector3("300.0752, 55.00583, -156.6629")))
                             {
@@ -550,20 +568,20 @@ namespace Trust.Dungeons
                     {
                         if (magnet3SW.ElapsedMilliseconds < 4000)
                         {
-                            await MovementHelpers.GetClosestLocal(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
+                            await MovementHelpers.GetClosestLocal(new Vector3("299.9771, 55.00583, -157.0001")).Follow();
                         }
                         else
                         {
                             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
-                                await MovementHelpers.SpreadSp(3000, new Vector3("300.0752, 55.00583, -156.6629"), 6f, false);
+                                await MovementHelpers.SpreadSp(3000, new Vector3("299.9771, 55.00583, -157.0001"), 6f, false);
                             }
                         }
                     }
 
                     if (WorldManager.SubZoneId == 4012)
                     {
-                        if (magnet3SW.ElapsedMilliseconds < 2500 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
+                        if (magnet3SW.ElapsedMilliseconds < 2000 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                         {
                             await MovementHelpers.GetClosestAlly.Follow();
                         }
@@ -571,7 +589,7 @@ namespace Trust.Dungeons
                         {
                             if (!AvoidanceManager.IsRunningOutOfAvoid)
                             {
-                                await MovementHelpers.Spread(3000, 10f, false, 10717);
+                                await MovementHelpers.HalfSpread(3000, 7f, false, 10717);
                             }
                         }
                     }

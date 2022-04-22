@@ -192,7 +192,7 @@ namespace Trust.Helpers
 
             if (spbc != 0)
             {
-                AllPartyMemberIds.Add(spbc);
+                AllPartyMemberIds.Add(spbc);                
             }
 
             //if (sidestepPlugin != null)
@@ -208,12 +208,88 @@ namespace Trust.Helpers
                     radius: spreadDistance,
                     npc.ObjectId);
                 await Coroutine.Yield();
+
             }
 
             if (!AvoidanceManager.IsRunningOutOfAvoid)
             {
                 MovementManager.MoveStop();
             }
+
+            
+
+            return true;
+        }
+
+        public static async Task<bool> HalfSpread(double TimeToSpread, float spreadDistance = 6.5f, bool IsSpreading = false, uint spbc = 0)
+        {
+            if (IsSpreading)
+            {
+                return true;
+            }
+
+            double CurrentMS = DateTime.Now.TimeOfDay.TotalMilliseconds;
+            double EndMS = CurrentMS + (TimeToSpread);
+
+            if (spbc != 0)
+            {
+                var nobj =  PartyManager.AllMembers.Select(pm => pm.BattleCharacter).OrderBy(obj => obj.Distance(Core.Player)).FirstOrDefault(obj => !obj.IsMe);
+
+                var st = Core.Player.CurrentTarget;
+
+                var fs = Core.Player;
+
+                Vector3 tl = new Vector3();
+                if (st != null && fs != null && st.Distance2D(fs) > 0)
+                {
+                    var k = (st.Z - fs.Z) / (st.X - fs.X);
+                    var b = st.Z - k * st.X;
+
+                    var plg = 100f / fs.DistanceSqr(st.Location);
+
+                    //var plg = 2f / Math.Sqrt((fs.X - st.X) * (fs.X - st.X) +
+                    //(fs.Z - st.Z) * (fs.Z - st.Z));
+
+                    
+                    tl.X = fs.X - plg * (st.X - fs.X);
+                    tl.Z = k * tl.X + b;
+                    tl.Y = st.Y;
+                    //Log(plg);
+                    //ActionManager.DoActionLocation(188, tl);
+
+                    //Log(tl);
+
+                    if (nobj.Distance(tl) - 2f < Core.Player.Distance(tl))
+                    {
+                        Navigator.PlayerMover.MoveTowards(tl);
+                        await Coroutine.Yield();
+                        return false;
+                    }
+                }
+            }
+
+            //if (sidestepPlugin != null)
+            //    { 
+            //        sidestepPlugin.Enabled = true;
+            //    }
+
+            foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(obj => Core.Player.Distance(obj)))
+            {
+                AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                    () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
+                    radius: spreadDistance,
+                    npc.ObjectId);
+                await Coroutine.Yield();
+
+            }
+     
+            if (!AvoidanceManager.IsRunningOutOfAvoid)
+            {
+                MovementManager.MoveStop();
+            }
+      
+           
 
             return true;
         }
@@ -239,7 +315,7 @@ namespace Trust.Helpers
             //    }
 
             var nobj = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => obj.Distance(Core.Player)).FirstOrDefault();
+                                .Where(obj => AllPartyMemberIds.Contains(obj.NpcId)).OrderBy(obj => obj.Distance(Core.Player)).FirstOrDefault(obj => !obj.IsMe);
 
             float ls = 0; 
             if (vector != null)
@@ -261,18 +337,28 @@ namespace Trust.Helpers
             {
                 var sdtc = spreadDistance;
 
-                if (nobj.ObjectId != npc.ObjectId)
+                if (nobj.ObjectId != npc.ObjectId && !npc.IsMe)
                 {
                     sdtc = spreadDistance - 3f;
                 }
+                var plc = new Vector3(PlayerLoc.X - ls, PlayerLoc.Y, PlayerLoc.Z);
+
+                if (nobj.ObjectId == npc.ObjectId)
+                {
+                    if (Core.Player.Distance(plc) + 1f > npc.Distance(plc))
+                    {
+                        Navigator.PlayerMover.MoveTowards(plc);
+                        await Coroutine.Yield();
+                        return false;
+                    }
+                }  
 
                 AvoidanceManager.AddAvoidObject<BattleCharacter>(
                     () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
-                    () => new Vector3(PlayerLoc.X - ls, PlayerLoc.Y, PlayerLoc.Z),
+                    () => plc,
                     leashRadius: 40,
                     radius: sdtc,
                     npc.ObjectId);
-
                 await Coroutine.Yield();
             }
 
@@ -280,7 +366,7 @@ namespace Trust.Helpers
             {
                 MovementManager.MoveStop();
             }
-
+            
             return true;
         }
 
@@ -324,13 +410,14 @@ namespace Trust.Helpers
                     npc.ObjectId);
 
                 await Coroutine.Yield();
+
             }
 
             if (!AvoidanceManager.IsRunningOutOfAvoid)
             {
                 MovementManager.MoveStop();
             }
-
+            
             return true;
         }
     }

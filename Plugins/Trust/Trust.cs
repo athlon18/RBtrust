@@ -129,6 +129,11 @@ namespace Trust
 
         private async Task<bool> RunTrust()
         {
+            if (await PlayerCheck())
+            {
+                return true;
+            }
+
             if (!Core.Me.InCombat && ActionManager.IsSprintReady && MovementManager.IsMoving)
             {
                 ActionManager.Sprint();
@@ -147,27 +152,22 @@ namespace Trust
                 }
             }
 
-            if (await PlayerCheck())
-            {
-                return true;
-            }
-
             return await dungeonManager.RunAsync();
         }
-
+        private static bool MeIsDead;
         private static async Task<bool> PlayerCheck()
         {
-            if (Core.Me.CurrentHealthPercent <= 0)
+            if (Core.Me.IsDead)
             {
 #if RB_CN
                 Logging.Write(Colors.Aquamarine, $"检测到死亡");
 #else
                 Logging.Write(Colors.Aquamarine, $"Player has died.");
 #endif
-                await Coroutine.Sleep(10000);
+                await Coroutine.Wait(20000, () => Core.Me.IsAlive);
                 NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path, true);
                 NeoProfileManager.UpdateCurrentProfileBehavior();
-                await Coroutine.Sleep(5000);
+                await Coroutine.Sleep(3000);
                 return true;
             }
 
