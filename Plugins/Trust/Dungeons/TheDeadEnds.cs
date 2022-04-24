@@ -320,7 +320,17 @@ namespace Trust.Dungeons
 
         public override async Task<bool> RunAsync()
         {
-            await Coroutine.Yield();
+            if (WorldManager.SubZoneId == 4109)
+            {
+                if (Core.Player.InCombat)
+                {
+                    sidestepPlugin.Enabled = true;
+                }
+                else
+                {
+                    sidestepPlugin.Enabled = false;
+                }
+            }    
 
             if (!Core.Me.InCombat)
             {
@@ -336,6 +346,8 @@ namespace Trust.Dungeons
                 LBsw.Reset();
                 PRsw.Reset();
             }
+
+
 
             // GENERIC MECHANICS
 

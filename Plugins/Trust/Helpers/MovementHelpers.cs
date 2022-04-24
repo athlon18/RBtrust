@@ -199,25 +199,24 @@ namespace Trust.Helpers
             //    { 
             //        sidestepPlugin.Enabled = true;
             //    }
-
-            foreach (var npc in GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                                .Where(obj =>  AllPartyMemberIds.Contains(obj.NpcId)).OrderByDescending(obj => Core.Player.Distance(obj)))
+            if (!AvoidanceManager.IsRunningOutOfAvoid)
             {
-                AvoidanceManager.AddAvoidObject<BattleCharacter>(
-                    () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
-                    radius: spreadDistance,
-                    npc.ObjectId);
-                await Coroutine.Yield();
-
+                foreach (var npc in PartyManager.AllMembers.Select(p => p.BattleCharacter).OrderByDescending(obj => Core.Player.Distance(obj)))
+                {
+                    AvoidanceManager.AddAvoidObject<BattleCharacter>(
+                        () => DateTime.Now.TimeOfDay.TotalMilliseconds <= EndMS,
+                        radius: spreadDistance,
+                        npc.ObjectId);
+                    
+                }
+                await Coroutine.Wait(300, () => AvoidanceManager.IsRunningOutOfAvoid);
             }
 
             if (!AvoidanceManager.IsRunningOutOfAvoid)
             {
                 MovementManager.MoveStop();
             }
-
             
-
             return true;
         }
 

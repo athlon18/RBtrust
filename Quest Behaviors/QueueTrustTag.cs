@@ -23,6 +23,11 @@ namespace ff14bot.NeoProfiles.Tags
         [XmlAttribute("Dungeon")]
         public DungeonId Dungeon { get; set; }
 
+
+        [Clio.XmlEngine.XmlAttribute("AutoChooseDungeon")]
+        private bool AutoChooseDungeon { get; set; }
+
+
         /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
@@ -44,8 +49,11 @@ namespace ff14bot.NeoProfiles.Tags
             {
                 await Coroutine.Sleep(3000);
                 // Choose Dungeon
-                window.SendAction(2, 3, 15, 4, (ulong)Dungeon - 1);
-                await Coroutine.Sleep(250);
+                if (AutoChooseDungeon)
+                {
+                    window.SendAction(2, 3, 15, 4, (ulong)Dungeon - 1);
+                    await Coroutine.Sleep(250);
+                }          
 
                 // Register for Duty
                 window.SendAction(1, 3, 14);

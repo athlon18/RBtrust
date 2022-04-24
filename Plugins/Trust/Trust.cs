@@ -167,7 +167,7 @@ namespace Trust
                 await Coroutine.Wait(20000, () => Core.Me.IsAlive);
                 NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path, true);
                 NeoProfileManager.UpdateCurrentProfileBehavior();
-                await Coroutine.Sleep(3000);
+                await Coroutine.Sleep(15000);
                 return true;
             }
 

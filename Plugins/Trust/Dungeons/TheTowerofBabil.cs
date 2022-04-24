@@ -69,6 +69,11 @@ namespace Trust.Dungeons
             21182, 25324,
         };
 
+        private HashSet<uint> follow1 = new HashSet<uint>()
+        {
+            25359
+        };
+
         private HashSet<uint> magnet = new HashSet<uint>()
         {
             25326, 25157, 25158, 25328,
@@ -106,21 +111,28 @@ namespace Trust.Dungeons
 
         private HashSet<uint> magnetx = new HashSet<uint>()
         {
-            25344, 25359
+            25344
         };
 
 
         private CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
         private PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
         private Stopwatch followSW = new Stopwatch();
+
+        private Stopwatch follow1SW = new Stopwatch();
         private Stopwatch magnetSW = new Stopwatch();
+
+        private Stopwatch magnetxSW = new Stopwatch();
+
         private Stopwatch miniSW = new Stopwatch();
         private Stopwatch toadSW = new Stopwatch();
         private Stopwatch boundlesspainSW = new Stopwatch();
         private Stopwatch claw2SW = new Stopwatch();
         private Stopwatch spreadSW = new Stopwatch();
 
-        private Stopwatch starCombat = new Stopwatch();
+        private Stopwatch overStatusSW = new Stopwatch();
+
+        private Stopwatch starCombatrunSW = new Stopwatch();
 
         private bool starCombatrun;
 
@@ -139,26 +151,6 @@ namespace Trust.Dungeons
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
-            if (WorldManager.SubZoneId == 4124)
-            {
-                if (!starCombatrun)
-                {
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "开场移动到指定位置");
-
-                    Vector3 location = new Vector3("-300.007, -175, 78.25982");
-
-                    while (Core.Me.Distance2D(location) > 3f)
-                    {
-                        Navigator.PlayerMover.MoveTowards(location);
-                        await Coroutine.Yield();
-                    }
-
-                    MovementManager.MoveStop();
-
-                    starCombatrun = true;
-                }
-            }
-
             if (WorldManager.SubZoneId != 4124 && WorldManager.SubZoneId != 4125 && WorldManager.SubZoneId != 4126 && WorldManager.SubZoneId != 4134)
             {
                 starCombatrun = false;
@@ -173,7 +165,16 @@ namespace Trust.Dungeons
 
                         target.Target();
                     }
-
+                }
+                if(WorldManager.SubZoneId == 4133 && !Core.Player.InCombat)
+                {
+                    if (sidestepPlugin.Enabled)
+                    {
+                        sidestepPlugin.Enabled = false;
+                    }
+                }
+                else
+                {
                     if (!sidestepPlugin.Enabled)
                     {
                         sidestepPlugin.Enabled = true;
@@ -181,61 +182,237 @@ namespace Trust.Dungeons
                 }
             }
 
+            if (WorldManager.SubZoneId == 4124)
+            {
+                if (!starCombatrun || starCombatrunSW.IsRunning)
+                {
+                    if (!starCombatrun && !starCombatrunSW.IsRunning)
+                    {
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "开场移动到指定位置");
+                        starCombatrunSW.Start();
+                        starCombatrun = true;
+                    }
+
+                    if (starCombatrunSW.ElapsedMilliseconds < 3000)
+                    {
+                        Vector3 location = new Vector3("-300.007, -175, 78.25982");
+
+                        if (Core.Me.Distance2D(location) > 3f)
+                        {
+                            Navigator.PlayerMover.MoveTowards(location);
+                            await Coroutine.Yield();
+                        }
+                        else
+                            MovementManager.MoveStop();
+                    }
+                    else
+                    {
+                        starCombatrunSW.Reset();
+                    }
+                }
+            }
+
+
+
             if (WorldManager.SubZoneId == 4134)
             {
-                if (magnetx.IsCasting())
+                if (follow1.IsCasting() || follow1SW.IsRunning)
                 {
-                    AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
-                    CapabilityManager.Clear();
+                    if (follow1.IsCasting() && !follow1SW.IsRunning)
+                    {
+                        AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
+                        CapabilityManager.Clear();
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "重力移动到指定位置");
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 6000, "移动到指定位置");
+                        follow1SW.Start();
+                    }
 
-                    await MovementHelpers.GetClosestAlly.Follow();
+                    if (!follow1.IsCasting())
+                    {
+                        follow1SW.Reset();
+                        CapabilityManager.Clear();
+                    }
+                    else
+                    {
+                        await MovementHelpers.GetClosestAlly.Follow();
+                    }
+
                 }
             }
 
             if (WorldManager.SubZoneId == 4126)
             {
-                if (magnetx.IsCasting() && !MagnetxMoved)
-                {  
-                    AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
+                ReceiveMessageHelpers.SkillsdeterminationOverStr = new HashSet<string>() { "祖国之父" };
 
-                    CapabilityManager.Clear();
-
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "重力移动到指定位置");
-
-                    Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");
-
-                    if (Core.Me.Distance2D(location) > 1f)
+                if (magnetx.IsCasting() || magnetxSW.IsRunning)
+                {
+                    if (magnetx.IsCasting() && !magnetxSW.IsRunning)
                     {
-                        Navigator.PlayerMover.MoveTowards(location);
+                        AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
+
+                        CapabilityManager.Clear();
+
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 8000, "重力移动到指定位置");
+
+                        magnetxSW.Start();
+
+                        ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
                     }
 
-                    else MovementManager.MoveStop();
-                }
-
-                if (!magnetx.IsCasting())
-                {
-                    MagnetxMoved = false;
-                }
-
-                ReceiveMessageHelpers.SkillsdeterminationOverStr =  new HashSet<string>() { "祖国之父" };
-                if (ReceiveMessageHelpers.SkillsdeterminationOverStatus)
-                {
-                    Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");
-
-                    if (Core.Me.Distance2D(location) > 1f)
+                    if (!magnetx.IsCasting())
                     {
-                        Navigator.PlayerMover.MoveTowards(location);
+                        magnetxSW.Reset();
+                    }
+                    else
+                    {
+                        Vector3 location = new Vector3("-0.02841111, 479.9999, -180.032");
+
+                        if (Core.Me.Distance2D(location) > 1f)
+                        {
+                            Navigator.PlayerMover.MoveTowards(location);
+                        }
+                        else MovementManager.MoveStop();
+                    }
+                }
+
+                if (ReceiveMessageHelpers.SkillsdeterminationOverStatus && (bool)GameObjectManager.GetObjectsOfType<BattleCharacter>()?.Where(obj => obj.NpcId == 10287).Any() || overStatusSW.IsRunning)
+                {
+
+                    if (ReceiveMessageHelpers.SkillsdeterminationOverStatus && !overStatusSW.IsRunning)
+                    {
+                        overStatusSW.Start();
+                        ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
+
+                        AvoidanceManager.RemoveAllAvoids(i => true);
+
+                        AvoidanceManager.AddAvoid(AvoidNull);
+
+                        AvoidanceManager.Pulse();
+
+                        CapabilityManager.Clear();
+
+                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 10000, "黑洞自动拉线");
+
+                        sidestepPlugin.Enabled = false;
+
                     }
 
-                    else MovementManager.MoveStop();
+                    if (overStatusSW.ElapsedMilliseconds < 3000)
+                    {
+                        if (ActionManager.IsSprintReady)
+                        {
+                            ActionManager.Sprint();
+                        }
+                        MagnetxMoved = false;
 
-                    await Coroutine.Sleep(2000);
+                        var location = new Vector3("0.02946682, 480, -179.7964");
 
-                    await MovementHelpers.Spread(4500, 15);
+                        if (Core.Me.Distance2D(location) > 0.5f)
+                        {
+                            Navigator.PlayerMover.MoveTowards(location);
+                        }
 
-                    ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
+                        else MovementManager.MoveStop();
+                    }
+                    else
+                    {
+                        if (overStatusSW.ElapsedMilliseconds > 6000 && !AvoidanceManager.IsRunningOutOfAvoid)
+                        {
+                            overStatusSW.Reset();
+                            CapabilityManager.Clear();
+                            sidestepPlugin.Enabled = true;                            
+                        }
+                        else
+                        {
+                            Vector3 ct = new Vector3("0.05105399, 480, -179.9926");
+
+                            Vector3 tr = new Vector3("19.48978, 479.9998, -199.5");
+
+                            Vector3 tl = new Vector3("-19.49998, 479.9998, -199.499");
+
+                            Vector3 lr = new Vector3("19.4835, 479.9999, -160.5016");
+
+                            Vector3 ll = new Vector3(" -19.47507, 479.9998, -160.5331");
+
+                            Dictionary<BattleCharacter, int> ptyinreg = new Dictionary<BattleCharacter, int>();
+
+                            foreach (var ptym in PartyManager.AllMembers.Select(p => p.BattleCharacter).Where(p => !p.IsMe))
+                            {
+                                if ((ptym.X > ct.X) && (ptym.X < tr.X) && (ptym.Z < ct.Z) && (ptym.Z > tr.Z))
+                                {
+                                    ptyinreg.Add(ptym, 1);
+                                    continue;
+                                }
+
+                                if ((ptym.X < ct.X) && (ptym.X > tl.X) && (ptym.Z < ct.Z) && (ptym.Z > tl.Z))
+                                {
+                                    ptyinreg.Add(ptym, 2);
+                                    continue;
+                                }
+
+                                if ((ptym.X > ct.X) && (ptym.X < lr.X) && (ptym.Z > ct.Z) && (ptym.Z < lr.Z))
+                                {
+                                    ptyinreg.Add(ptym, 3);
+                                    continue;
+                                }
+                                if ((ptym.X < ct.X) && (ptym.X > ll.X) && (ptym.Z > ct.Z) && (ptym.Z < ll.Z))
+                                {
+                                    ptyinreg.Add(ptym, 4);
+                                    continue;
+                                }
+                            }
+                            List<int> pcr = new List<int>() { 1,2,3,4 };
+
+                            switch (pcr.FirstOrDefault(p => !ptyinreg.Any(pt => pt.Value == p)))
+                            {
+                                case 1:
+                                    if (Core.Me.Distance2D(tr) > 3f)
+                                    {
+                                        Navigator.PlayerMover.MoveTowards(tr);
+                                    }
+                                    else MovementManager.MoveStop();
+                                    break;
+                                case 2:
+                                    if (Core.Me.Distance2D(tl) > 3f)
+                                    {
+                                        Navigator.PlayerMover.MoveTowards(tl);
+                                    }
+                                    else MovementManager.MoveStop();
+                                    break;
+                                case 3:
+                                    if (Core.Me.Distance2D(lr) > 3f)
+                                    {
+                                        Navigator.PlayerMover.MoveTowards(lr);
+                                    }
+                                    else MovementManager.MoveStop();
+                                    break;
+                                case 4:
+                                    if (Core.Me.Distance2D(ll) > 3f)
+                                    {
+                                        Navigator.PlayerMover.MoveTowards(ll);
+                                    }
+                                    else MovementManager.MoveStop();
+                                    break;
+                                default:
+
+                                    break;
+
+                            }
+
+
+
+
+                            //if (ftg.Distance2D() < 3f && !MagnetxMoved)
+                            //{
+                            //    MagnetxMoved = true;
+                            //}
+                            //if (MovementHelpers.GetClosestAlly.Distance2D() > 5f && MagnetxMoved)
+                            //{
+                            //    await MovementHelpers.Spread(3000, 20f);
+                            //}
+
+                        }
+                    }
                 }
             }
 
@@ -249,11 +426,6 @@ namespace Trust.Dungeons
 
                 AvoidanceManager.RemoveAllAvoids(i => true);
 
-                //foreach (var avoid in AvoidanceManager.AvoidInfos)
-                //{
-                //    AvoidanceManager.RemoveAvoid(avoid);
-                //}
-                //if (!(bool)AvoidanceManager.Avoids?.Any(r => !r.AvoidInfo.CanRun))
                 AvoidanceManager.AddAvoid(AvoidNull);
 
                 AvoidanceManager.Pulse();
@@ -549,18 +721,6 @@ namespace Trust.Dungeons
             }
 
             // Avoid Claw Game in final zone only if in combat, otherwise frequent stucks
-            if (WorldManager.SubZoneId == 4133)
-            {
-                if (!Core.Me.InCombat)
-                {
-                    sidestepPlugin.Enabled = false;
-                }
-                else
-                {
-                    sidestepPlugin.Enabled = true;
-                }
-
-            }
 
             return false;
         }

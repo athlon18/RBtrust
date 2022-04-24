@@ -113,14 +113,14 @@ namespace ff14bot.NeoProfiles.Tags
 
                     await _rest.ExecuteCoroutine(context);
                 }
-                else
-                {
-                    if (await CommonTasks.MoveAndStop(mt, 3, true))
-                    {
-                        //Logging.Write(Colors.Yellow, $@" 自动躲闪开启 {Core.Player.Distance(DistanceXYZ)} >>>>>> >**>");
-                        await Coroutine.Wait(1000, () => MovementManager.IsMoving);
-                    }
-                }
+                //else
+                //{
+                //    if (await CommonTasks.MoveAndStop(mt, 3, true))
+                //    {
+                //        //Logging.Write(Colors.Yellow, $@" 自动躲闪开启 {Core.Player.Distance(DistanceXYZ)} >>>>>> >**>");
+                //        await Coroutine.Wait(1000, () => MovementManager.IsMoving);
+                //    }
+                //}
 
   
 
