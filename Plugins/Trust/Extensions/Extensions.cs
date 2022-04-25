@@ -7,6 +7,7 @@ using ff14bot.Navigation;
 using ff14bot.Objects;
 using ff14bot.AClasses;
 using ff14bot.Interfaces;
+using ff14bot.Enums;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -22,6 +23,95 @@ namespace Trust.Extensions
     /// </summary>
     internal static class Extensions
     {
+        /* public enum TrustNPC : uint
+        {
+          
+            // Yshtola = 729,
+            Urianger = 1492,
+            Alphinaud = 4130, 
+            Alisaie = 5239,
+            Yshtola = 8378,
+            Ryne = 8889,
+            Minfilia = 8917,
+            Lyna = 8919,
+            AlphinaudAvatar = 11264, 
+            AlisaieAvatar = 11265, 
+            UriangerAvatar = 11267,
+            YshtolaAvatar = 11268, 
+            RyneAvatar = 11269, 
+            EstinienAvatar = 11270,
+            Venat = 10586, 
+            VenatPhantom = 10587,
+            EmetSelch = 10898, 
+            Hythlodaeus = 10899,
+            Thancred = 713,
+            CrystalExarch = 8650,
+            ThancredsAvatar = 11266,
+            GrahaTiasAvatar = 11271,
+            GrahaTia = 9363,
+        }; */
+
+        private static HashSet<ClassJobType> Tanks = new HashSet<ClassJobType>()
+        {
+            ClassJobType.Gladiator,
+            ClassJobType.Marauder,
+            ClassJobType.Paladin,
+            ClassJobType.Gunbreaker,
+            ClassJobType.Warrior,
+            ClassJobType.DarkKnight,
+        };
+
+        private static HashSet<ClassJobType> DPS = new HashSet<ClassJobType>()
+        {
+
+            ClassJobType.Lancer,		
+            ClassJobType.Archer,
+            ClassJobType.Thaumaturge,
+            ClassJobType.Pugilist,
+            ClassJobType.Monk,		
+            ClassJobType.Dragoon,
+            ClassJobType.Bard,	
+            ClassJobType.BlackMage,
+            ClassJobType.Arcanist,
+            ClassJobType.Summoner,
+            ClassJobType.Rogue,
+            ClassJobType.Ninja,
+            ClassJobType.Machinist,
+            ClassJobType.Samurai,	
+            ClassJobType.RedMage,
+            ClassJobType.Dancer,
+            ClassJobType.Reaper,
+
+        };
+
+        private static HashSet<ClassJobType> Healers = new HashSet<ClassJobType>()
+        {
+
+           ClassJobType.Sage,
+           ClassJobType.Astrologian,
+           ClassJobType.WhiteMage,
+           ClassJobType.Scholar,
+           ClassJobType.Conjurer,
+
+        };
+
+        public static bool IsTank(this BattleCharacter bc)
+        {
+            return Tanks.Contains(bc.CurrentJob) ? true : false;
+        }
+
+        public static bool IsDPS(this BattleCharacter bc)
+        {
+            return DPS.Contains(bc.CurrentJob) ? true : false;
+        }
+
+        public static bool IsHealer(this BattleCharacter bc)
+        {
+            return Healers.Contains(bc.CurrentJob) ? true : false;
+        }
+            
+
+
         /// <summary>
         /// Checks if any nearby <see cref="BattleCharacter"/> is casting any spell ID in this collection.
         /// </summary>
@@ -32,6 +122,31 @@ namespace Trust.Extensions
             return GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
                     .Any(obj => spellCastIds.Contains(obj.CastingSpellId) && obj.Distance() < 50);
         }
+
+         public static bool IsCastingtwo(this HashSet<uint> spellCastIds)
+        {
+            var actids = GameObjectManager.GetObjectsOfType<BattleCharacter>()
+               ?.Where(obj => obj.IsCasting &&  !(bool)PartyManager.AllMembers?.Any(p => p.ObjectId == obj.ObjectId));
+
+            if ((bool)actids?.Any())
+            {
+                foreach (var actid in actids)
+                {
+                    Logging.Write(Colors.Yellow, $@" IsCastingtwo 判断显示在使用的 actid ： {actid.CastingSpellId} {actid.SpellCastInfo.IsCasting} {actid.SpellCastInfo.SpellData.LocalizedName} {spellCastIds.Contains(actid.CastingSpellId)}");
+
+                    return spellCastIds.Contains(actid.CastingSpellId) && actid.SpellCastInfo.IsCasting;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsFw(this HashSet<uint> bossid)
+        {
+            return (bool)GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)?
+                    .Any(obj => bossid.Contains(obj.NpcId) && obj.CurrentHealthPercent < 1 && obj.Distance() < 50);
+        }
+
 
         /// <summary>
         /// Follows the specified <see cref="BattleCharacter"/>.
