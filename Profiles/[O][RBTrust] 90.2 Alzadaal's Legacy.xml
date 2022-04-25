@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+]>
+<Profile>
+  <Name>[O][RBTrust] 90.2 Alzadaal's Legacy</Name>
+  <Order>
+    <CheckPlugins/>
+
+    <While Condition="True">
+      <WaitForLoading/>
+      <If Condition="not IsOnMap(1050)">
+
+        <EquipRecommended/>
+        <JoinSupportDuty DutyId="844"/>
+        
+      </If>
+
+      <If Condition="IsOnMap(1050)">
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+
+        <If Condition="ObjectExistsWithId(2000700) and GameObjectManager.GetObjectByNPCId(2000700).IsTargetable">
+          <!-- Shortcut -->
+          <UseTransport NpcId="2000700" XYZ="-150.4448, 304.5, 90.68836"/>
+        </If>
+
+        <If Condition="IsOnSubMap(4161)">
+          <MoveTo XYZ="124.0163, 303, -71.33109" Distance="0.5"/>  
+        </If>
+
+        <If Condition="IsOnSubMap(4158)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+          <Grind GrindRef="Ambujam" PostCombatDelay="2.0" While="ObjectExistsWithId(11241)"/>
+          <MoveTo XYZ="124.0726, 303.4002, -123.8607" Distance="0.5"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <!-- Take Portal -->
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+          <MoveTo XYZ="123.9738, 305.6002, -145.2243"/>
+          <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(2012779).IsTargetable"/>
+          <UseObject NpcId="2012779" XYZ="123.9795, 305.6, -149.9784" Condition="WorldManager.SubZoneId == 4161"/>
+          <WaitForLoading/>
+        </If>
+
+        <If Condition="IsOnSubMap(4162)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+          <MoveTo XYZ="57.69048, 0.0003038645, 110.795"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <MoveTo XYZ="-11.02436, 2.646446, -21.00627"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <MoveTo XYZ="0.06374817, -7.145303, -141.0012" Distance="0.5"/>
+        </If>
+
+        <If Condition="IsOnSubMap(4159)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+          <MoveTo XYZ="-0.05154048, -16.00106, -193.1886"/>
+          <Grind GrindRef="Armored Chariot" PostCombatDelay="2.0" While="ObjectExistsWithId(11239)"/>
+          <MoveTo XYZ="-0.05154048, -16.00106, -193.1886"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <!-- Manual Transition -->
+          <MoveTo XYZ="-0.1881048, -18.54502, -243.2915"/>
+          <While Condition="IsOnSubMap(4162)">
+            <RunCode Name="Transition"/>
+          </While>
+        </If>
+
+        <If Condition="IsOnSubMap(4163)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+          <MoveTo XYZ="-26.74413, -350.1011, -23.45172"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <MoveTo XYZ="-34.981, -350, 9.557016" />
+        </If>
+
+        <If Condition="IsOnSubMap(4166)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+          <MoveTo XYZ="114.5225, -350.0501, 6.586664"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          <MoveTo XYZ="110.0813, -350, -44.27398" Distance="0.5"/>
+        </If>
+
+        <If Condition="IsOnSubMap(4160)">
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+          <MoveTo XYZ="110, -350, -74" Distance="0.5"/>
+          <Grind GrindRef="Kapikulu" PostCombatDelay="2.0" While="ObjectExistsWithId(11238)"/>
+          <MoveTo XYZ="110, -350, -74" Distance="0.5"/>
+          <LLOpenChest/>
+          <EquipRecommended/>
+          
+        </If>
+        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+        <LLLeaveDuty/>
+      </If>
+    </While>
+  </Order>
+  <GrindAreas>
+    <GrindArea Name="Ambujam">
+      <Hotspots>
+        <Hotspot XYZ="123.5224, 303, -83.47326" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="11241"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Armored Chariot">
+      <Hotspots>
+        <Hotspot XYZ="0, -16.00106, -190.3089" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="11239"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="Kapikulu">
+      <Hotspots>
+        <Hotspot XYZ="110, -350, -74" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="11238"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+  </GrindAreas>
+  <CodeChunks>
+    <CodeChunk Name="Transition">
+      <![CDATA[
+            Core.Me.SetFacing(3.114886f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(2000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+  </CodeChunks>
+</Profile>
