@@ -23,7 +23,7 @@ namespace ff14bot.NeoProfiles.Tags
                 // Plugin is installed and loaded correctly.  Force enable it so the user doesn't have to.
                 trustPlugin.Enabled = true;
 
-                string usabilityWarning = "Melee classes may have difficulty with some bosses.";
+                string usabilityWarning = "Certain jobs may have difficulty with some bosses.";
 #if RB_CN
                 usabilityWarning = "近战如果打不到BOSS,另一个DPS带琳,添加吃食物,在trust设置里设置食物";
 #endif

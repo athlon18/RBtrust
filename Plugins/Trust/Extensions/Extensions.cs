@@ -1,4 +1,5 @@
 ﻿using Buddy.Coroutines;
+using Clio.Utilities;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
@@ -126,7 +127,7 @@ namespace Trust.Extensions
          public static bool IsCastingtwo(this HashSet<uint> spellCastIds)
         {
             var actids = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-               ?.Where(obj => obj.IsCasting &&  !(bool)PartyManager.AllMembers?.Any(p => p.ObjectId == obj.ObjectId));
+               ?.Where(obj => obj.IsCasting && !(bool)PartyManager.AllMembers?.Any(p => p.ObjectId == obj.ObjectId));
 
             if ((bool)actids?.Any())
             {
@@ -148,6 +149,10 @@ namespace Trust.Extensions
         }
 
 
+
+        private static Stopwatch MoveStopSw = new Stopwatch();
+        private static Vector3 MoveStopDc = new Vector3();
+
         /// <summary>
         /// Follows the specified <see cref="BattleCharacter"/>.
         /// </summary>
@@ -160,43 +165,40 @@ namespace Trust.Extensions
         {
             
 
-            if (bc == null)
+           if (bc == null)
             {
                 return true;
             }
 
-            float curDistance = Core.Me.Location.Distance(bc.Location);
+            float curDistance = Core.Me.Distance2D(bc);
 
             if (curDistance < followDistance)
             {
-                //await StopMoving();
-                Navigator.Stop();
                 return true;
             }
 
+            MoveStopSw.Reset();
+
             while (!Core.Me.IsDead && Core.Me.InCombat)
             {
-                curDistance = Core.Me.Location.Distance(bc.Location);
-
+                curDistance = Core.Me.Distance2D(bc);
                 if (curDistance < followDistance)
                 {
-                   break;
+#if RB_CN
+                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance2D(bc.Location)}]");
+#else
+                    Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance2D: {curDistance}]");
+#endif
+                    break;
                 }
-
                 if (Core.Me.IsDead)
                 {
                     return false;
                 }
-
-                if (Core.Me.IsCasting)
-                {
-                    ActionManager.StopCasting();
-                }
-#if RB_CN
-                Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
-#else
-                Logging.Write(Colors.Aquamarine, $"Following {bc.Name} [Distance: {curDistance}]");
-#endif
+                //if (Core.Me.IsCasting)
+                //{
+                //    ActionManager.StopCasting();
+                //}
                 if (useMesh)
                 {
                     await CommonTasks.MoveTo(bc.Location);
@@ -204,25 +206,38 @@ namespace Trust.Extensions
                 else
                 {
                     Navigator.PlayerMover.MoveTowards(bc.Location);
+                    await Coroutine.Yield();
                 }
 
-                await Coroutine.Yield();
+                curDistance = Core.Me.Distance2D(bc);
+
+                if (curDistance < followDistance + 0.5f)
+                {
+                    MoveStopDc = bc.Location;
+
+                    if (await Coroutine.Wait(100, () => bc.Distance2D() < followDistance || bc.Distance2D(MoveStopDc) > 0))
+                    {
+                        if (bc.Distance2D(MoveStopDc) > 0)
+                        {
+                            continue;
+                        }
+                        Navigator.PlayerMover.MoveStop();
+                    }
+                }
                 await Coroutine.Sleep(msWait);
             }
 
-            return await StopMoving();
+            //return await StopMoving();
+            return true;
         }
 
         public static async Task<bool> Follow2(this BattleCharacter bc, Stopwatch sw, double TimeToFollow = 3000, float followDistance = 0.3f, int msWait = 0, bool useMesh = false)
         {
-
-            float curDistance = Core.Me.Location.Distance(bc.Location);
-
+            float curDistance = Core.Me.Location.Distance2D(bc.Location);
             if (bc == null)
             {
                 return true;
             }
-
             if (!sw.IsRunning)
             {
                 sw.Restart();
@@ -230,35 +245,37 @@ namespace Trust.Extensions
 
             if (!Core.Me.IsDead && Core.Me.InCombat && (sw.ElapsedMilliseconds <= TimeToFollow))
             {
-                            
+
                 if (curDistance < followDistance)
                 {
-                   //await StopMoving();
-                   Navigator.Stop();
-                   return true;
+                    Navigator.Stop();
                 }
-                               
+
                 else if (useMesh)
                 {
-                    if (Core.Me.IsCasting)
-                    {
-                        ActionManager.StopCasting();
-                    }
-
                     await CommonTasks.MoveTo(bc.Location);
                 }
                 else
                 {
-                    if (Core.Me.IsCasting)
-                    {
-                        ActionManager.StopCasting();
-                    }
-
                     Navigator.PlayerMover.MoveTowards(bc.Location);
-                }                              
+                    await Coroutine.Sleep(msWait);
+                }
+                curDistance = Core.Me.Distance2D(bc);
 
-                await Coroutine.Sleep(msWait);
+                if (curDistance < 1f)
+                {
+                    MoveStopDc = bc.Location;
 
+                    if (await Coroutine.Wait(100, () => bc.Distance2D() < followDistance || bc.Distance2D(MoveStopDc) > 0))
+                    {
+                        if (bc.Distance2D(MoveStopDc) > 0)
+                        {
+                            return false;
+                        }
+                        Navigator.PlayerMover.MoveStop();
+                    }
+                }
+               
 #if RB_CN
                 Logging.Write(Colors.Aquamarine, $"跟随 队友 {bc.Name} [距离: {Core.Me.Distance(bc.Location)}]");
 #else
