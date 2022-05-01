@@ -100,6 +100,12 @@
         /// Lv. 90.1: The Dead Ends
         /// </summary>
         TheDeadEnds = 973,
+
+        /// <summary>
+        /// Lv. 90.2: Alzadaal's Legacy
+        /// </summary>
+        AlzadaalsLegacy = 1050,
+
 #pragma warning restore SA1629 // Documentation text should end with a period
     }
 }
