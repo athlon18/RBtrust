@@ -44,6 +44,12 @@
             <UseObject NpcId="2011745" XYZ="400, 0.1000001, -177.5" Radius="10" UseTimes="1" />
             <!--Control Terminal-->
           </If>
+          <MoveTo XYZ="399.9814, 0.001791358, -177.6551"/>
+          <WaitTimer WaitTime="12"/>
+          <Grind GrindRef="ElevatorWave1" PostCombatDelay="12.0" While="ObjectExistsWithId(10878) or ObjectExistsWithId(10879)"/>
+          <Grind GrindRef="ElevatorWave2" PostCombatDelay="12.0" While="ObjectExistsWithId(10881) or ObjectExistsWithId(10880)"/>
+          <Grind GrindRef="ElevatorWave3" PostCombatDelay="12.0" While="ObjectExistsWithId(10882) or ObjectExistsWithId(10883)"/>
+                    
           <!-- Post Object Movement to Next Area -->
           <MoveTo XYZ="400.1074, 0, -155.7414"/>
           <While Condition="IsOnSubMap(4129)">
@@ -71,15 +77,17 @@
           </While>
         </If>
 
-        <If Condition="IsOnSubMap(4132)">
+        <While Condition="IsOnSubMap(4132)">
           <If Condition="GameObjectManager.GetObjectByNPCId(2011746).IsVisible">
             <UseObject NpcId="2011746" XYZ="0, 499.9999, 1.192093E-07" Radius="10" UseTimes="1" />
+            <WaitTimer WaitTime="15"/>
             <!--Control Terminal-->
           </If>
-          <MoveTo XYZ="-0.002707131, 493, -61.90952"/>
-        </If>
+           <RunCode Name="WalkOffPlatform"/>
+        </While>
 
         <If Condition="IsOnSubMap(4133)">
+          <MoveTo XYZ="-0.002707131, 493, -61.90952" Distance="0.5"/>
           <LootTreasure/>
           <EquipRecommended/>
           <MoveTo XYZ="-42.88587, 484, -115.8765" Distance="0.5"/>
@@ -133,6 +141,39 @@
       <MinLevel/>
       <MaxLevel/>
     </GrindArea>
+    <GrindArea Name="ElevatorWave1">
+      <Hotspots>
+        <Hotspot XYZ="399.9814, 0.001791358, -177.6551" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10878" Weight="2"/>
+        <TargetMob Id="10879" Weight="1"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ElevatorWave2">
+      <Hotspots>
+        <Hotspot XYZ="399.9814, 0.001791358, -177.6551" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10880" Weight="2"/>
+        <TargetMob Id="10881" Weight="1"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="ElevatorWave3">
+      <Hotspots>
+        <Hotspot XYZ="399.9814, 0.001791358, -177.6551" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10882" Weight="2"/>
+        <TargetMob Id="10883" Weight="1"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
   </GrindAreas>
   <CodeChunks>
     <CodeChunk Name="Transition1">
@@ -156,6 +197,14 @@
             Core.Me.SetFacing(3.154251f);
             MovementManager.MoveForwardStart();
             await Coroutine.Sleep(2000);
+            Navigator.PlayerMover.MoveStop();
+            ]]>
+    </CodeChunk>
+    <CodeChunk Name="WalkOffPlatform">
+      <![CDATA[
+            Core.Me.SetFacing(3.143022f);
+            MovementManager.MoveForwardStart();
+            await Coroutine.Sleep(5000);
             Navigator.PlayerMover.MoveStop();
             ]]>
     </CodeChunk>
