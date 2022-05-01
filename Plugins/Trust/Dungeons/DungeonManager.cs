@@ -40,6 +40,7 @@ namespace Trust.Dungeons
                 { ZoneId.TheAitiascope, new TheAitiascope() },
                 { ZoneId.TheMothercrystal, new TheMothercrystal() },
                 { ZoneId.TheDeadEnds, new TheDeadEnds() },
+                { ZoneId.AlzadaalsLegacy, new AlzadaalsLegacy() },
             };
         }
 
