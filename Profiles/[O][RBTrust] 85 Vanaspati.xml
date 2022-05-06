@@ -21,8 +21,11 @@
           <!-- Shortcut available -->
           <UseTransport NpcId="2000700" XYZ="-186.2605, 1.365554, 373.3409"/>
         </If>
-
+        
         <If Condition="IsOnSubMap(4015)">
+          <MoveTo XYZ="-205.6921, 15.48361, 271.3739" Distance="0.5"/>
+          <WaitWhile Condition="GetInstanceTodo(0) == 0 and not ObjectExistsWithId(10366)"/>
+          <Grind GrindRef="TerminusPursuer" PostCombatDelay="4.0" While="ObjectExistsWithId(10366)"/>
           <MoveTo XYZ="-374.9516, 14.5, 102.6363" Distance="0.5"/>
           <WaitWhile Condition="not ObjectExistsWithId(10717)"/>
         </If>
@@ -41,6 +44,9 @@
         </If>
 
         <If Condition="IsOnSubMap(4017)">
+          <MoveTo XYZ="-329.899, 41.00037, -146.9926" Distance="0.5"/>
+          <WaitWhile Condition="GetInstanceTodo(2) == 0 and not ObjectExistsWithId(11192)"/>
+          <Grind GrindRef="TerminusHorror" PostCombatDelay="2.0" While="ObjectExistsWithId(10367) or ObjectExistsWithId(11192)"/>
           <MoveTo XYZ="-337.9989, 42.05722, -191.0324"/>
         </If>
 
@@ -88,6 +94,27 @@
     </While>
   </Order>
   <GrindAreas>
+    <GrindArea Name="TerminusPursuer">
+      <Hotspots>
+        <Hotspot XYZ="-205.6921, 15.48361, 271.3739" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10366"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
+    <GrindArea Name="TerminusHorror">
+      <Hotspots>
+        <Hotspot XYZ="-329.899, 41.00037, -146.9926" Radius="250"/>
+      </Hotspots>
+      <TargetMobs>
+        <TargetMob Id="10367" Weight="2"/>
+        <TargetMob Id="11192" Weight="1"/>
+      </TargetMobs>
+      <MinLevel/>
+      <MaxLevel/>
+    </GrindArea>
     <GrindArea Name="TerminusSnatcher">
       <Hotspots>
         <Hotspot XYZ="-375, 14.5, 72" Radius="250"/>
