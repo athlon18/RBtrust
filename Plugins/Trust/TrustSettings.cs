@@ -15,6 +15,8 @@ namespace Trust
 
         private readonly Dictionary<uint, string> drugDict;
 
+        private readonly ListView listView;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TrustSettings"/> class.
         /// </summary>
@@ -66,7 +68,7 @@ namespace Trust
 
         private void DrugDropBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Instance.DrugId = (uint)foodDropBox.SelectedValue;
+            Settings.Instance.DrugId = (uint)drugDropBox.SelectedValue;
             Settings.Instance.Save();
         }
 
@@ -88,5 +90,11 @@ namespace Trust
             drugDropBox.DisplayMember = "Value";
             drugDropBox.ValueMember = "Key";
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
