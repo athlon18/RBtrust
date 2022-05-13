@@ -1,4 +1,5 @@
-﻿using ff14bot.Helpers;
+﻿using ff14bot.Enums;
+using ff14bot.Helpers;
 using System.Configuration;
 using System.IO;
 
@@ -30,5 +31,7 @@ namespace Trust
         [Setting]
         public uint FoodId { get; set; }
         public uint DrugId { get; set; }
+        public ClassJobType ClassId { get; set; }
+        public string DungeonName { get; set; }
     }
 }
