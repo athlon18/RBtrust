@@ -194,10 +194,9 @@ namespace Trust
             string rootPath = Directory.GetCurrentDirectory() + "/Plugins/RBtrust/Profiles/";
             DirectoryInfo root = new DirectoryInfo(rootPath);
             FileInfo[] files = root.GetFiles();
-         
             foreach (var item in files)
             {
-                dungeonDict[item.ToString()] = item.ToString();           
+                dungeonDict[item.ToString()] = item.ToString();
             }
 
             dungeonDropBox.DataSource = new BindingSource(dungeonDict, null);
