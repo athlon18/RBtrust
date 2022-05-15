@@ -131,10 +131,13 @@ namespace Trust
             }
             if (classType != null)
             {
-                byte[] buffer = Encoding.GetEncoding("GBK").GetBytes(GearsetManager.GearSets.Where(i => i.InUse).First(
-                    gs => gs.Class == classType).Name);
-                var keyword = Encoding.UTF8.GetString(buffer);
-                selectedClass.Text = keyword;
+                var gearSets = GearsetManager.GearSets.Where(i => i.InUse).First(gs => gs.Class == classType);
+                if (gearSets.Name != null)
+                {
+                    byte[] buffer = Encoding.GetEncoding("GBK").GetBytes(gearSets.Name);
+                    var keyword = Encoding.UTF8.GetString(buffer);
+                    selectedClass.Text = keyword;
+                }
             }
         }
 
