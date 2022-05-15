@@ -125,18 +125,22 @@ namespace Trust
         {
             var name = Settings.Instance.DungeonName;
             var classType = Settings.Instance.ClassId;
-            if (name != null)
+            if (name != null && name != string.Empty)
             {
                 selectedDungeon.Text = name;
             }
-            if (classType != null)
+
+            if (classType.ToString() != null && classType.ToString() != string.Empty)
             {
                 var gearSets = GearsetManager.GearSets.Where(i => i.InUse);
                 if (gearSets != null)
                 {
-                    byte[] buffer = Encoding.GetEncoding("GBK").GetBytes(gearSets.First(gs => gs.Class == classType).Name);
-                    var keyword = Encoding.UTF8.GetString(buffer);
-                    selectedClass.Text = keyword;
+                    if (gearSets.Any(gs => gs.Class == classType))
+                    {
+                        byte[] buffer = Encoding.GetEncoding("GBK").GetBytes(gearSets.First(gs => gs.Class == classType).Name);
+                        var keyword = Encoding.UTF8.GetString(buffer);
+                        selectedClass.Text = keyword;
+                    }
                 }
             }
         }
