@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Media;
+using Trust;
 
 namespace ff14bot.NeoProfiles.Tags
 {
@@ -25,8 +26,10 @@ namespace ff14bot.NeoProfiles.Tags
     [XmlElement("Extract")]
     public class ExtractTag : AbstractTaskTag
     {
+        /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
+           var classId = Trust.Settings.Instance.ClassId;
             Logging.Write(Colors.Aquamarine, "开始[自动精炼] StartAutoExtract ");
             await Inventory.ExtractFromAllGear();
             return false;

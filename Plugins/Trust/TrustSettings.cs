@@ -1,4 +1,8 @@
-﻿using ff14bot;
+﻿// <copyright file="TrustSettings.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using ff14bot;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using System;
@@ -27,8 +31,6 @@ namespace Trust
 
         private readonly Dictionary<string, string> dungeonDict;
 
-        private readonly ListView listView;
-
         private string newProfilePath;
 
         /// <summary>
@@ -51,7 +53,6 @@ namespace Trust
             {
                 foodDropBox.SelectedValue = Settings.Instance.FoodId;
             }
-
 
 
             if (InventoryManager.FilledSlots.ContainsDrugItem(Settings.Instance.DrugId))
@@ -77,7 +78,8 @@ namespace Trust
 
             foreach (BagSlot item in InventoryManager.FilledSlots.GetFoodItems())
             {
-                foodDict[item.TrueItemId] = "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : string.Empty);
+                foodDict[item.TrueItemId] =
+                    "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : string.Empty);
             }
 
             foodDropBox.DataSource = new BindingSource(foodDict, null);
@@ -102,7 +104,8 @@ namespace Trust
 
             foreach (var item in InventoryManager.FilledSlots.GetDrugItems())
             {
-                drugDict[item.TrueItemId] = "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : string.Empty);
+                drugDict[item.TrueItemId] =
+                    "(" + item.Count + ")" + item.Name + (item.IsHighQuality ? " HQ" : string.Empty);
             }
 
             drugDropBox.DataSource = new BindingSource(drugDict, null);
@@ -112,13 +115,11 @@ namespace Trust
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void TrustSettings_Load(object sender, EventArgs e)
         {
             load();
-
         }
 
         private void load()
@@ -137,7 +138,8 @@ namespace Trust
                 {
                     if (gearSets.Any(gs => gs.Class == classType))
                     {
-                        byte[] buffer = Encoding.GetEncoding("GBK").GetBytes(gearSets.First(gs => gs.Class == classType).Name);
+                        byte[] buffer = Encoding.GetEncoding("GBK")
+                            .GetBytes(gearSets.First(gs => gs.Class == classType).Name);
                         var keyword = Encoding.UTF8.GetString(buffer);
                         selectedClass.Text = keyword;
                     }
@@ -146,12 +148,13 @@ namespace Trust
         }
 
 
-        private void btnStartTrust_Click(object sender, EventArgs e)
+        private void BtnStartTrust_Click(object sender, EventArgs e)
         {
             var name = Settings.Instance.DungeonName;
-            if (name == null) return;
+            if (name == null) { return; }
+
             var ProfileName = "/Plugins/RBtrust/Profiles/" + name;
-            newProfilePath = Slashify(ProfileName);
+            this.newProfilePath = this.Slashify(ProfileName);
             output.Text = newProfilePath;
             NeoProfileManager.Load(Environment.CurrentDirectory + newProfilePath, true);
             StartBotBase();
@@ -238,19 +241,17 @@ namespace Trust
                     SelectYesno.Yes();
                 }
             }
+
             BotManager.Current.Start();
             TreeRoot.Start();
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
     }
 }
