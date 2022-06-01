@@ -64,6 +64,12 @@ namespace Trust.Dungeons
             16850, 16851, 16852, 17232, 17552,
         };
 
+        private static readonly HashSet<uint> Exorcise = new HashSet<uint>() { 15826, 15827 };
+        private static readonly Vector3 ExorciseStackLoc = new Vector3("79.35034, 0, -81.01664");
+
+        private static readonly HashSet<uint> Pendulum = new HashSet<uint>() { 15833, 15842, 16769, 16777, 16790 };
+        private static readonly Vector3 PendulumDodgeLoc = new Vector3("117.1188,23,-474.0881");
+
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
 
@@ -71,54 +77,45 @@ namespace Trust.Dungeons
         public override async Task<bool> RunAsync()
         {
             // Tesleen, the Forgiven (得到宽恕的泰丝琳)
-            // 15826, 15827                                 :: Exorcise            :: 傩
-            HashSet<uint> exorcise = new HashSet<uint>() { 15826, 15827 };
-            if (exorcise.IsCasting())
+            if (Exorcise.IsCasting())
             {
-                Vector3 location = new Vector3("79.24156, 0, -81.55303");
-
-                if (Core.Me.Distance(location) > 1f && Core.Me.IsCasting)
+                if (Core.Me.Distance(ExorciseStackLoc) > 1f && Core.Me.IsCasting)
                 {
                     ActionManager.StopCasting();
                 }
 
-                while (Core.Me.Distance(location) > 1f)
+                while (Core.Me.Distance(ExorciseStackLoc) > 1f)
                 {
-                    await CommonTasks.MoveTo(location);
+                    await CommonTasks.MoveTo(ExorciseStackLoc);
                     await Coroutine.Yield();
                 }
 
                 Navigator.PlayerMover.MoveStop();
 
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 5000, "Exorcise Avoid");
-                while (sw.ElapsedMilliseconds < 5000)
-                {
-                    await MovementHelpers.GetClosestAlly.Follow(7f);
-                    await Coroutine.Yield();
-                }
-
-                sw.Stop();
+                await Coroutine.Sleep(5000);
+                Stopwatch exorciseTimer = new Stopwatch();
+                exorciseTimer.Restart();
+                AvoidanceManager.AddAvoidLocation(
+                   () => exorciseTimer.IsRunning && exorciseTimer.ElapsedMilliseconds < 7000,
+                   radius: 16.0f,
+                   () => ExorciseStackLoc,
+                   ignoreIfBlocking: false);
             }
 
             // Philia (斐利亚)
-            // 15833, 16777, 16790                          :: Pendulum            :: 钟摆
-            // 15842, 16769                                 :: Taphephobia         :: 恐惧症
-            HashSet<uint> pendulum = new HashSet<uint>() { 15833, 15842, 16769, 16777, 16790 };
-            if (pendulum.IsCasting())
+            // 15833, 16777, 16790 :: Pendulum    :: 钟摆
+            // 15842, 16769        :: Taphephobia :: 恐惧症
+            if (Pendulum.IsCasting())
             {
-                Vector3 location = new Vector3("117.1188,23,-474.0881");
-
-                if (Core.Me.Distance(location) > 1 && Core.Me.IsCasting)
+                if (Core.Me.Distance(PendulumDodgeLoc) > 1 && Core.Me.IsCasting)
                 {
                     ActionManager.StopCasting();
                 }
 
-                while (Core.Me.Distance(location) > 1f)
+                while (Core.Me.Distance(PendulumDodgeLoc) > 1f)
                 {
                     CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "Exorcise Avoid");
-                    await CommonTasks.MoveTo(location);
+                    await CommonTasks.MoveTo(PendulumDodgeLoc);
                     await Coroutine.Yield();
                 }
 
