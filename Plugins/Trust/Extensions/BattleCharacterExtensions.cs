@@ -17,8 +17,8 @@ namespace RBTrust.Plugins.Trust.Extensions
     /// </summary>
     internal static class BattleCharacterExtensions
     {
-        private static readonly Stopwatch MoveStopTimer = default;
-        private static Vector3 moveStopDc = default;
+        private static readonly Stopwatch MoveStopTimer = new Stopwatch();
+        private static Vector3 moveStopDc;
 
         /// <summary>
         /// Determines if <see cref="BattleCharacter"/> is in Tank role.
