@@ -4,10 +4,9 @@ using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-using ff14bot.Objects;
+using RBTrust.Plugins.Trust.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Trust.Data;
 using Trust.Extensions;
@@ -36,50 +35,41 @@ namespace Trust.Dungeons
             8570,  // Iron Chain            :: 锁链
         };
 
+        /// <summary>
+        /// Set of spells to dodge by following closest ally.
+        /// </summary>
+        private static readonly HashSet<uint> SpellsDodgedViaClosest = new HashSet<uint>()
+        {
+            // 15602, 15609                             :: Heretic's Fork
+            // 15814, 16850                             :: Thumbscrew
+            // 15815, 16852                             :: Wooden Horse
+            // 15816, 16851                             :: Gibbet Cage
+            // 15817, 15820                             :: Brazen Bull
+            // 15818                                    :: Executioner's Sword
+            // 15819                                    :: Light Shot
+            // 15822, 15886, 17552                      :: Heretic's Fork
+            // 15834, 15835, 15836, 15837, 15838, 15839 :: Fierce Beating
+            // 15840, 15841                             :: Cat o' Nine Tails
+            // 15843, 16765                             :: Sickly Inferno
+            // 15845, 17232                             :: Into the Light
+            // 15846                                    :: Right Knout
+            // 15847                                    :: Left Knout
+            // 15848, 15849                             :: Aethersup
+            // 16779, 16780, 16781, 16782               :: Land Rune
+            15602, 15609, 15814, 15815, 15816, 15817,
+            15818, 15819, 15820, 15822, 15834, 15835,
+            15836, 15837, 15838, 15839, 15840, 15841,
+            15843, 15845, 15846, 15847, 15848, 15849,
+            15886, 16765, 16779, 16780, 16781, 16782,
+            16850, 16851, 16852, 17232, 17552,
+        };
+
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
 
-        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
-            // Spellcast Filter (法术过滤器) :: Fetters :: 脚镣
-            HashSet<uint> fetters = new HashSet<uint>()
-            {
-                292, 504, 510, 667, 668, 770, 800, 822, 901,
-                930, 990, 1010, 1055, 1153, 1258, 1391, 1399,
-                1460, 1477, 1497, 1614, 1726, 1757, 1849, 1908,
-            };
-            bool chainsUp = GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false)
-                .Where(obj => fetters.Any(r => obj.HasAura(r)))
-                .Count() > 0;
-
-            // 15602, 15609                                 :: Heretic's Fork
-            // 15814, 16850                                 :: Thumbscrew
-            // 15815, 16852                                 :: Wooden Horse
-            // 15816, 16851                                 :: Gibbet Cage
-            // 15817, 15820                                 :: Brazen Bull
-            // 15818                                        :: Executioner's Sword
-            // 15819                                        :: Light Shot
-            // 15822, 15886, 17552                          :: Heretic's Fork
-            // 15834, 15835, 15836, 15837, 15838, 15839     :: Fierce Beating
-            // 15840, 15841                                 :: Cat o' Nine Tails
-            // 15843, 16765                                 :: Sickly Inferno
-            // 15845, 17232                                 :: Into the Light
-            // 15846                                        :: Right Knout
-            // 15847                                        :: Left Knout
-            // 15848, 15849                                 :: Aethersup
-            // 16779, 16780, 16781, 16782                   :: Land Rune
-            HashSet<uint> spells = new HashSet<uint>()
-            {
-                15602, 15609, 15814, 15815, 15816, 15817,
-                15818, 15819, 15820, 15822, 15834, 15835,
-                15836, 15837, 15838, 15839, 15840, 15841,
-                15843, 15845, 15846, 15847, 15848, 15849,
-                15886, 16765, 16779, 16780, 16781, 16782,
-                16850, 16851, 16852, 17232, 17552,
-            };
-
             // Tesleen, the Forgiven (得到宽恕的泰丝琳)
             // 15826, 15827                                 :: Exorcise            :: 傩
             HashSet<uint> exorcise = new HashSet<uint>() { 15826, 15827 };
@@ -99,11 +89,10 @@ namespace Trust.Dungeons
                 }
 
                 Navigator.PlayerMover.MoveStop();
-                //await Coroutine.Sleep(5000);
-                
+
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "Exorcise Avoid");
+                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 5000, "Exorcise Avoid");
                 while (sw.ElapsedMilliseconds < 5000)
                 {
                     await MovementHelpers.GetClosestAlly.Follow(7f);
@@ -128,7 +117,7 @@ namespace Trust.Dungeons
 
                 while (Core.Me.Distance(location) > 1f)
                 {
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "Exorcise Avoid");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "Exorcise Avoid");
                     await CommonTasks.MoveTo(location);
                     await Coroutine.Yield();
                 }
@@ -138,9 +127,9 @@ namespace Trust.Dungeons
             }
 
             // Default (缺省)
-            if (spells.IsCasting())
+            if (SpellsDodgedViaClosest.IsCasting())
             {
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Spells Avoid");
+                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 1500, "Spells Avoid");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 

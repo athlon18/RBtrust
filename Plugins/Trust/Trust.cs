@@ -25,6 +25,7 @@ namespace Trust
 
         /// <inheritdoc/>
         public override string Author => "athlon";
+
 #if RB_CN
         /// <inheritdoc/>
         public override string Name => "亲信战友";

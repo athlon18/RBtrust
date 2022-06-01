@@ -99,7 +99,7 @@
         /// <summary>
         /// Lv. 90.2: Alzadaal's Legacy
         /// </summary>
-         AlzadaalsLegacy = 19,
+        AlzadaalsLegacy = 19,
 
 #pragma warning restore SA1629 // Documentation text should end with a period
     }

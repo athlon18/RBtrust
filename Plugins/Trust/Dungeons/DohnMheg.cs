@@ -5,12 +5,12 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
+using RBTrust.Plugins.Trust.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Trust.Data;
-using Trust.Extensions;
 using Trust.Helpers;
 
 namespace Trust.Dungeons
@@ -29,8 +29,6 @@ namespace Trust.Dungeons
         public override DungeonId DungeonId => DungeonId.DohnMheg;
 
         /// <inheritdoc/>
-        CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
-
         public override async Task<bool> RunAsync()
         {
             PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
@@ -148,7 +146,7 @@ namespace Trust.Dungeons
 
             if (spellCasting)
             {
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
+                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 
@@ -213,7 +211,7 @@ namespace Trust.Dungeons
 
                             while (obj.Location.Distance2D(Core.Me.Location) >= 0.2)
                             {
-                                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "Avoidance In Progress");
+                                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "Avoidance In Progress");
                                 Navigator.PlayerMover.MoveTowards(obj.Location);
                                 await Coroutine.Sleep(50);
                             }

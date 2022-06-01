@@ -21,9 +21,14 @@ namespace Trust.Dungeons
         public abstract DungeonId DungeonId { get; }
 
         /// <summary>
+        /// Gets a handle to signal the combat routine should not use certain features (e.g., prevent CR from moving).
+        /// </summary>
+        protected CapabilityManagerHandle CapabilityHandle { get; } = CapabilityManager.CreateNewHandle();
+
+        /// <summary>
         /// Gets SideStep Plugin reference.
         /// </summary>
-        protected static PluginContainer SidestepPlugin { get; } = PluginHelpers.GetSideStepPlugin();
+        protected PluginContainer SidestepPlugin { get; } = PluginHelpers.GetSideStepPlugin();
 
         /// <summary>
         /// Executes dungeon logic.

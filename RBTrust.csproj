@@ -31,12 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreyMagic, Version=1.0.60.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\GreyMagic.dll</HintPath>
+    <Reference Include="GreyMagic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=260525fa2b0e778a, processorArchitecture=AMD64">
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.492\lib\net461\GreyMagic.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy, Version=1.0.477.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
-      <HintPath>packages\RebornBuddy.Assemblies.1.0.477\lib\net461\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.492.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=AMD64">
+      <HintPath>packages\RebornBuddy.Assemblies.1.0.492\lib\net461\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,10 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Plugins\Trust\Data\ClassJobRoles.cs" />
     <Compile Include="Plugins\Trust\Data\DungeonId.cs" />
+    <Compile Include="Plugins\Trust\Data\PartyMembers.cs" />
     <Compile Include="Plugins\Trust\Data\SubZoneId.cs" />
     <Compile Include="Plugins\Trust\Data\ZoneId.cs" />
     <Compile Include="Plugins\Trust\Dungeons\AbstractDungeon.cs" />
+    <Compile Include="Plugins\Trust\Dungeons\AlzadaalsLegacy.cs" />
     <Compile Include="Plugins\Trust\Dungeons\Amaurot.cs" />
     <Compile Include="Plugins\Trust\Dungeons\AnamnesisAnyder.cs" />
     <Compile Include="Plugins\Trust\Dungeons\DohnMheg.cs" />
@@ -73,12 +76,14 @@
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfBabil.cs" />
     <Compile Include="Plugins\Trust\Dungeons\TheTowerOfZot.cs" />
     <Compile Include="Plugins\Trust\Dungeons\Vanaspati.cs" />
+    <Compile Include="Plugins\Trust\Extensions\BattleCharacterExtensions.cs" />
     <Compile Include="Plugins\Trust\Extensions\Extensions.cs" />
     <Compile Include="Plugins\Trust\Helpers\FoodHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LoadingHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\LocalizationHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\MovementHelpers.cs" />
     <Compile Include="Plugins\Trust\Helpers\PluginHelpers.cs" />
+    <Compile Include="Plugins\Trust\Helpers\ReceiveMessageHelpers.cs" />
     <Compile Include="Plugins\Trust\Settings.cs" />
     <Compile Include="Plugins\Trust\Trust.cs" />
     <Compile Include="Plugins\Trust\TrustSettings.cs">
@@ -91,7 +96,6 @@
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
     <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
-    <Compile Include="Quest Behaviors\CrossZoneLineTag.cs" />
     <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
     <Compile Include="Plugins\Trust\Helpers\InstanceFlags.cs" />
     <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
@@ -130,8 +134,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.376\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.376\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.435\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="packages\StyleCop.Analyzers.Unstable.1.2.0.435\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

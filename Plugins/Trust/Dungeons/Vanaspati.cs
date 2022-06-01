@@ -1,11 +1,11 @@
-﻿using Buddy.Coroutines;
-using Clio.Utilities;
+﻿using Clio.Utilities;
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
 using ff14bot.Pathing.Avoidance;
+using RBTrust.Plugins.Trust.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,109 +28,92 @@ namespace Trust.Dungeons
         /// </summary>
         public new const ZoneId ZoneId = Data.ZoneId.Vanaspati;
 
-        /// <inheritdoc/>
-        public override DungeonId DungeonId => DungeonId.Vanaspati;
-
-        private HashSet<uint> follow = new HashSet<uint>()
+        private readonly HashSet<uint> follow = new HashSet<uint>()
         {
-            25139 ,25140
+            25139, 25140,
         };
 
-        private HashSet<uint> follow1 = new HashSet<uint>()
+        private readonly HashSet<uint> follow1 = new HashSet<uint>()
         {
-            25151,25153
+            25151, 25153,
         };
 
-        private HashSet<uint> follow2 = new HashSet<uint>()
+        private readonly HashSet<uint> follow2 = new HashSet<uint>()
         {
-            25160, 25166
+            25160, 25166,
         };
 
-        private HashSet<uint> magnet = new HashSet<uint>()
+        private readonly HashSet<uint> magnet = new HashSet<uint>()
         {
-            25143 ,25146 ,25148 ,27852
+            25143, 25146, 25148, 27852,
         };
 
-        private HashSet<uint> magnet1 = new HashSet<uint>()
+        private readonly HashSet<uint> magnet1 = new HashSet<uint>()
         {
-            25145
+            25145,
         };
 
-        private HashSet<uint> magnet2 = new HashSet<uint>()
+        private readonly HashSet<uint> magnet2 = new HashSet<uint>()
         {
-            25147
+            25147,
         };
 
-        private HashSet<uint> magnet3 = new HashSet<uint>()
+        private readonly HashSet<uint> magnet3 = new HashSet<uint>()
         {
-           25142 , 25168
+           25142, 25168,
         };
 
-        private HashSet<uint> magnet4 = new HashSet<uint>()
+        private readonly HashSet<uint> magnet4 = new HashSet<uint>()
         {
             25169,
         };
 
-        private HashSet<string> overStr = new HashSet<string>()
+        private readonly HashSet<string> overStr = new HashSet<string>()
         {
-           "地脉失控" , "污秽的"
+           "地脉失控", "污秽的",
         };
 
+        private static readonly AvoidInfo AvoidNull = AvoidanceManager.AddAvoidLocation(() => false, 0, () => new Vector3("0,0,1"));
 
-        private static AvoidInfo AvoidNull = AvoidanceManager.AddAvoidLocation(() => false, 0, () => new Vector3("0,0,1"));
+        private readonly Stopwatch followSW = new Stopwatch();
+        private readonly Stopwatch follow1SW = new Stopwatch();
+        private readonly Stopwatch follow2SW = new Stopwatch();
+        private readonly Stopwatch followxSW = new Stopwatch();
 
-
-        private CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
-        private PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
-        private Stopwatch followSW = new Stopwatch();
-
-        private Stopwatch follow1SW = new Stopwatch();
-
-        private Stopwatch follow2SW = new Stopwatch();
-
-        private Stopwatch followxSW = new Stopwatch();
-
-        private Stopwatch magnetSW = new Stopwatch();
-
-        private Stopwatch magnet1SW = new Stopwatch();
-
-        private Stopwatch magnet2SW = new Stopwatch();
-
-        private Stopwatch magnet3SW = new Stopwatch();
-
-        private Stopwatch magnet3fW = new Stopwatch();
-
-        private bool magnet3SWrun;
+        private readonly Stopwatch magnetSW = new Stopwatch();
+        private readonly Stopwatch magnet1SW = new Stopwatch();
+        private readonly Stopwatch magnet2SW = new Stopwatch();
+        private readonly Stopwatch magnet3SW = new Stopwatch();
+        private readonly Stopwatch magnet3fW = new Stopwatch();
 
         private bool magnet3SWhaifrun;
 
-        private Stopwatch magnet3xSW = new Stopwatch();
+        private readonly Stopwatch magnet3xSW = new Stopwatch();
+        private readonly Stopwatch magnet3xsSW = new Stopwatch();
+        private readonly Stopwatch magnet4SW = new Stopwatch();
+        private readonly Stopwatch magnet4xSW = new Stopwatch();
+        private readonly Stopwatch magnetxSW = new Stopwatch();
 
-        private Stopwatch magnet3xsSW = new Stopwatch();
-
-        private Stopwatch magnet4SW = new Stopwatch();
-
-        private Stopwatch magnet4xSW = new Stopwatch();
-
-        private Stopwatch magnetxSW = new Stopwatch();
-
-        private Stopwatch hastargetSW = new Stopwatch();
-
-        private Stopwatch hastargetxSW = new Stopwatch();
+        private readonly Stopwatch hastargetSW = new Stopwatch();
+        private readonly Stopwatch hastargetxSW = new Stopwatch();
 
         private static DateTime resetTime = DateTime.Now;
 
         private bool Pmbuff;
 
-        private static bool hastarget => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).
-                    Where(r => r.CanAttack && r.IsTargetable).Any();
+        /// <inheritdoc/>
+        public override DungeonId DungeonId => DungeonId.Vanaspati;
+
+        private static bool HasTarget => GameObjectManager.GetObjectsOfType<BattleCharacter>(true, false).
+                    Any(bc => bc.CanAttack && bc.IsTargetable);
+
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
 
             if (WorldManager.SubZoneId != 4012 && WorldManager.SubZoneId != 4013 && WorldManager.SubZoneId != 4014)
             {
-                var target = GameObjectManager.Attackers?.OrderByDescending(e => e.CurrentHealthPercent).FirstOrDefault();
+                BattleCharacter target = GameObjectManager.Attackers?.OrderByDescending(e => e.CurrentHealthPercent).FirstOrDefault();
 
                 if (target != null && Core.Player.CurrentTarget != target)
                 {
@@ -141,13 +124,16 @@ namespace Trust.Dungeons
                         target.Target();
                     }
 
-                    if (!sidestepPlugin.Enabled)
+                    if (!SidestepPlugin.Enabled)
                     {
-                        sidestepPlugin.Enabled = true;
+                        SidestepPlugin.Enabled = true;
                     }
                 }
 
-                if (magnet3SWhaifrun) magnet3SWhaifrun = false;
+                if (magnet3SWhaifrun)
+                {
+                    magnet3SWhaifrun = false;
+                }
 
                 magnet3.Remove(25160);
                 magnet3.Remove(25169);
@@ -158,23 +144,30 @@ namespace Trust.Dungeons
 
             if (Core.Player.HasAura("Temporary Misdirection") || Pmbuff)
             {
-                if (!Pmbuff) Pmbuff = true;
+                if (!Pmbuff)
+                {
+                    Pmbuff = true;
+                }
 
-                sidestepPlugin.Enabled = false;
+                SidestepPlugin.Enabled = false;
 
                 if (!Core.Player.HasAura("Temporary Misdirection") && Pmbuff)
                 {
-                    sidestepPlugin.Enabled = true;
+                    SidestepPlugin.Enabled = true;
                     CapabilityManager.Clear();
                     Pmbuff = false;
                 }
-               
+
             }
 
 
             if (WorldManager.SubZoneId == 4014 && !Core.Player.InCombat)
             {
-                if (magnet3SWhaifrun) magnet3SWhaifrun = false;
+                if (magnet3SWhaifrun)
+                {
+                    magnet3SWhaifrun = false;
+                }
+
                 magnet3.Remove(25160);
                 magnet3.Remove(25169);
                 hastargetxSW.Reset();
@@ -186,33 +179,33 @@ namespace Trust.Dungeons
 
             if (WorldManager.SubZoneId == 4014 && Core.Player.InCombat)
             {
-                if (!hastarget && !hastargetxSW.IsRunning)
+                if (!HasTarget && !hastargetxSW.IsRunning)
                 {
                     hastargetxSW.Restart();
                 }
 
-                if (!hastarget && !hastargetSW.IsRunning)
+                if (!HasTarget && !hastargetSW.IsRunning)
                 {
                     followxSW.Reset();
                     follow2SW.Reset();
                     Navigator.PlayerMover.MoveStop();
                 }
 
-                if (hastarget && hastargetxSW.ElapsedMilliseconds < 3000 && hastargetxSW.IsRunning)
+                if (HasTarget && hastargetxSW.ElapsedMilliseconds < 3000 && hastargetxSW.IsRunning)
                 {
                     hastargetxSW.Reset();
                 }
 
-                if (!hastarget && hastargetxSW.ElapsedMilliseconds > 3000 || hastargetSW.IsRunning)
+                if ((!HasTarget && hastargetxSW.ElapsedMilliseconds > 3000) || hastargetSW.IsRunning)
                 {
                     if (!hastargetSW.IsRunning)
                     {
-                        Logging.Write(Colors.Yellow, $@" 自动躲闪开启 hastarget {hastarget}");
-                        sidestepPlugin.Enabled = false;
+                        Logging.Write(Colors.Yellow, $@" 自动躲闪开启 hastarget {HasTarget}");
+                        SidestepPlugin.Enabled = false;
                         AvoidanceManager.RemoveAllAvoids(i => true);
                         AvoidanceManager.AddAvoid(AvoidNull);
                         AvoidanceManager.Pulse();
-                        CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 30000, "自动跟随");
+                        CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 30000, "自动跟随");
                         hastargetSW.Restart();
                         followxSW.Reset();
                         follow2SW.Reset();
@@ -223,12 +216,12 @@ namespace Trust.Dungeons
                         ActionManager.Sprint();
                     }
 
-                    if (hastarget)
+                    if (HasTarget)
                     {
                         hastargetxSW.Reset();
 
-                        Logging.Write(Colors.Yellow, $@" 自动躲闪开启 hastarget {hastarget}");
-                        sidestepPlugin.Enabled = true;
+                        Logging.Write(Colors.Yellow, $@" 自动躲闪开启 hastarget {HasTarget}");
+                        SidestepPlugin.Enabled = true;
                         CapabilityManager.Clear();
                         hastargetSW.Reset();
                         magnet3.Add(25169);
@@ -247,7 +240,7 @@ namespace Trust.Dungeons
                 if (!followSW.IsRunning)
                 {
                     Logging.Write(Colors.Yellow, $@" 自动跟随队友 followSW {follow.IsCasting()}");
-                    sidestepPlugin.Enabled = false;
+                    SidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => true);
                     AvoidanceManager.AddAvoid(AvoidNull);
                     AvoidanceManager.Pulse();
@@ -255,7 +248,7 @@ namespace Trust.Dungeons
                     CapabilityManager.Clear();
                     followSW.Restart();
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "自动跟随");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 15000, "自动跟随");
                 }
 
 
@@ -263,7 +256,7 @@ namespace Trust.Dungeons
                 {
 
                     Logging.Write(Colors.Yellow, $@" 自动躲闪开启 followSW {followSW.ElapsedMilliseconds}");
-                    sidestepPlugin.Enabled = true;
+                    SidestepPlugin.Enabled = true;
                     CapabilityManager.Clear();
                     followSW.Reset();
 
@@ -280,7 +273,7 @@ namespace Trust.Dungeons
                 if (!follow1SW.IsRunning)
                 {
                     Logging.Write(Colors.Yellow, $@" 自动跟随队友 follow1SW {follow1.IsCasting()}");
-                    sidestepPlugin.Enabled = false;
+                    SidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => true);
                     AvoidanceManager.AddAvoid(AvoidNull);
                     AvoidanceManager.Pulse();
@@ -288,18 +281,15 @@ namespace Trust.Dungeons
                     CapabilityManager.Clear();
                     follow1SW.Restart();
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "自动跟随");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 15000, "自动跟随");
                 }
-
 
                 if (!follow1.IsCasting())
                 {
-
                     Logging.Write(Colors.Yellow, $@" 自动躲闪开启 follow1SW {follow1SW.ElapsedMilliseconds}");
-                    sidestepPlugin.Enabled = true;
+                    SidestepPlugin.Enabled = true;
                     CapabilityManager.Clear();
                     follow1SW.Reset();
-
                 }
                 else
                 {
@@ -311,34 +301,32 @@ namespace Trust.Dungeons
                         {
                             Navigator.PlayerMover.MoveTowards(location);
                         }
-
-                        else MovementManager.MoveStop();
-
+                        else
+                        {
+                            MovementManager.MoveStop();
+                        }
                     }
                     else
                     {
-                        await MovementHelpers.GetClosestLocal(new Vector3("-294.9383, 41.5, -354.0579")).Follow(2f);
+                        await MovementHelpers.GetClosestPartyMember(new Vector3("-294.9383, 41.5, -354.0579")).Follow(2f);
                     }
                 }
             }
 
-
             if (followxSW.ElapsedMilliseconds > 3000)
             {
                 Logging.Write(Colors.Yellow, $@" 自动躲闪开启 followxSW {followxSW.ElapsedMilliseconds}");
-                sidestepPlugin.Enabled = true;
+                SidestepPlugin.Enabled = true;
                 CapabilityManager.Clear();
                 followxSW.Reset();
             }
-
-
 
             if (!hastargetSW.IsRunning && !magnet3SW.IsRunning && !magnet3xsSW.IsRunning && (follow2.IsCasting() || follow2SW.IsRunning))
             {
                 if (!follow2SW.IsRunning)
                 {
                     Logging.Write(Colors.Yellow, $@" 自动跟随队友 follow2SW {follow2.IsCasting()}");
-                    sidestepPlugin.Enabled = false;
+                    SidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => true);
                     AvoidanceManager.AddAvoid(AvoidNull);
                     AvoidanceManager.Pulse();
@@ -346,9 +334,8 @@ namespace Trust.Dungeons
                     CapabilityManager.Clear();
                     follow2SW.Restart();
                     followxSW.Reset();
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "自动跟随");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 15000, "自动跟随");
                 }
-
 
                 if (!follow2.IsCasting())
                 {
@@ -361,28 +348,25 @@ namespace Trust.Dungeons
                 }
                 else
                 {
-
-                    await MovementHelpers.GetClosestLocal(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
+                    await MovementHelpers.GetClosestPartyMember(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
                 }
-
-
             }
 
             if (magnet.IsCasting() || magnetSW.IsRunning)
             {
-
                 if (!magnetSW.IsRunning)
                 {
                     if (WorldManager.SubZoneId == 4013)
                     {
-                        sidestepPlugin.Enabled = false;
+                        SidestepPlugin.Enabled = false;
                         AvoidanceManager.RemoveAllAvoids(i => true);
                         AvoidanceManager.AddAvoid(AvoidNull);
                         AvoidanceManager.Pulse();
 
                         CapabilityManager.Clear();
                     }
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "正在移动");
+
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 5000, "正在移动");
 
                     magnetSW.Restart();
                 }
@@ -391,7 +375,10 @@ namespace Trust.Dungeons
                 {
                     CapabilityManager.Clear();
 
-                    if (!sidestepPlugin.Enabled) sidestepPlugin.Enabled = true;
+                    if (!SidestepPlugin.Enabled)
+                    {
+                        SidestepPlugin.Enabled = true;
+                    }
 
                     magnetSW.Reset();
                 }
@@ -405,8 +392,10 @@ namespace Trust.Dungeons
                         {
                             Navigator.PlayerMover.MoveTowards(location);
                         }
-
-                        else MovementManager.MoveStop();
+                        else
+                        {
+                            MovementManager.MoveStop();
+                        }
                     }
 
                     if (WorldManager.SubZoneId == 4013)
@@ -417,8 +406,10 @@ namespace Trust.Dungeons
                         {
                             Navigator.PlayerMover.MoveTowards(location);
                         }
-
-                        else MovementManager.MoveStop();
+                        else
+                        {
+                            MovementManager.MoveStop();
+                        }
                     }
                 }
             }
@@ -430,20 +421,19 @@ namespace Trust.Dungeons
                 {
                     if (WorldManager.SubZoneId == 4013)
                     {
-                        sidestepPlugin.Enabled = false;
+                        SidestepPlugin.Enabled = false;
                         AvoidanceManager.RemoveAllAvoids(i => true);
                         AvoidanceManager.AddAvoid(AvoidNull);
                         AvoidanceManager.Pulse();
 
                         CapabilityManager.Clear();
 
-
                         magnetxSW.Restart();
                     }
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 3000, "正在移动");
+
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "正在移动");
 
                     magnet1SW.Restart();
-
                 }
 
                 await MovementHelpers.Spread(3000, 8, false, 1383);
@@ -451,12 +441,11 @@ namespace Trust.Dungeons
 
             if (magnet2.IsCasting() || magnet2SW.IsRunning)
             {
-
                 if (!magnet2SW.IsRunning)
                 {
                     if (WorldManager.SubZoneId == 4013)
                     {
-                        sidestepPlugin.Enabled = false;
+                        SidestepPlugin.Enabled = false;
                         AvoidanceManager.RemoveAllAvoids(i => true);
                         AvoidanceManager.AddAvoid(AvoidNull);
                         AvoidanceManager.Pulse();
@@ -465,10 +454,10 @@ namespace Trust.Dungeons
                         magnet1SW.Reset();
                         magnetxSW.Reset();
                     }
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 5000, "正在移动");
+
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 5000, "正在移动");
 
                     magnet2SW.Restart();
-
                 }
 
                 if (!magnet2.IsCasting())
@@ -479,7 +468,7 @@ namespace Trust.Dungeons
 
                     CapabilityManager.Clear();
 
-                    if (!sidestepPlugin.Enabled) sidestepPlugin.Enabled = true;
+                    SidestepPlugin.Enabled = true;
 
                     magnet2SW.Reset();
                 }
@@ -487,21 +476,19 @@ namespace Trust.Dungeons
                 {
                     if (WorldManager.SubZoneId == 4013)
                     {
-                        var usets = (Vector3)GameObjectManager.GetObjectsOfType<BattleCharacter>()?.Where(obj => obj.NpcId == 1383).OrderBy(obj => Core.Player.Distance2D(obj)).FirstOrDefault().Location;
+                        Vector3 usets = (Vector3)GameObjectManager.GetObjectsOfType<BattleCharacter>()?.Where(obj => obj.NpcId == 1383).OrderBy(obj => Core.Player.Distance2D(obj)).FirstOrDefault().Location;
 
                         if (Core.Me.Distance2D(usets) > 0.5f)
                         {
                             Navigator.PlayerMover.MoveTowards(usets);
                         }
-
-                        else MovementManager.MoveStop();
+                        else
+                        {
+                            MovementManager.MoveStop();
+                        }
                     }
-
                 }
-
             }
-
-
 
             ReceiveMessageHelpers.SkillsdeterminationOverStr = overStr;
 
@@ -514,7 +501,7 @@ namespace Trust.Dungeons
                     follow2SW.Reset();
                     magnet3fW.Reset();
                     Logging.Write(Colors.SkyBlue, $@"  magnet3 运行以开始 {magnet3.IsCastingtwo()}");
-                    sidestepPlugin.Enabled = false;
+                    SidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => true);
                     AvoidanceManager.AddAvoid(AvoidNull);
                     AvoidanceManager.Pulse();
@@ -522,7 +509,7 @@ namespace Trust.Dungeons
                     CapabilityManager.Clear();
                     magnet3.Add(25160);
 
-                    CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 15000, "正在移动");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 15000, "正在移动");
 
                     magnet3SW.Restart();
 
@@ -533,7 +520,7 @@ namespace Trust.Dungeons
                 {
                     if (magnet3SW.ElapsedMilliseconds < 7500 && !ReceiveMessageHelpers.SkillsdeterminationOverStatus)
                     {
-                        await MovementHelpers.GetClosestLocal(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
+                        await MovementHelpers.GetClosestPartyMember(new Vector3("300.0752, 55.00583, -156.6629")).Follow();
                     }
                     else
                     {
@@ -541,6 +528,7 @@ namespace Trust.Dungeons
                         {
                             magnet3fW.Start();
                         }
+
                         if (magnet3fW.ElapsedMilliseconds < 600)
                         {
                             if (MovementHelpers.GetClosestAlly.Distance(new Vector3("300.0752, 55.00583, -156.6629")) - 3f < Core.Player.Distance(new Vector3("300.0752, 55.00583, -156.6629")))
@@ -568,7 +556,7 @@ namespace Trust.Dungeons
                     {
                         if (magnet3SW.ElapsedMilliseconds < 4000)
                         {
-                            await MovementHelpers.GetClosestLocal(new Vector3("299.9771, 55.00583, -157.0001")).Follow();
+                            await MovementHelpers.GetClosestPartyMember(new Vector3("299.9771, 55.00583, -157.0001")).Follow();
                         }
                         else
                         {
@@ -595,8 +583,6 @@ namespace Trust.Dungeons
                     }
                 }
 
-
-
                 if (!magnet3.IsCastingtwo())
                 {
                     magnet3SW.Reset();
@@ -605,13 +591,12 @@ namespace Trust.Dungeons
                     AvoidanceManager.RemoveAllAvoids(i => true);
                     AvoidanceManager.AddAvoid(AvoidNull);
                     AvoidanceManager.Pulse();
-                    sidestepPlugin.Enabled = true;
+                    SidestepPlugin.Enabled = true;
                     magnet3.Remove(25160);
                     Logging.Write(Colors.SkyBlue, $@"  magnet3SWrun 运行结束");
                     ReceiveMessageHelpers.SkillsdeterminationOverStatus = false;
                 }
             }
-
 
             return false;
         }

@@ -1,14 +1,6 @@
 using Buddy.Coroutines;
-using ff14bot;
 using ff14bot.Managers;
-using ff14bot.Navigation;
-using ff14bot.Objects;
-using ff14bot.Pathing;
-using ff14bot.Enums;
-using ff14bot.NeoProfiles;
-using ff14bot.Behavior;
-using ff14bot.Helpers;
-using System;
+using RBTrust.Plugins.Trust.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -47,8 +39,6 @@ namespace Trust.Dungeons
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
-            CapabilityManagerHandle TrustHandle = CapabilityManager.CreateNewHandle();
-            
             // 15614, 15615, 15616, 15617, 15618, 17153     :: Typhoon Wing
             // 15622, 15623, 16987, 16988, 16989            :: Exegesis
             // 15638, 15640, 15641, 15649, 18025            :: Divine Diminuendo
@@ -76,7 +66,7 @@ namespace Trust.Dungeons
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 20000, "Forgiven Obscenity Avoid");
+                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 20000, "Forgiven Obscenity Avoid");
                 while (sw.ElapsedMilliseconds < 20000)
                 {
                     await MovementHelpers.GetClosestAlly.Follow();
@@ -89,15 +79,10 @@ namespace Trust.Dungeons
             // Default (缺省)
             if (spells.IsCasting())
             {
-                CapabilityManager.Update(TrustHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
+                CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 1500, "Enemy Spell Cast In Progress");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
-            //else
-           // {
-           //     CapabilityManager.Clear(TrustHandle, CapabilityFlags.Movement, "Enemy Spell Cast Done");
-           // }
 
-            // SideStep (回避)
             if (WorldManager.SubZoneId != 3000)
             {
                 BossIds.ToggleSideStep(new uint[] { 8262 });
