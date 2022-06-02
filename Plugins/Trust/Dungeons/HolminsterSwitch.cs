@@ -4,9 +4,11 @@ using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 using RBTrust.Plugins.Trust.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Trust.Data;
 using Trust.Extensions;
@@ -66,9 +68,12 @@ namespace Trust.Dungeons
 
         private static readonly HashSet<uint> Exorcise = new HashSet<uint>() { 15826, 15827 };
         private static readonly Vector3 ExorciseStackLoc = new Vector3("79.35034, 0, -81.01664");
+        private static readonly int ExorciseDuration = 25_000;
 
         private static readonly HashSet<uint> Pendulum = new HashSet<uint>() { 15833, 15842, 16769, 16777, 16790 };
         private static readonly Vector3 PendulumDodgeLoc = new Vector3("117.1188,23,-474.0881");
+
+        private readonly Stopwatch exorciseTimer = new Stopwatch();
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
@@ -90,16 +95,28 @@ namespace Trust.Dungeons
                     await Coroutine.Yield();
                 }
 
+                // Wait in-place for stack marker to go off
                 Navigator.PlayerMover.MoveStop();
-
                 await Coroutine.Sleep(5000);
-                Stopwatch exorciseTimer = new Stopwatch();
+
                 exorciseTimer.Restart();
+
+                // Create an AOE avoid for the ice puddle where the stack marker went off
                 AvoidanceManager.AddAvoidLocation(
-                   () => exorciseTimer.IsRunning && exorciseTimer.ElapsedMilliseconds < 7000,
-                   radius: 16.0f,
-                   () => ExorciseStackLoc,
-                   ignoreIfBlocking: false);
+                   () => exorciseTimer.IsRunning && exorciseTimer.ElapsedMilliseconds < ExorciseDuration,
+                   radius: 6.5f * 1.5f, // Expand to account for stack target maybe standing to the side
+                   () => ExorciseStackLoc);
+
+                // Non-targetable but technically .IsVisible copies of Tesleen with the same .NpcId are used to place the outer ice puddles
+                // Create AOE avoids on top of them since SideStep doesn't do this automatically
+                IEnumerable<GameObject> fakeTesleens = GameObjectManager.GetObjectsByNPCId(8300).Where(obj => !obj.IsTargetable);
+                foreach (GameObject fake in fakeTesleens)
+                {
+                    AvoidanceManager.AddAvoidLocation(
+                       () => exorciseTimer.IsRunning && exorciseTimer.ElapsedMilliseconds < ExorciseDuration,
+                       radius: 6.5f,
+                       () => fake.Location);
+                }
             }
 
             // Philia (斐利亚)
