@@ -58,12 +58,12 @@ namespace Trust.Dungeons
             // 15847                                    :: Left Knout
             // 15848, 15849                             :: Aethersup
             // 16779, 16780, 16781, 16782               :: Land Rune
-            15602, 15609, 15814, 15815, 15816, 15817,
-            15818, 15819, 15820, 15822, 15834, 15835,
-            15836, 15837, 15838, 15839, 15840, 15841,
-            15843, 15845, 15846, 15847, 15848, 15849,
-            15886, 16765, 16779, 16780, 16781, 16782,
-            16850, 16851, 16852, 17232, 17552,
+            15602, 15609, 15814, 15815, 15816,
+            15817, 15818, 15819, 15820, 15822,
+            15843, 15845, 15846, 15847, 15848,
+            15849, 15886, 16765, 16779, 16780,
+            16781, 16782, 16850, 16851, 16852,
+            17232, 17552,
         };
 
         private static readonly HashSet<uint> Exorcise = new HashSet<uint>() { 15826, 15827 };
@@ -73,7 +73,8 @@ namespace Trust.Dungeons
         private static readonly HashSet<uint> Pendulum = new HashSet<uint>() { 15833, 15842, 16769, 16777, 16790 };
         private static readonly Vector3 PendulumDodgeLoc = new Vector3("117.1188,23,-474.0881");
 
-        private readonly Stopwatch exorciseTimer = new Stopwatch();
+        private static readonly HashSet<uint> FierceBeating = new HashSet<uint>() { 15834, 15835, 15836, 15837, 15838, 15839 };
+        private static readonly int FierceBeatingDuration = 32_000;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
@@ -99,6 +100,7 @@ namespace Trust.Dungeons
                 Navigator.PlayerMover.MoveStop();
                 await Coroutine.Sleep(5000);
 
+                Stopwatch exorciseTimer = new Stopwatch();
                 exorciseTimer.Restart();
 
                 // Create an AOE avoid for the ice puddle where the stack marker went off
@@ -112,10 +114,12 @@ namespace Trust.Dungeons
                 IEnumerable<GameObject> fakeTesleens = GameObjectManager.GetObjectsByNPCId(8300).Where(obj => !obj.IsTargetable);
                 foreach (GameObject fake in fakeTesleens)
                 {
-                    AvoidanceManager.AddAvoidLocation(
+                    Vector3 location = fake.Location;
+
+                    ff14bot.Pathing.Avoidance.AvoidInfo a = AvoidanceManager.AddAvoidLocation(
                        () => exorciseTimer.IsRunning && exorciseTimer.ElapsedMilliseconds < ExorciseDuration,
                        radius: 6.5f,
-                       () => fake.Location);
+                       () => location);
                 }
             }
 
@@ -131,13 +135,55 @@ namespace Trust.Dungeons
 
                 while (Core.Me.Distance(PendulumDodgeLoc) > 1f)
                 {
-                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "Exorcise Avoid");
+                    CapabilityManager.Update(CapabilityHandle, CapabilityFlags.Movement, 3000, "Pendulum Avoid");
                     await CommonTasks.MoveTo(PendulumDodgeLoc);
                     await Coroutine.Yield();
                 }
 
                 await CommonTasks.StopMoving();
                 await Coroutine.Sleep(100);
+            }
+
+            if (FierceBeating.IsCasting())
+            {
+                GameObject philia = GameObjectManager.GetObjectsByNPCId(8301).FirstOrDefault(obj => obj.IsTargetable);
+
+                if (philia != null)
+                {
+                    Vector3 location = philia.Location;
+                    uint objectId = philia.ObjectId;
+
+                    Stopwatch fierceBeatingTimer = new Stopwatch();
+                    fierceBeatingTimer.Restart();
+
+                    // Create an AOE avoid for the orange swirly under the boss
+                    AvoidanceManager.AddAvoidObject<GameObject>(
+                        canRun: () => fierceBeatingTimer.IsRunning && fierceBeatingTimer.ElapsedMilliseconds < FierceBeatingDuration,
+                        radius: 11f,
+                        unitIds: objectId);
+
+                    // Attach wide cone avoids pointing out the boss's front and back
+                    // Position + rotation will auto-update as the boss moves + turns!
+                    AvoidanceManager.AddAvoidUnitCone<GameObject>(
+                        canRun: () => fierceBeatingTimer.IsRunning && fierceBeatingTimer.ElapsedMilliseconds < FierceBeatingDuration,
+                        objectSelector: (obj) => obj.ObjectId == objectId,
+                        leashPointProducer: () => location,
+                        leashRadius: 40f,
+                        rotationDegrees: 0f,
+                        radius: 25f,
+                        arcDegrees: 135f,
+                        ignoreIfBlocking: true);
+
+                    AvoidanceManager.AddAvoidUnitCone<GameObject>(
+                        canRun: () => fierceBeatingTimer.IsRunning && fierceBeatingTimer.ElapsedMilliseconds < FierceBeatingDuration,
+                        objectSelector: (obj) => obj.ObjectId == objectId,
+                        leashPointProducer: () => location,
+                        leashRadius: 40f,
+                        rotationDegrees: 180f,
+                        radius: 25f,
+                        arcDegrees: 135f,
+                        ignoreIfBlocking: false);
+                }
             }
 
             // Default (缺省)

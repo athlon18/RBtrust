@@ -127,6 +127,11 @@
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.1 The Aitiascope.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.2 The Mothercrystal.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.1 The Dead Ends.xml" />
+    <Content Include="Profiles\[O][RBTrust] 81 The Tower of Zot.xml" />
+    <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
+    <Content Include="Profiles\[O][RBTrust] 85 Vanaspati.xml" />
+    <Content Include="Profiles\[O][RBTrust] 90.1 The Dead Ends.xml" />
+    <Content Include="Profiles\[O][RBTrust] 90.2 Alzadaal%27s Legacy.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">
