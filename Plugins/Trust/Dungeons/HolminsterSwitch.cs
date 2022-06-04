@@ -6,6 +6,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
 using RBTrust.Plugins.Trust.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -75,6 +76,7 @@ namespace Trust.Dungeons
 
         private static readonly HashSet<uint> FierceBeating = new HashSet<uint>() { 15834, 15835, 15836, 15837, 15838, 15839 };
         private static readonly int FierceBeatingDuration = 32_000;
+        private static DateTime fierceBeatingTimestamp = DateTime.MinValue;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.HolminsterSwitch;
@@ -144,7 +146,7 @@ namespace Trust.Dungeons
                 await Coroutine.Sleep(100);
             }
 
-            if (FierceBeating.IsCasting())
+            if (FierceBeating.IsCasting() && fierceBeatingTimestamp.AddMilliseconds(FierceBeatingDuration) < DateTime.Now)
             {
                 GameObject philia = GameObjectManager.GetObjectsByNPCId(8301).FirstOrDefault(obj => obj.IsTargetable);
 
@@ -153,6 +155,7 @@ namespace Trust.Dungeons
                     Vector3 location = philia.Location;
                     uint objectId = philia.ObjectId;
 
+                    fierceBeatingTimestamp = DateTime.Now;
                     Stopwatch fierceBeatingTimer = new Stopwatch();
                     fierceBeatingTimer.Restart();
 
