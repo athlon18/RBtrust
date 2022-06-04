@@ -162,27 +162,17 @@ namespace Trust.Dungeons
                         radius: 11f,
                         unitIds: objectId);
 
-                    // Attach wide cone avoids pointing out the boss's front and back
+                    // Attach very wide cone avoid pointing out the boss's right, forcing bot to left side
+                    // Boss spins clockwise and front cleave comes quickly, so disallow less-safe right side
                     // Position + rotation will auto-update as the boss moves + turns!
                     AvoidanceManager.AddAvoidUnitCone<GameObject>(
                         canRun: () => fierceBeatingTimer.IsRunning && fierceBeatingTimer.ElapsedMilliseconds < FierceBeatingDuration,
                         objectSelector: (obj) => obj.ObjectId == objectId,
                         leashPointProducer: () => location,
                         leashRadius: 40f,
-                        rotationDegrees: 0f,
+                        rotationDegrees: -90f,
                         radius: 25f,
-                        arcDegrees: 135f,
-                        ignoreIfBlocking: true);
-
-                    AvoidanceManager.AddAvoidUnitCone<GameObject>(
-                        canRun: () => fierceBeatingTimer.IsRunning && fierceBeatingTimer.ElapsedMilliseconds < FierceBeatingDuration,
-                        objectSelector: (obj) => obj.ObjectId == objectId,
-                        leashPointProducer: () => location,
-                        leashRadius: 40f,
-                        rotationDegrees: 180f,
-                        radius: 25f,
-                        arcDegrees: 135f,
-                        ignoreIfBlocking: false);
+                        arcDegrees: 345f);
                 }
             }
 
