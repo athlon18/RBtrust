@@ -2,7 +2,7 @@
 using ff14bot.Managers;
 using System.Threading.Tasks;
 
-namespace ff14bot.NeoProfiles.Tags
+namespace Trust.Windows
 {
     /// <summary>
     /// Convenience wrapper for Duty Finder and Queue windows.

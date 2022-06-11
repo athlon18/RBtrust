@@ -1,9 +1,7 @@
 ﻿using Buddy.Coroutines;
 using Clio.XmlEngine;
-using ff14bot.Behavior;
-using ff14bot.Managers;
 using System.Threading.Tasks;
-using TreeSharp;
+using Trust.Windows;
 
 namespace ff14bot.NeoProfiles.Tags
 {
@@ -11,29 +9,10 @@ namespace ff14bot.NeoProfiles.Tags
     /// Accepts pending duty finder commence windows.
     /// </summary>
     [XmlElement("JoinDutyFinder")]
-    internal class JoinDutyFinderTag : ProfileBehavior
+    public class JoinDutyFinderTag : AbstractTaskTag
     {
-        private bool done = false;
-
         /// <inheritdoc/>
-        public override bool IsDone => done;
-
-        /// <inheritdoc/>
-        protected override void OnResetCachedDone()
-        {
-            done = false;
-        }
-
-        /// <inheritdoc/>
-        protected override Composite CreateBehavior()
-        {
-            return new PrioritySelector(
-                CommonBehaviors.HandleLoading,
-                new Decorator(ret => QuestLogManager.InCutscene, new ActionAlwaysSucceed()),
-                new ActionRunCoroutine(r => TheTask()));
-        }
-
-        private async Task<bool> TheTask()
+        protected override async Task<bool> RunAsync()
         {
             await ExtendedContentsFinder.Open();
 
@@ -41,7 +20,6 @@ namespace ff14bot.NeoProfiles.Tags
 
             if (await ExtendedContentsFinder.Join())
             {
-                done = true;
                 return true;
             }
 

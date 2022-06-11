@@ -105,7 +105,7 @@
     <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
     <Compile Include="Quest Behaviors\SetPluginsTag.cs" />
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
-    <Compile Include="Windows\ExtendedContentsFinder.cs" />
+    <Compile Include="Plugins\Trust\Windows\ExtendedContentsFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
