@@ -95,14 +95,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
-    <Compile Include="Quest Behaviors\CommenceDutyTag.cs" />
     <Compile Include="Quest Behaviors\EquipRecommendedTag.cs" />
     <Compile Include="Plugins\Trust\Helpers\InstanceFlags.cs" />
     <Compile Include="Quest Behaviors\JoinDutyFinderTag.cs" />
     <Compile Include="Quest Behaviors\LeaveDutyTag.cs" />
-    <Compile Include="Quest Behaviors\LoadProfileTag.cs" />
     <Compile Include="Quest Behaviors\LootTreasureTag.cs" />
-    <Compile Include="Quest Behaviors\QueueTrustTag.cs" />
     <Compile Include="Quest Behaviors\SetPluginsTag.cs" />
     <Compile Include="Quest Behaviors\WaitForLoadingTag.cs" />
     <Compile Include="Plugins\Trust\Windows\ExtendedContentsFinder.cs" />
