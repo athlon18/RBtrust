@@ -39,6 +39,8 @@ namespace ff14bot.NeoProfiles.Tags
               .Where(c => c.Distance() < MaxDistance)
               .OrderBy(c => c.Distance());
 
+            bool lootedSomething = false;
+
             foreach (Treasure chest in nearbyChests)
             {
                 while (Core.Me.Distance(chest.Location) > InteractRange)
@@ -50,10 +52,12 @@ namespace ff14bot.NeoProfiles.Tags
                 Navigator.PlayerMover.MoveStop();
 
                 chest.Interact();
+                lootedSomething = true;
+
                 await Coroutine.Sleep(LootingCooldown);
             }
 
-            if (ShouldEquipRecommended)
+            if (lootedSomething && ShouldEquipRecommended)
             {
                 await RecommendEquip.EquipAsync();
             }
