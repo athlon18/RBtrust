@@ -41,7 +41,8 @@
   ❌ Lv. 87: Ktisis Hyperboreia\
   ❌ Lv. 89.1: The Aitiascope\
   ❌ Lv. 89.2: The Mothercrystal\
-  ✔️ Lv. 90.1 The Dead Ends
+  ✔️ Lv. 90.1 The Dead Ends\
+  ❌ Lv. 90.2: Alzadaal's Legacy
 
 ## Installation
 
