@@ -13,7 +13,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="652"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(838)">
@@ -22,26 +22,21 @@
         <MoveTo XYZ="-79.58617, 748.2328, 100.5795"/>
         <Grind GrindRef="TheFirstBeast" PostCombatDelay="2.0" While="ObjectExistsWithId(8201)"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="-60.50607, 748.2327, 62.50991"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="25.74221, 728.4708, -119.9524"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="48.94165, 729.0496, -225.3814"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="59.6765, 728, -344.0564"/>
 
         <MoveTo XYZ="60.01367, 728, -361.0438"/>
         <WaitWhile Condition="ObjectExistsWithId(8202)"/>
         <LootTreasure/>
-        <EquipRecommended/>
         <RunCode Name="AetherialFlow"/>
 
         <MoveTo XYZ="-0.01531982, -735.0118, 279.7742"/>
@@ -49,14 +44,12 @@
 
         <MoveTo XYZ="0.04636243, -729.9998, 197.4371"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="0.1779838, -729.9998, 180.7759"/>
         <RunCode Name="Transition2"/>
 
         <MoveTo XYZ="0.09161426, -732.0001, 62.09192"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="0.163903, -732.0001, 46.89133"/>
         <RunCode Name="Transition3"/>
@@ -66,7 +59,6 @@
         <MoveTo XYZ="-0.0480026, -720.0001, -39.52992"/>
         <Grind GrindRef="Therion" PostCombatDelay="2.0" While="ObjectExistsWithId(8210)"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <LeaveDuty/>
       </If>

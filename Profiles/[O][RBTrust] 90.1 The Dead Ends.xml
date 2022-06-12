@@ -17,16 +17,13 @@
       <WaitForLoading/>
 
       <If Condition="not IsOnMap(973)">
-
         <JoinSupportDuty DutyId="792"/>
-       
+        <EquipRecommended/>
       </If>
 
       <If Condition="IsOnMap(973)">
-        
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
-  
         <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
           <!-- Shortcut available -->
           <UseTransport NpcId="&Shortcut;" XYZ="359.8188, 499.5619, 188.9725"/>
@@ -50,9 +47,8 @@
           <Grind GrindRef="CausticGrebuloff" PostCombatDelay="2.0" While="ObjectExistsWithId(&CausticGrebuloff;)"/>
 
           <LootTreasure/>
-          
 
-           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+          <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <MoveTo XYZ="266.6553, 500.4002, -218.991"/>
           <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&ShellMoundPortal;).IsTargetable"/>
           <UseObject NpcId="&ShellMoundPortal;" XYZ="266.4988, 500.4002, -221.3627" Condition="WorldManager.SubZoneId == 4104"/>
@@ -64,26 +60,25 @@
           <MoveTo XYZ="-14.99242, 0.0001438856, 14.03172"/>
 
           <LootTreasure/>
-          
 
           <MoveTo XYZ="6.240906, -0.0001268019, -20.24878"/>
           <MoveTo XYZ="-104.7037, 0, -114.254"/>
           <MoveTo XYZ="-83.48212, -0.01531982, -163.0122"/>
 
           <LootTreasure/>
-          
+
           <MoveTo XYZ="-104.9368, 0.1995358, -195.7092"/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [4109, 4105]">
-          
+
           <!-- Deterrence Grounds -->
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
           <WaitTimer WaitTime="1"/>
           <Grind GrindRef="Peacekeeper" PostCombatDelay="2.0" While="ObjectExistsWithId(&Peacekeeper;)"/>
 
           <LootTreasure/>
-          
+
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
           <MoveTo XYZ="-107.9689, -8.000126, -287.6669"/>
@@ -97,13 +92,11 @@
           <MoveTo XYZ="-297.6578, -610.15, 92.24072"/>
 
           <LootTreasure/>
-          
 
           <MoveTo XYZ="-296.7371, -605.0003, 49.38559"/>
           <MoveTo XYZ="-379.6894, -587.4899, -31.56436"/>
 
           <LootTreasure/>
-          
 
           <MoveTo XYZ="-379.9343, -576.9999, -125.1538"/>
         </If>
@@ -115,10 +108,9 @@
           <Grind GrindRef="Rala" PostCombatDelay="2.0" While="ObjectExistsWithId(&Rala;)"/>
 
           <LootTreasure/>
-          
+
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
-          
-          
+
           <LeaveDuty/>
         </If>
       </If>

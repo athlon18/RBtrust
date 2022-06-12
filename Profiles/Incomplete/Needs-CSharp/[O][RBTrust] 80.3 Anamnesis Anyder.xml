@@ -35,7 +35,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="714"/>
-      
+
       </If>
 
       <If Condition="IsOnMap(&ZoneId;)">
@@ -61,19 +61,16 @@
           <!-- Sinister Bubble NpcID: 9262 -->
 
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&TheGardenOfRecollection;, &Katharsis;]">
           <MoveTo XYZ="19.97517, 100, 145.2332"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="33.91603, 105, 15.84781"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="19.96226, 110, -60.07328"/>
         </If>
@@ -82,19 +79,16 @@
           <Grind GrindRef="Boss2" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss2;)"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&Anamnesis;, &Doxa;, &TheArchiveEternal;]">
           <MoveTo XYZ="71.77529, 92, -230.4634"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="-4.257263, 91.99998, -221.3627"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="20.16837, 92.00001, -299.9221"/>
           <!--<CrossZoneLine Start="20.16837, 92.00001, -299.9221" End="20.00874, 90.57153, -325.8144" Distance="0.1"/> -->
@@ -106,7 +100,6 @@
           <Grind GrindRef="Boss3" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss3;)"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <LeaveDuty/>
         </If>

@@ -12,7 +12,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="787"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(974)">
@@ -29,7 +29,7 @@
         <If Condition="IsOnSubMap(3766)">
           <Grind GrindRef="Lyssa" PostCombatDelay="2.0" While="ObjectExistsWithId(10396)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-139.5833, 500, 10.65856"/>
           <While Condition="IsOnSubMap(3760)">
@@ -40,17 +40,17 @@
         <If Condition="IsOnSubMap(3761)">
           <MoveTo XYZ="-111.9119, 624.0024, 110.1894"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="0.3954928, 624.0016, 127.6892"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-0.1270234, 630.0001, 63.1016" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(3767)">
           <Grind GrindRef="LadonLord" PostCombatDelay="2.0" While="ObjectExistsWithId(10398)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-0.04708901, 630.0001, -0.05946518"/>
           <While Condition="IsOnSubMap(3761)">
@@ -66,7 +66,7 @@
         <If Condition="IsOnSubMap(3764)">
           <MoveTo XYZ="20.119, -600, -45.0291"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="29.57607, -599.7429, -71.85575" Distance="0.5"/>
           <WaitWhile Condition="not IsOnSubMap(3765)"/>
         </If>
@@ -74,7 +74,7 @@
         <If Condition="IsOnSubMap(3765)">
           <MoveTo XYZ="-29.98282, -140, 20.09882"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-33.25174, -140, 1.282965" Distance="0.5"/>
           <While Condition="IsOnSubMap(3765)">
             <RunCode Name="Transition3"/>
@@ -86,7 +86,6 @@
         <If Condition="IsOnSubMap(3768)">
           <Grind GrindRef="Hermes" PostCombatDelay="2.0" While="ObjectExistsWithId(10399)"/>
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <LeaveDuty/>

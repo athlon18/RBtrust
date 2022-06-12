@@ -12,7 +12,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="783"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(952)">
@@ -31,7 +31,7 @@
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Minduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10256)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="63.24457, -443.4718, -177.2011"/>
           <While Condition="IsOnSubMap(3730)">
@@ -43,10 +43,10 @@
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <MoveTo XYZ="-333.4352, -180.9977, 88.76975"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-240.6393, -172.0018, 68.73035"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-257.6166, -169, -8.267162" Distance="0.5"/>
         </If>
 
@@ -54,7 +54,7 @@
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Sanduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10257)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-262.2831, -167.9562, -86.32867"/>
           <While Condition="IsOnSubMap(3731)">
@@ -65,10 +65,10 @@
         <If Condition="IsOnSubMap(3732)">
           <MoveTo XYZ="23.56817, 534.9012, -21.68986"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="38.93001, 538.2892, -84.50268"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-38.83713, 546.104, -38.20349" Distance="0.5"/>
         </If>
 
@@ -76,7 +76,6 @@
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Cinduruva" PostCombatDelay="2.0" While="ObjectExistsWithId(10259) or ObjectExistsWithId(10257) or ObjectExistsWithId(10256)"/>
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <LeaveDuty/>

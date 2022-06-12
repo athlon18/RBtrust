@@ -13,7 +13,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="651"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(823)">
@@ -39,7 +39,6 @@
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8231)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -49,7 +48,6 @@
         <MoveTo XYZ="133.7429,-8.545856,186.1049"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第七步  小怪6 -->
         <MoveTo XYZ="84.77122,-2,159.0878"/>
@@ -63,7 +61,6 @@
         <MoveTo XYZ="48.53169,-11,78.59581"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十步  小怪8 -->
         <MoveTo XYZ="64.61283,-11,71.81774"/>
@@ -75,7 +72,6 @@
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8232)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -90,7 +86,6 @@
         <MoveTo XYZ="42.02502,-60.00004,-301.4867"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十三步 打怪11 -->
         <MoveTo XYZ="28.86912,-60.00003,-333.6031"/>
@@ -104,7 +99,6 @@
         <MoveTo XYZ="-7.775939,-57.00002,-423.3626"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十六步 BOSS3 艾洛斯 -->
         <MoveTo XYZ="17.0723,-57.74398,-433.5704"/>
@@ -118,7 +112,6 @@
         <MoveTo XYZ="20.98305,-77,-547.7723"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <LeaveDuty/>
       </If>

@@ -4,9 +4,9 @@ using ff14bot.Behavior;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Trust.Windows;
 
 namespace ff14bot.NeoProfiles.Tags
 {
@@ -17,7 +17,7 @@ namespace ff14bot.NeoProfiles.Tags
     public class LootTreasureTag : AbstractTaskTag
     {
         private const float InteractRange = 1.5f;
-        private readonly string[] chestNames = { "宝箱", "Treasure Coffer" };
+        private const int LootingCooldown = 1500;
 
         /// <summary>
         /// Gets or sets max search radius for Treasure Coffers.
@@ -25,11 +25,18 @@ namespace ff14bot.NeoProfiles.Tags
         [XmlAttribute("MaxDistance")]
         public int MaxDistance { get; set; } = 50;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to equip recommended after looting.
+        /// </summary>
+        [XmlAttribute("EquipRecommended")]
+        public bool ShouldEquipRecommended { get; set; } = true;
+
         /// <inheritdoc/>
         protected override async Task<bool> RunAsync()
         {
             IOrderedEnumerable<Treasure> nearbyChests = GameObjectManager.GetObjectsOfType<Treasure>()
-              .Where(c => !c.IsOpen && c.Distance() < MaxDistance && chestNames.Contains(c.Name, StringComparer.OrdinalIgnoreCase))
+              .Where(c => !c.IsOpen)
+              .Where(c => c.Distance() < MaxDistance)
               .OrderBy(c => c.Distance());
 
             foreach (Treasure chest in nearbyChests)
@@ -43,7 +50,12 @@ namespace ff14bot.NeoProfiles.Tags
                 Navigator.PlayerMover.MoveStop();
 
                 chest.Interact();
-                await Coroutine.Sleep(1000);
+                await Coroutine.Sleep(LootingCooldown);
+            }
+
+            if (ShouldEquipRecommended)
+            {
+                await RecommendEquip.EquipAsync();
             }
 
             return false;

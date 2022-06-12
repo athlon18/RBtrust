@@ -11,7 +11,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="649"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(821)">
@@ -35,7 +35,6 @@
         <Grind GrindRef="boss1" While="GameObjectManager.GetObjectByNPCId(8141)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -50,7 +49,6 @@
         <WaitTimer waitTime="1"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第八步  打怪 猎蜜熊 -->
         <MoveTo XYZ="-67.10806,16.14704,-186.3012"/>
@@ -62,14 +60,12 @@
         <WaitTimer waitTime="2"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十步  BOSS2 格里奥勒 -->
         <NoCombatMoveTo XYZ="12.55156,23.04288,-349.3528" Wait="1"/>
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8143)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十一步 打怪 上个BOSS打完要往前去到下一层 再往前右键互动石柱才能开怪-->
         <MoveTo XYZ="8.755135,20.0074,-400.4264"/>
@@ -81,7 +77,6 @@
         <MoveTo XYZ="-170.8162,-182.7501,35.80744"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="-171.8794,-178.75,-6.813273"/>
         <RunCode name="贝壳王冠"/>
@@ -110,7 +105,6 @@
         <WaitTimer waitTime="1"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十六步 BOSS3 乐圣 因克·佐恩 -->
         <MoveTo XYZ="-128.4545,-156.0078,-160.0941"/>
@@ -127,7 +121,6 @@
         <MoveTo XYZ="-128.9267,-144.5268,-255.1648"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <LeaveDuty/>
       </If>

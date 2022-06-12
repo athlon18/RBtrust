@@ -12,7 +12,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="785"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(969)">
@@ -31,7 +31,7 @@
         <If Condition="IsOnSubMap(4124)">
           <Grind GrindRef="Barnabas" PostCombatDelay="2.0" While="ObjectExistsWithId(10279)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-299.8641, -174.98, 25.57108"/>
           <While Condition="IsOnSubMap(4128)">
@@ -49,7 +49,7 @@
           <Grind GrindRef="ElevatorWave1" PostCombatDelay="12.0" While="ObjectExistsWithId(10878) or ObjectExistsWithId(10879)"/>
           <Grind GrindRef="ElevatorWave2" PostCombatDelay="12.0" While="ObjectExistsWithId(10881) or ObjectExistsWithId(10880)"/>
           <Grind GrindRef="ElevatorWave3" PostCombatDelay="12.0" While="ObjectExistsWithId(10882) or ObjectExistsWithId(10883)"/>
-                    
+
           <!-- Post Object Movement to Next Area -->
           <MoveTo XYZ="400.1074, 0, -155.7414"/>
           <While Condition="IsOnSubMap(4129)">
@@ -59,17 +59,17 @@
 
         <If Condition="IsOnSubMap(4130)">
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="220.7072, -7.510185E-06, 372.184"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="220.7229, 0.9999998, 322.8848" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(4125)">
           <Grind GrindRef="Lugae" PostCombatDelay="2.0" While="ObjectExistsWithId(10282)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="149.9771, 1.597404E-05, 201.5869"/>
           <While Condition="IsOnSubMap(4131)">
@@ -83,16 +83,16 @@
             <WaitTimer WaitTime="15"/>
             <!--Control Terminal-->
           </If>
-           <RunCode Name="WalkOffPlatform"/>
+          <RunCode Name="WalkOffPlatform"/>
         </While>
 
         <If Condition="IsOnSubMap(4133)">
           <MoveTo XYZ="-0.002707131, 493, -61.90952" Distance="0.5"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-42.88587, 484, -115.8765" Distance="0.5"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-0.08154679, 480, -184.8952" Distance="0.5"/>
         </If>
 
@@ -100,7 +100,6 @@
           <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
           <Grind GrindRef="Anima" PostCombatDelay="2.0" While="ObjectExistsWithId(10285) or ObjectExistsWithId(10288)"/>
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <LeaveDuty/>

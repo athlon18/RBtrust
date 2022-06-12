@@ -92,6 +92,7 @@
     <Compile Include="Plugins\Trust\TrustSettings.Designer.cs">
       <DependentUpon>TrustSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\Trust\Windows\RecommendEquip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest Behaviors\AbstractTaskTag.cs" />
     <Compile Include="Quest Behaviors\CheckPluginsTag.cs" />
@@ -117,18 +118,14 @@
     <Content Include="Profiles\[O][RBTrust] 77 Malikah%27s Well.xml" />
     <Content Include="Profiles\[O][RBTrust] 79 Mt. Gulg.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 80.1 Amaurot.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 81 The Tower of Zot.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 83 The Tower of Babil.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 85 Vanaspati.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 87 Ktisis Hyperboreia.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.1 The Aitiascope.xml" />
     <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 89.2 The Mothercrystal.xml" />
-    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.1 The Dead Ends.xml" />
     <Content Include="Profiles\[O][RBTrust] 81 The Tower of Zot.xml" />
     <Content Include="Profiles\[O][RBTrust] 83 The Tower of Babil.xml" />
     <Content Include="Profiles\[O][RBTrust] 85 Vanaspati.xml" />
     <Content Include="Profiles\[O][RBTrust] 90.1 The Dead Ends.xml" />
-    <Content Include="Profiles\[O][RBTrust] 90.2 Alzadaal%27s Legacy.xml" />
+    <Content Include="Profiles\Incomplete\Needs-CSharp\[O][RBTrust] 90.2 Alzadaal%27s Legacy.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Plugins\Trust\TrustSettings.resx">

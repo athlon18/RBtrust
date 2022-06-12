@@ -39,7 +39,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="692"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(&ZoneId;)">
@@ -63,20 +63,17 @@
           <Grind GrindRef="Boss1" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss1;)"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&TheChivalricSphere;, &TheMartialCourt;, &TheRegalSphere;]">
           <MoveTo XYZ="52.58231, -7.05, 103.0038"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="73.97729, -14.05, 34.97017"/>
           <MoveTo XYZ="57.15619, -12, -6.035901"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <MoveTo XYZ="0.03179554, -14.05, -16.97828"/>
           <MoveTo XYZ="0.02542141, -12.5, -43.09413"/>
@@ -86,21 +83,18 @@
           <Grind GrindRef="Boss2" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss2;)"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&TheRegalSphere;, &TheFontOfQuintessence;, &TheDivineSphere;, &TheMyrhinneHall;]">
           <MoveTo XYZ="42.57712, 8, -196.9276"/>
 
           <LootTreasure MaxDistance="20"/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&TheDivineSphere;, &TheChamberOfRaisedCups;, &TheChamberOfImmortalLegacy;]">
           <MoveTo XYZ="30.77378, 8, -228.1729"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <If Condition="WorldManager.SubZoneId in [&TheDivineSphere;, &TheChamberOfImmortalLegacy;, &TheChamberOfCourtlyLove;]">
@@ -112,7 +106,6 @@
           <Grind GrindRef="Boss3" PostCombatDelay="2.0" While="ObjectExistsWithId(&Boss3;)"/>
 
           <LootTreasure/>
-          <EquipRecommended/>
 
           <LeaveDuty/>
         </If>

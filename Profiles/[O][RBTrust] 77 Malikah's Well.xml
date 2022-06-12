@@ -13,7 +13,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="656"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(836)">
@@ -45,7 +45,6 @@
 
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -60,7 +59,6 @@
         <MoveTo XYZ="150.2792,-9.825012,230.1477"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第八步  110 2 -->
         <MoveTo XYZ="120.1081,-16.74789,253.6611"/>
@@ -71,7 +69,6 @@
         <MoveTo XYZ="134.1232,-20.00566,294.3241"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十步  BOSS2 水陆两用塔罗斯 -->
         <MoveTo XYZ="145.1313,-19.93752,290.0767"/>
@@ -82,7 +79,6 @@
         <Grind GrindRef="boss2" While="GameObjectManager.GetObjectByNPCId(8250)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
 
@@ -95,7 +91,6 @@
         <MoveTo XYZ="205.5566,-83.95903,125.3191"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十三步 打怪10 -->
         <MoveTo XYZ="174.0549,-84.03419,95.40165"/>
@@ -106,7 +101,6 @@
         <MoveTo XYZ="205.2062,-79.99991,35.41732"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十六步 BOSS3 斯托尔戈 -->
         <MoveTo XYZ="197.4315,-71.29984,-44.65081"/>
@@ -120,7 +114,6 @@
         <MoveTo XYZ="196.0255,-93.3999,-104.823"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <LeaveDuty/>
       </If>

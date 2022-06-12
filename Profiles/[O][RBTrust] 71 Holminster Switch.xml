@@ -16,7 +16,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="676"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(837)">
@@ -40,14 +40,12 @@
         <Grind GrindRef="ForgivenDissonance" While="GameObjectManager.GetObjectByNPCId(&ForgivenDissonance;)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第八步  打怪 -->
         <MoveTo XYZ="-15.98,2.05, 127.16"/>
         <MoveTo XYZ="-4.837286,-1.260272,106.3564"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第九步  打怪 -->
         <MoveTo XYZ="-4.61,-4.48,68.4"/>
@@ -57,7 +55,6 @@
         <MoveTo XYZ="73.73,-5.25,-0.73"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十步  BOSS2 得到宽恕的泰丝琳-->
         <MoveTo XYZ="78.65691,0.01566279,-58.73653"/>
@@ -65,11 +62,9 @@
         <Grind GrindRef="TesleenTheForgiven" While="GameObjectManager.GetObjectByNPCId(&TesleenTheForgiven;)"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <MoveTo XYZ="86.15449,0.512633,-189.4477"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十一步 打怪-->
         <MoveTo XYZ="77.4,0,-208.51"/>
@@ -83,7 +78,6 @@
 
         <MoveTo XYZ="71.46906,1.502112,-326.3975"/>
         <LootTreasure/>
-        <EquipRecommended/>
 
         <!-- 第十五步 Philia-->
         <NoCombatMoveTo XYZ="134.1453,23,-477.03" Wait="1"/>
@@ -92,7 +86,6 @@
         <MoveTo XYZ="133.34,23,-455.87"/>
 
         <LootTreasure/>
-        <EquipRecommended/>
 
         <LeaveDuty/>
       </If>

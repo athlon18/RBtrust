@@ -12,7 +12,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="786"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(978)">
@@ -27,7 +27,7 @@
         <If Condition="IsOnSubMap(3992)">
           <Grind GrindRef="LiviatheUndeterred" PostCombatDelay="2.0" While="ObjectExistsWithId(10290)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <UseObject NpcId="2011758" XYZ="-6.0001, 163.99, 471" Radius="10" UseTimes="1" BlacklistAfter="True"/>
           <WaitWhile Condition="not IsOnSubMap(3996)"/>
@@ -38,7 +38,7 @@
           <LootTreasure/>
           <MoveTo XYZ="-5.726303, -211.8298, 231.0701"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="11.03978, -211.1853, 169.1452"/>
           <MoveTo XYZ="10.77671, -211.405, 156.6219" Distance="0.5" UseMesh="False"/>
         </If>
@@ -46,7 +46,7 @@
         <If Condition="IsOnSubMap(3993)">
           <Grind GrindRef="RhitahtyntheUnshakable" PostCombatDelay="2.0" While="ObjectExistsWithId(10292)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="11, -211.405, 134" Distance="0.5"/>
           <While Condition="IsOnSubMap(3993) or IsOnSubMap(3996)">
@@ -66,7 +66,6 @@
         <If Condition="IsOnSubMap(3994)">
           <Grind GrindRef="AmontheUndying" PostCombatDelay="2.0" While="ObjectExistsWithId(10293)"/>
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <LeaveDuty/>

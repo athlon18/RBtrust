@@ -12,7 +12,7 @@
 
         <EquipRecommended/>
         <JoinSupportDuty DutyId="789"/>
-        
+
       </If>
 
       <If Condition="IsOnMap(970)">
@@ -21,7 +21,7 @@
           <!-- Shortcut available -->
           <UseTransport NpcId="2000700" XYZ="-186.2605, 1.365554, 373.3409"/>
         </If>
-        
+
         <If Condition="IsOnSubMap(4015)">
           <MoveTo XYZ="-205.6921, 15.48361, 271.3739" Distance="0.5"/>
           <WaitWhile Condition="GetInstanceTodo(0) == 0 and not ObjectExistsWithId(10366)"/>
@@ -38,7 +38,7 @@
         <If Condition="IsOnSubMap(4012)">
           <Grind GrindRef="TerminusSnatcher" PostCombatDelay="2.0" While="ObjectExistsWithId(10717)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-388.303, 15.47565, 53.24551"/>
         </If>
@@ -52,17 +52,17 @@
 
         <If Condition="IsOnSubMap(4018)">
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-299.7542, 40.98804, -264.7301"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="-295.469, 41.5, -331.6922" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(4013)">
           <Grind GrindRef="TerminusWrecker" PostCombatDelay="2.0" While="ObjectExistsWithId(10718)"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <!-- Post Boss Movement to Next Area -->
           <MoveTo XYZ="-295.2436, 42.86975, -404.4084"/>
           <While Condition="IsOnSubMap(4013)">
@@ -76,17 +76,16 @@
 
         <If Condition="IsOnSubMap(4020)">
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="299.9305, 54.80732, -91.3283"/>
           <LootTreasure/>
-          <EquipRecommended/>
+
           <MoveTo XYZ="299.9672, 55.00583, -142.1797" Distance="0.5"/>
         </If>
 
         <If Condition="IsOnSubMap(4014)">
           <Grind GrindRef="Svarbhanu" PostCombatDelay="2.0" While="ObjectExistsWithId(10719)"/>
           <LootTreasure/>
-          <EquipRecommended/>
         </If>
 
         <LeaveDuty/>
