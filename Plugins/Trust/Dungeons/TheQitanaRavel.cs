@@ -13,6 +13,11 @@ namespace Trust.Dungeons
     /// </summary>
     public class TheQitanaRavel : AbstractDungeon
     {
+        /// <summary>
+        /// Gets zone ID for this dungeon.
+        /// </summary>
+        public new const ZoneId ZoneId = Data.ZoneId.TheQitanaRavel;
+
         private readonly HashSet<uint> spellCastIds = new HashSet<uint>()
         {
             15918, 15916, 15917, 17223, 15498,
@@ -23,11 +28,6 @@ namespace Trust.Dungeons
             15523, 15527, 15522, 15526, 15525,
             15524,
         };
-
-        /// <summary>
-        /// Gets zone ID for this dungeon.
-        /// </summary>
-        public new const ZoneId ZoneId = Data.ZoneId.TheQitanaRavel;
 
         /// <inheritdoc/>
         public override DungeonId DungeonId => DungeonId.TheQitanaRavel;

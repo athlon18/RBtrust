@@ -3,7 +3,7 @@
     /// <summary>
     /// Static map of place names to Sub-Zone IDs.
     /// </summary>
-    public enum SubZoneId : ushort
+    public enum SubZoneId : uint
     {
 #pragma warning disable SA1629 // Documentation text should end with a period
         /// <summary>

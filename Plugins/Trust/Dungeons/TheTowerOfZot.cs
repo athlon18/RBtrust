@@ -20,14 +20,14 @@ namespace Trust.Dungeons
         /// </summary>
         public new const ZoneId ZoneId = Data.ZoneId.TheTowerOfZot;
 
-        private readonly CapabilityManagerHandle TrustHandle1 = CapabilityManager.CreateNewHandle();
-        private readonly CapabilityManagerHandle TrustHandle2 = CapabilityManager.CreateNewHandle();
-        private readonly CapabilityManagerHandle TrustHandle3 = CapabilityManager.CreateNewHandle();
-        private readonly CapabilityManagerHandle TrustHandle4 = CapabilityManager.CreateNewHandle();
+        private readonly CapabilityManagerHandle trustHandle1 = CapabilityManager.CreateNewHandle();
+        private readonly CapabilityManagerHandle trustHandle2 = CapabilityManager.CreateNewHandle();
+        private readonly CapabilityManagerHandle trustHandle3 = CapabilityManager.CreateNewHandle();
+        private readonly CapabilityManagerHandle trustHandle4 = CapabilityManager.CreateNewHandle();
         private readonly PluginContainer sidestepPlugin = PluginHelpers.GetSideStepPlugin();
-        private readonly Stopwatch DAsw = new Stopwatch();
-        private readonly Stopwatch TMsw = new Stopwatch();
-        private readonly Stopwatch STsw = new Stopwatch();
+        private readonly Stopwatch daSw = new Stopwatch();
+        private readonly Stopwatch tmSw = new Stopwatch();
+        private readonly Stopwatch stSw = new Stopwatch();
 
         // BOSS MECHANIC SPELLIDS
 
@@ -102,73 +102,73 @@ namespace Trust.Dungeons
             if (!Core.Me.InCombat)
             {
                 CapabilityManager.Clear();
-                DAsw.Reset();
-                TMsw.Reset();
-                STsw.Reset();
+                daSw.Reset();
+                tmSw.Reset();
+                stSw.Reset();
             }
 
             if (stack.IsCasting())
             {
-                if (!STsw.IsRunning)
+                if (!stSw.IsRunning)
                 {
-                    STsw.Restart();
+                    stSw.Restart();
                 }
 
                 sidestepPlugin.Enabled = false;
                 AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
-                CapabilityManager.Update(TrustHandle1, CapabilityFlags.Movement, 1000, "Follow/Stack Mechanic In Progress");
-                CapabilityManager.Update(TrustHandle2, CapabilityFlags.Facing, 1000, "Follow/Stack Mechanic In Progress");
+                CapabilityManager.Update(trustHandle1, CapabilityFlags.Movement, 1000, "Follow/Stack Mechanic In Progress");
+                CapabilityManager.Update(trustHandle2, CapabilityFlags.Facing, 1000, "Follow/Stack Mechanic In Progress");
                 await MovementHelpers.GetClosestAlly.Follow();
             }
 
-            if (STsw.ElapsedMilliseconds > 3000)
+            if (stSw.ElapsedMilliseconds > 3000)
             {
-                STsw.Reset();
+                stSw.Reset();
                 sidestepPlugin.Enabled = true;
             }
 
-            if (deltaattack.IsCasting() || (DAsw.IsRunning && DAsw.ElapsedMilliseconds < 24000))
+            if (deltaattack.IsCasting() || (daSw.IsRunning && daSw.ElapsedMilliseconds < 24000))
             {
-                if (!DAsw.IsRunning || DAsw.ElapsedMilliseconds >= 24000)
+                if (!daSw.IsRunning || daSw.ElapsedMilliseconds >= 24000)
                 {
-                    CapabilityManager.Update(TrustHandle3, CapabilityFlags.Movement, 24000, "Delta Attack Avoid");
-                    CapabilityManager.Update(TrustHandle4, CapabilityFlags.Facing, 24000, "Delta Attack Avoid");
-                    DAsw.Restart();
+                    CapabilityManager.Update(trustHandle3, CapabilityFlags.Movement, 24000, "Delta Attack Avoid");
+                    CapabilityManager.Update(trustHandle4, CapabilityFlags.Facing, 24000, "Delta Attack Avoid");
+                    daSw.Restart();
                 }
 
-                if (DAsw.ElapsedMilliseconds < 24000)
+                if (daSw.ElapsedMilliseconds < 24000)
                 {
                     sidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
-                    await MovementHelpers.GetClosestAlly.Follow2(DAsw, 24000);
+                    await MovementHelpers.GetClosestAlly.Follow2(daSw, 24000);
                 }
             }
 
-            if (DAsw.ElapsedMilliseconds > 24000)
+            if (daSw.ElapsedMilliseconds > 24000)
             {
                 sidestepPlugin.Enabled = true;
             }
 
-            if (transmute.IsCasting() || TMsw.IsRunning)
+            if (transmute.IsCasting() || tmSw.IsRunning)
             {
-                if (!TMsw.IsRunning)
+                if (!tmSw.IsRunning)
                 {
-                    CapabilityManager.Update(TrustHandle3, CapabilityFlags.Movement, 20000, "Transmute Avoid");
-                    CapabilityManager.Update(TrustHandle4, CapabilityFlags.Facing, 20000, "Transmute Avoid");
-                    TMsw.Restart();
+                    CapabilityManager.Update(trustHandle3, CapabilityFlags.Movement, 20000, "Transmute Avoid");
+                    CapabilityManager.Update(trustHandle4, CapabilityFlags.Facing, 20000, "Transmute Avoid");
+                    tmSw.Restart();
                 }
 
-                if (TMsw.ElapsedMilliseconds < 20000)
+                if (tmSw.ElapsedMilliseconds < 20000)
                 {
                     sidestepPlugin.Enabled = false;
                     AvoidanceManager.RemoveAllAvoids(i => i.CanRun);
-                    await MovementHelpers.GetClosestAlly.Follow2(TMsw, 20000);
+                    await MovementHelpers.GetClosestAlly.Follow2(tmSw, 20000);
                 }
 
-                if (TMsw.ElapsedMilliseconds >= 20000)
+                if (tmSw.ElapsedMilliseconds >= 20000)
                 {
                     sidestepPlugin.Enabled = true;
-                    TMsw.Reset();
+                    tmSw.Reset();
                 }
             }
 

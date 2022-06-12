@@ -278,7 +278,7 @@ namespace Trust.Dungeons
         /// <inheritdoc/>
         public override async Task<bool> RunAsync()
         {
-            if (WorldManager.SubZoneId == 4109)
+            if (WorldManager.SubZoneId == (uint)SubZoneId.JudgmentDay)
             {
                 SidestepPlugin.Enabled = Core.Player.InCombat;
             }
