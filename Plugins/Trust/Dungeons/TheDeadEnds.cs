@@ -577,12 +577,15 @@ namespace Trust.Dungeons
                     AvoidPestilentSandsTraps();
                     break;
                 case SubZoneId.GrebuloffPillars:
+                    AvoidGrebuloffPillarsTraps();
                     break;
                 case SubZoneId.ShellMound:
+                    HandleCausticGrebuloffMechanics();
                     break;
 
                 // Ostrakon Okto
                 case SubZoneId.JudgmentDay:
+                    AvoidJudgmentDayTraps();
                     break;
                 case SubZoneId.DeterrenceGrounds:
                     HandlePeacekeeperMechanics();
@@ -592,6 +595,7 @@ namespace Trust.Dungeons
                 case SubZoneId.ThePlenty:
                     break;
                 case SubZoneId.TheWorldTree:
+                    HandleRalaMechanics();
                     break;
             }
 
@@ -617,6 +621,20 @@ namespace Trust.Dungeons
                         ignoreIfBlocking: true);
                 }
             }
+        }
+
+        private void AvoidGrebuloffPillarsTraps()
+        {
+        }
+
+        private void HandleCausticGrebuloffMechanics()
+        {
+
+        }
+
+        private void AvoidJudgmentDayTraps()
+        {
+
         }
 
         private void HandlePeacekeeperMechanics()
@@ -673,6 +691,11 @@ namespace Trust.Dungeons
                    () => location,
                    ignoreIfBlocking: false);
             }
+        }
+
+        private void HandleRalaMechanics()
+        {
+
         }
 
         // the point of these functions is to take your location and a 2nd location, then calculate a point a distance
